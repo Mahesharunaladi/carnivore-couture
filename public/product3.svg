@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <rect width="300" height="200" fill="#f9e4e8" />
+  <g transform="translate(100, 50) scale(0.7)">
+    <path d="M80 40C80 62.09 62.09 80 40 80C17.91 80 0 62.09 0 40C0 17.91 17.91 0 40 0C62.09 0 80 17.91 80 40Z" fill="#f4c3c3"/>
+    <path d="M30 20L50 20L60 40L50 60L30 60L20 40L30 20Z" fill="#e8a0a0"/>
+    <circle cx="40" cy="40" r="10" fill="#d11243"/>
+  </g>
+  <text x="150" y="150" font-family="Arial" font-size="16" font-weight="bold" fill="#333" text-anchor="middle">Chicken Boneless - Mini Bites</text>
+</svg>
