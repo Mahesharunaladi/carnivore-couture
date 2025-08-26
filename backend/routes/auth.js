@@ -10,27 +10,60 @@ const auth = require('../middleware/auth');
 router.post('/register', userValidationRules(), validate, async (req, res) => {
     try {
         // Check if email already exists
-        const existingUser = await User.findOne({ email: req.body.email });
+        const existingUser = await User.findOne({ email: req.body.email.toLowerCase() });
         if (existingUser) {
             return res.status(400).json({ message: 'Email already registered' });
         }
 
-        const user = new User(req.body);
+        // Create new user with sanitized data
+        const userData = {
+            name: req.body.name.trim(),
+            email: req.body.email.toLowerCase(),
+            password: req.body.password,
+            address: {
+                street: req.body.address?.street?.trim(),
+                city: req.body.address?.city?.trim(),
+                state: req.body.address?.state?.trim(),
+                zipCode: req.body.address?.zipCode?.trim()
+            }
+        };
+
+        const user = new User(userData);
+        
+        // Password will be automatically hashed by the pre-save middleware
         await user.save();
         
+        // Generate JWT token
         const token = jwt.sign(
-            { userId: user._id },
+            { 
+                userId: user._id,
+                role: user.role 
+            },
             process.env.JWT_SECRET || 'your-secret-key',
             { expiresIn: '24h' }
         );
         
-        // Remove password from response
+        // Remove sensitive data from response
         const userResponse = user.toObject();
         delete userResponse.password;
         
-        res.status(201).json({ user: userResponse, token });
+        // Send welcome email (you can implement this later)
+        // await sendWelcomeEmail(user.email, user.name);
+        
+        res.status(201).json({ 
+            message: 'Registration successful',
+            user: userResponse, 
+            token 
+        });
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        console.error('Registration error:', error);
+        if (error.code === 11000) {
+            return res.status(400).json({ message: 'Email already registered' });
+        }
+        res.status(400).json({ 
+            message: 'Registration failed', 
+            error: error.message 
+        });
     }
 });
 
