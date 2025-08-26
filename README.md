@@ -1,64 +1,165 @@
 # Carnivore Couture
 
-## Premium Meat Fashion for the Discerning Carnivore
+## Premium Meat E-commerce Platform
 
-Carnivore Couture is a fictional e-commerce website that specializes in meat-themed fashion items. This project is built with React and Vite, showcasing a modern web application with a unique theme.
+Carnivore Couture is a full-stack e-commerce platform specializing in premium meat products. Built with React + Vite for the frontend and Node.js + Express + MongoDB for the backend, it offers a modern, secure, and scalable solution for online meat retail.
 
 ## Features
 
+### Frontend
 - Responsive design for all device sizes
-- Product showcase with add to cart functionality
-- Shopping cart counter
-- Meat-themed UI with custom styling
+- Product showcase with dynamic filtering
+- Real-time shopping cart management
+- Secure user authentication
+- Order tracking and history
+- Admin dashboard for product management
+
+### Backend
+- RESTful API architecture
+- JWT-based authentication
+- Role-based access control
+- Shopping cart persistence
+- Order management system
+- Secure payment processing
+- Input validation and sanitization
+- Rate limiting and security headers
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (v14 or higher recommended)
+- Node.js (v14 or higher)
+- MongoDB
 - npm or yarn
 
 ### Installation
 
+#### Backend Setup
+
 1. Clone the repository
    ```bash
-   git clone https://github.com/yourusername/carnivore-couture.git
+   git clone https://github.com/Mahesharunaladi/carnivore-couture.git
    ```
 
-2. Navigate to the project directory
+2. Navigate to the backend directory
    ```bash
-   cd carnivore-couture
+   cd carnivore-couture/backend
    ```
 
 3. Install dependencies
    ```bash
    npm install
-   # or
-   yarn
    ```
 
-4. Start the development server
+4. Create .env file
+   ```env
+   PORT=5000
+   MONGODB_URI=your_mongodb_uri
+   JWT_SECRET=your_jwt_secret
+   FRONTEND_URL=http://localhost:3000
+   ```
+
+5. Start the backend server
    ```bash
    npm run dev
-   # or
-   yarn dev
    ```
 
-5. Open your browser and visit `http://localhost:5173`
+#### Frontend Setup
 
-## Build for Production
+1. Open a new terminal and navigate to the project root
+   ```bash
+   cd carnivore-couture
+   ```
 
-```bash
-npm run build
-# or
-yarn build
-```
+2. Install frontend dependencies
+   ```bash
+   npm install
+   ```
+
+3. Start the frontend development server
+   ```bash
+   npm run dev
+   ```
+
+4. Open your browser and visit `http://localhost:5173`
 
 ## Technologies Used
 
-- React
+### Frontend
+- React 18
 - Vite
 - CSS3
+- React Router
+- Axios
+
+### Backend
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JSON Web Tokens
+- Express Validator
+- Helmet.js
+- Morgan
+
+## API Documentation
+
+### Authentication Endpoints
+
+```http
+POST /api/auth/register
+POST /api/auth/login
+GET /api/auth/me
+PATCH /api/auth/me
+```
+
+### Product Endpoints
+
+```http
+GET /api/products
+GET /api/products/:id
+POST /api/products     # Admin only
+PATCH /api/products/:id # Admin only
+DELETE /api/products/:id # Admin only
+```
+
+### Cart Endpoints
+
+```http
+GET /api/cart
+POST /api/cart/add
+PATCH /api/cart/update/:productId
+DELETE /api/cart/remove/:productId
+DELETE /api/cart/clear
+```
+
+### Order Endpoints
+
+```http
+POST /api/orders
+GET /api/orders/my-orders
+GET /api/orders/:id
+PATCH /api/orders/:id/status # Admin only
+PATCH /api/orders/:id/cancel
+```
+
+## Security Features
+
+- JWT-based authentication
+- Request rate limiting
+- Input validation and sanitization
+- Secure HTTP headers
+- CORS configuration
+- Error handling
+- Request logging
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
@@ -66,12 +167,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Acknowledgments
 
-- This is a fictional project created for demonstration purposes
-- Inspired by the love for both fashion and fine meats
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-
-
-123
+- Built with modern web development best practices
+- Focuses on security and scalability
+- Implements a complete e-commerce solution
