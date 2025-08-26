@@ -173,7 +173,7 @@ function App() {
           {/* Main Header */}
           <header className="main-header">
             <div className="logo-container">
-              <img src="/logo.svg" alt="Carnivore Couture" className="logo-image" />
+              <img src="/logo-removebg-preview.png" alt="Carnivores Couture Logo" className="logo-image" />
             </div>
             <div className="location-selector">
               <FiMapPin className="location-icon" />
