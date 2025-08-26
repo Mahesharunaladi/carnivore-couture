@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 // Import routes
 const productRoutes = require('./routes/products');
 const authRoutes = require('./routes/auth');
+const orderRoutes = require('./routes/orders');
+const cartRoutes = require('./routes/cart');
 
 // Load environment variables
 dotenv.config();
@@ -26,10 +28,38 @@ mongoose.connect(MONGODB_URI)
 // Routes
 app.use('/api/products', productRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/cart', cartRoutes);
 
 // Basic route
 app.get('/', (req, res) => {
   res.json({ message: 'Welcome to Carnivore Couture API' });
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  
+  if (err.name === 'ValidationError') {
+    return res.status(400).json({ 
+      message: 'Validation Error', 
+      errors: Object.values(err.errors).map(e => e.message) 
+    });
+  }
+  
+  if (err.name === 'JsonWebTokenError') {
+    return res.status(401).json({ message: 'Invalid token' });
+  }
+  
+  res.status(500).json({ 
+    message: 'Something went wrong!',
+    error: process.env.NODE_ENV === 'development' ? err.message : undefined
+  });
+});
+
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({ message: 'Route not found' });
 });
 
 // Start server
