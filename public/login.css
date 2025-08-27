@@ -80,16 +80,19 @@ body {
   align-items: center;
   padding: 2rem;
   background-color: #1a1a1a;
+  background-image: url('/chicken.svg'); /* Added background image */
+  background-size: cover; /* Cover the entire area */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
 }
 
 .chicken-image {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /* This will be removed from Login.jsx, so these styles will no longer apply */
+  display: none; /* Hide the image if it's still present for some reason */
 }
 
 .rooster-img {
+  /* This will be removed from Login.jsx, so these styles will no longer apply */
   max-width: 100%;
   height: auto;
   border-radius: 10px;
@@ -198,4 +201,48 @@ body {
   .login-title {
     font-size: 2rem;
   }
+}
+
+
+/* Styles for messages and form toggle */
+.error-message {
+  color: #ff4d4d;
+  background-color: #ffe6e6;
+  border: 1px solid #ff4d4d;
+  padding: 0.8rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.success-message {
+  color: #4CAF50;
+  background-color: #e6ffe6;
+  border: 1px solid #4CAF50;
+  padding: 0.8rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.toggle-form {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #ccc;
+}
+
+.toggle-form .toggle-btn {
+  background: none;
+  border: none;
+  color: #ff6b47;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: underline;
+  font-size: 1rem;
+  padding: 0;
+  margin-left: 0.5rem;
+}
+
+.toggle-form .toggle-btn:hover {
+  color: #e05a3c;
 }
