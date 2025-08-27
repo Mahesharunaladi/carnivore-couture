@@ -1,53 +1,172 @@
-# Carnivore Couture
+# 🥩 Carnivore Couture
 
 ## Premium Meat E-commerce Platform
 
-Carnivore Couture is a full-stack e-commerce platform specializing in premium meat products. Built with React + Vite for the frontend and Node.js + Express + MongoDB for the backend, it offers a modern, secure, and scalable solution for online meat retail.
+Carnivore Couture is a sophisticated e-commerce platform specializing in premium meat products. Built with modern technologies and best practices, it offers a seamless shopping experience for quality meat products.
 
-## Features
+![Carnivore Couture Logo](/public/logo3.png)
+
+## 🚀 Features
+
+### 🎨 Frontend
+- **Modern UI/UX** - Built with React + Vite for optimal performance
+- **Responsive Design** - Fully responsive across all devices
+- **Dynamic Product Catalog** - Real-time filtering and search
+- **Interactive Shopping Cart** - Seamless cart management
+- **User Authentication** - Secure login and registration
+- **Order Management** - Track orders and view history
+- **Admin Dashboard** - Complete product and order management
+- **Wishlist** - Save favorite items for later
+
+### ⚙️ Backend
+- **Robust API** - RESTful architecture with Express.js
+- **Secure Authentication** - JWT-based user authentication
+- **Data Protection** - Input validation and sanitization
+- **Access Control** - Role-based permissions system
+- **Performance** - Rate limiting and optimization
+- **Security** - CORS, Helmet, and security best practices
+- **Database** - MongoDB with Mongoose ODM
+- **Error Handling** - Comprehensive error management
+
+## 🛠 Tech Stack
 
 ### Frontend
-- Responsive design for all device sizes
-- Product showcase with dynamic filtering
-- Real-time shopping cart management
-- Secure user authentication
-- Order tracking and history
-- Admin dashboard for product management
+- **React** - UI library
+- **Vite** - Build tool
+- **React Icons** - Icon library
+- **CSS3** - Styling with modern CSS features
+- **Context API** - State management
+- **React Router** - Navigation
+- **Axios** - HTTP client
 
 ### Backend
-- RESTful API architecture
-- JWT-based authentication
-- Role-based access control
-- Shopping cart persistence
-- Order management system
-- Secure payment processing
-- Input validation and sanitization
-- Rate limiting and security headers
+- **Node.js** - Runtime environment
+- **Express.js** - Web framework
+- **MongoDB** - Database
+- **Mongoose** - ODM
+- **JWT** - Authentication
+- **bcrypt** - Password hashing
+- **Express Validator** - Input validation
+- **Helmet** - Security headers
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
-
 - Node.js (v14 or higher)
 - MongoDB
 - npm or yarn
 
 ### Installation
 
-#### Backend Setup
+#### 1. Clone the Repository
+```bash
+git clone https://github.com/Mahesharunaladi/carnivore-couture.git
+cd carnivore-couture
+```
 
-1. Clone the repository
-   ```bash
-   git clone https://github.com/Mahesharunaladi/carnivore-couture.git
-   ```
+#### 2. Frontend Setup
+```bash
+# Install dependencies
+npm install
 
-2. Navigate to the backend directory
-   ```bash
-   cd carnivore-couture/backend
-   ```
+# Start development server
+npm run dev
+```
 
-3. Install dependencies
-   ```bash
+#### 3. Backend Setup
+```bash
+# Navigate to backend directory
+cd backend
+
+# Install dependencies
+npm install
+
+# Create .env file
+cp .env.example .env
+
+# Start server
+npm start
+```
+
+#### 4. Environment Variables
+Create a `.env` file in the backend directory:
+```env
+PORT=5000
+MONGODB_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+FRONTEND_URL=http://localhost:3000
+```
+
+## 🌟 Key Features
+
+### User Features
+- User registration and authentication
+- Browse products by category
+- Advanced product filtering and search
+- Shopping cart management
+- Order placement and tracking
+- User profile management
+- Wishlist functionality
+- Address management
+
+### Admin Features
+- Product management (CRUD operations)
+- Order management
+- User management
+- Analytics dashboard
+- Inventory management
+- Category management
+
+## 📱 Responsive Design
+- Mobile-first approach
+- Adaptive layouts
+- Touch-friendly interfaces
+- Optimized images
+- Flexible grids
+
+## 🔒 Security Features
+- JWT authentication
+- Password hashing
+- Input validation
+- Rate limiting
+- CORS protection
+- XSS prevention
+- Security headers
+- Error handling
+
+## 🏗 Project Structure
+```
+carnivore-couture/
+├── src/
+│   ├── components/
+│   │   ├── Logo/
+│   │   ├── ProductCard/
+│   │   └── ...
+│   ├── context/
+│   │   ├── AuthContext.jsx
+│   │   └── CartContext.jsx
+│   └── App.jsx
+├── backend/
+│   ├── routes/
+│   ├── models/
+│   ├── middleware/
+│   └── server.js
+└── README.md
+```
+
+## 🤝 Contributing
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📝 License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 👥 Authors
+- Mahesh Arunaladi - Initial work
+
+## 🙏 Acknowledgments
+- Special thanks to all contributors
+- Inspiration from various e-commerce platforms
+- React and Node.js communities
    npm install
    ```
 
