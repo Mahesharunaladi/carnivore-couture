@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from './context/AuthContext';
 import Logo from './components/NewLogo';
+import './Login.css';
 
 const Login = ({ onClose }) => {
   const [isRegistering, setIsRegistering] = useState(false);
@@ -8,7 +9,13 @@ const Login = ({ onClose }) => {
     name: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    address: {
+      street: '',
+      city: '',
+      state: '',
+      zipCode: ''
+    }
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -16,10 +23,23 @@ const Login = ({ onClose }) => {
   const { login, register } = useAuth();
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+    
+    if (name.startsWith('address.')) {
+      const addressField = name.split('.')[1];
+      setFormData(prev => ({
+        ...prev,
+        address: {
+          ...prev.address,
+          [addressField]: value
+        }
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
     setError('');
   };
 
@@ -86,13 +106,28 @@ const Login = ({ onClose }) => {
           <p className="login-subtitle">Leaat bicus of cive hirare ce off alegeo</p>
           
           <form onSubmit={handleSubmit} className="login-form">
+            {isRegistering && (
+              <div className="form-group">
+                <label htmlFor="name">Full Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Enter your full name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            )}
+            
             <div className="form-group">
-              <label htmlFor="email">Ccc.et</label>
+              <label htmlFor="email">Email</label>
               <input
                 type="email"
                 id="email"
                 name="email"
-                placeholder="Urese sas"
+                placeholder="Enter your email"
                 value={formData.email}
                 onChange={handleChange}
                 required
@@ -100,34 +135,106 @@ const Login = ({ onClose }) => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="password">Lenea</label>
+              <label htmlFor="password">Password</label>
               <input
                 type="password"
                 id="password"
                 name="password"
-                placeholder="Geitriche"
+                placeholder="Enter your password"
                 value={formData.password}
                 onChange={handleChange}
                 required
               />
             </div>
 
-            <div className="form-group">
-              <label htmlFor="password">Fastorze</label>
-              <input
-                type="text"
-                id="text"
-                name="text"
-                placeholder="Beufarl"
-                value={formData.text}
-                onChange={handleChange}
-                required
-              />
-            </div>
+            {isRegistering && (
+              <>
+                <div className="form-group">
+                  <label htmlFor="confirmPassword">Confirm Password</label>
+                  <input
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    placeholder="Confirm your password"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
 
-            <button type="submit" className="login-submit-btn">
-              Save Pattens
+                <div className="address-fields">
+                  <div className="form-group">
+                    <label htmlFor="street">Street Address</label>
+                    <input
+                      type="text"
+                      id="street"
+                      name="address.street"
+                      placeholder="Enter street address"
+                      value={formData.address.street}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="city">City</label>
+                    <input
+                      type="text"
+                      id="city"
+                      name="address.city"
+                      placeholder="Enter city"
+                      value={formData.address.city}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="state">State</label>
+                    <input
+                      type="text"
+                      id="state"
+                      name="address.state"
+                      placeholder="Enter state"
+                      value={formData.address.state}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="zipCode">ZIP Code</label>
+                    <input
+                      type="text"
+                      id="zipCode"
+                      name="address.zipCode"
+                      placeholder="Enter ZIP code"
+                      value={formData.address.zipCode}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+
+            {error && <div className="error-message">{error}</div>}
+
+            <button 
+              type="submit" 
+              className={`submit-button ${loading ? 'loading' : ''}`}
+              disabled={loading}
+            >
+              {loading ? 'Processing...' : isRegistering ? 'Register' : 'Login'}
             </button>
+
+            <div className="toggle-form">
+              {isRegistering ? (
+                <p>Already have an account? <button onClick={() => setIsRegistering(false)}>Login here</button></p>
+              ) : (
+                <p>Don't have an account? <button onClick={() => setIsRegistering(true)}>Register here</button></p>
+              )}
+            </div>
           </form>
         </div>
       </div>
