@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from './context/AuthContext';
+import Logo from './components/Logo';
 
 const Login = ({ onClose }) => {
   const [isRegistering, setIsRegistering] = useState(false);
@@ -66,10 +67,7 @@ const Login = ({ onClose }) => {
   return (
     <div className="login-container">
       <div className="login-header">
-        <div className="logo">
-          <span className="logo-icon">C</span>
-          <span className="logo-text">Canivores</span>
-        </div>
+        <Logo className="login-logo" />
         <nav className="nav-menu">
           <a href="#home">Home</a>
           <a href="#menu">Menu</a>

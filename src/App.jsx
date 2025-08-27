@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import './App.css';
 import { FiSearch, FiShoppingCart, FiUser, FiMenu, FiShare2, FiBookmark, FiMoreVertical, FiMapPin, FiNavigation } from 'react-icons/fi';
 import Login from './Login.jsx';
+import Logo from './components/Logo';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { useAuth } from './context/AuthContext';
@@ -176,9 +177,7 @@ function App() {
 
           {/* Main Header */}
           <header className="main-header">
-            <div className="logo-container">
-              <img src="/logo-removebg-preview.png" alt="Carnivores Couture Logo" className="logo-image" />
-            </div>
+            <Logo />
             <div className="location-selector">
               <FiMapPin className="location-icon" />
               <div className="location-text">

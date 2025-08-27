@@ -111,15 +111,32 @@
 
 .logo-container {
   display: flex;
+  align-items: center;
   margin-right: 2rem;
 }
 
 .logo-image {
-  height: clamp(40px, 8vw, 80px);
-  width: auto;
-  max-width: 160px;
+  height: auto;
+  width: 180px;
   transform-origin: center;
   object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.logo-image:hover {
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .logo-image {
+    width: 140px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-image {
+    width: 120px;
+  }
 }
 
 /* Responsive header adjustments */
