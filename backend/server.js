@@ -45,23 +45,42 @@ app.use(morgan('combined', { stream: accessLogStream })); // Logging
 
 // MongoDB connection
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/carnivore-couture';
-mongoose.connect(MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-.then(() => console.log('Connected to MongoDB'))
-.catch((err) => console.error('MongoDB connection error:', err));
+mongoose.connect(MONGODB_URI)
+  .then(() => console.log('Connected to MongoDB'))
+  .catch((err) => console.error('MongoDB connection error:', err));
 
-// Basic route
-app.get('/', (req, res) => {
-  res.json({ message: 'Welcome to Carnivore Couture API' });
+// Mount routes
+app.use('/api/auth', authLimiter, authRoutes);
+app.use('/api/products', apiLimiter, productRoutes);
+app.use('/api/orders', apiLimiter, orderRoutes);
+app.use('/api/cart', apiLimiter, cartRoutes);
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: 'Something went wrong!' });
 });
+
+// Start server
+if (!module.parent) {
+  const port = process.env.PORT || 5000;
+  app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+  });
+}
+
+module.exports = app;
 
 // Routes with rate limiting
 app.use('/api/auth', authLimiter, authRoutes);
 app.use('/api/products', apiLimiter, productRoutes);
 app.use('/api/orders', apiLimiter, orderRoutes);
 app.use('/api/cart', apiLimiter, cartRoutes);
+
+// Basic route
+app.get('/', (req, res) => {
+  res.json({ message: 'Welcome to Carnivore Couture API' });
+});
 
 // Error handling middleware
 app.use((err, req, res, next) => {
