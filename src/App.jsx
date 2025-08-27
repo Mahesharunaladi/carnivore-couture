@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import { FiSearch, FiShoppingCart, FiUser, FiMenu, FiShare2, FiBookmark, FiMoreVertical, FiMapPin, FiNavigation } from 'react-icons/fi';
-import Login from '../../src/Login.jsx';
+import Login from './Login.jsx';
+import { AuthProvider } from './context/AuthContext';
+import { CartProvider } from './context/CartContext';
+import { useAuth } from './context/AuthContext';
+import { useCart } from './context/CartContext';
 
 function App() {
   const [cartItems, setCartItems] = useState(0);

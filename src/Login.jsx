@@ -1,22 +1,66 @@
 import React, { useState } from 'react';
+import { useAuth } from './context/AuthContext';
 
-const Login = () => {
+const Login = ({ onClose }) => {
+  const [isRegistering, setIsRegistering] = useState(false);
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
-    password: ''
+    password: '',
+    confirmPassword: ''
   });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  
+  const { login, register } = useAuth();
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
+    setError('');
   };
 
-  const handleSubmit = (e) => {
+  const validateForm = () => {
+    if (!formData.email || !formData.password) {
+      setError('All fields are required');
+      return false;
+    }
+    if (isRegistering) {
+      if (!formData.name) {
+        setError('Name is required');
+        return false;
+      }
+      if (formData.password !== formData.confirmPassword) {
+        setError('Passwords do not match');
+        return false;
+      }
+      if (formData.password.length < 6) {
+        setError('Password must be at least 6 characters');
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Login data:', formData);
-    // Add your login logic here
+    if (!validateForm()) return;
+
+    setLoading(true);
+    try {
+      if (isRegistering) {
+        await register(formData);
+      } else {
+        await login(formData.email, formData.password);
+      }
+      onClose();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
