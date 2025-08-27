@@ -113,6 +113,7 @@
   display: flex;
   align-items: center;
   margin-right: 2rem;
+  justify-content: center;
 }
 
 .logo-image {
@@ -121,6 +122,23 @@
   transform-origin: center;
   object-fit: contain;
   transition: transform 0.3s ease;
+}
+
+.logo-container.small .logo-image {
+  width: 120px;
+}
+
+.logo-container.medium .logo-image {
+  width: 180px;
+}
+
+.logo-container.large .logo-image {
+  width: 240px;
+}
+
+.logo-image:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
 }
 
 .logo-image:hover {

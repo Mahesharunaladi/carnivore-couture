@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import './App.css';
 import { FiSearch, FiShoppingCart, FiUser, FiMenu, FiShare2, FiBookmark, FiMoreVertical, FiMapPin, FiNavigation } from 'react-icons/fi';
 import Login from './Login.jsx';
-import Logo from './components/Logo';
+import Logo from './components/NewLogo';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { useAuth } from './context/AuthContext';

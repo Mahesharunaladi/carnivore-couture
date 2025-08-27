@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from './context/AuthContext';
-import Logo from './components/Logo';
+import Logo from './components/NewLogo';
 
 const Login = ({ onClose }) => {
   const [isRegistering, setIsRegistering] = useState(false);
