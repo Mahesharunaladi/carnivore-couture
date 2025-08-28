@@ -2,27 +2,9 @@ const { body, validationResult } = require('express-validator');
 
 const userValidationRules = () => {
     return [
-        body('name')
-            .trim()
-            .notEmpty().withMessage('Name is required')
-            .isLength({ min: 2, max: 50 }).withMessage('Name must be between 2 and 50 characters')
-            .matches(/^[a-zA-Z\s]+$/).withMessage('Name can only contain letters and spaces'),
-        body('email')
-            .trim()
-            .notEmpty().withMessage('Email is required')
-            .isEmail().withMessage('Please enter a valid email')
-            .normalizeEmail(),
-        body('password')
-            .notEmpty().withMessage('Password is required')
-            .isLength({ min: 6 }).withMessage('Password must be at least 6 characters long')
-            .matches(/\d/).withMessage('Password must contain a number')
-            .matches(/[a-z]/).withMessage('Password must contain a lowercase letter')
-            .matches(/[A-Z]/).withMessage('Password must contain an uppercase letter')
-            .matches(/[!@#$%^&*]/).withMessage('Password must contain a special character'),
-        body('address.street').optional().trim().isLength({ max: 100 }).withMessage('Street address too long'),
-        body('address.city').optional().trim().isLength({ max: 50 }).withMessage('City name too long'),
-        body('address.state').optional().trim().isLength({ max: 50 }).withMessage('State name too long'),
-        body('address.zipCode').optional().trim().matches(/^\d{5}(-\d{4})?$/).withMessage('Invalid zip code format')
+        body('name').trim().notEmpty().withMessage('Name is required'),
+        body('email').trim().isEmail().withMessage('Please enter a valid email'),
+        body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long')
     ];
 };
 

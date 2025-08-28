@@ -1,31 +1,29 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+
+// Test route
+router.get('/test', (req, res) => {
+    console.log('Test route hit');
+    res.json({ message: 'Auth router is working' });
+});
+
+// Simple register route
+router.post('/register', (req, res) => {
+    console.log('Register route hit:', req.body);
+    res.json({ message: 'Registration endpoint working', data: req.body });
+});
 const User = require('../models/User');
 const { userValidationRules, validate } = require('../middleware/validation');
 const auth = require('../middleware/auth');
 
 // Register a new user
-router.post('/register', userValidationRules(), validate, async (req, res) => {
+router.post('/register', async (req, res) => {
+    console.log('Registration attempt:', req.body);
     try {
-        // Check if email already exists
-        const existingUser = await User.findOne({ email: req.body.email.toLowerCase() });
-        if (existingUser) {
-            return res.status(400).json({ message: 'Email already registered' });
-        }
-
-        // Create new user with sanitized data
         const userData = {
-            name: req.body.name.trim(),
-            email: req.body.email.toLowerCase(),
-            password: req.body.password,
-            address: {
-                street: req.body.address?.street?.trim(),
-                city: req.body.address?.city?.trim(),
-                state: req.body.address?.state?.trim(),
-                zipCode: req.body.address?.zipCode?.trim()
-            }
+            name: req.body.name,
+            email: req.body.email,
+            password: req.body.password
         };
 
         const user = new User(userData);
@@ -57,12 +55,14 @@ router.post('/register', userValidationRules(), validate, async (req, res) => {
         });
     } catch (error) {
         console.error('Registration error:', error);
+        console.error('Stack trace:', error.stack);
         if (error.code === 11000) {
             return res.status(400).json({ message: 'Email already registered' });
         }
         res.status(400).json({ 
             message: 'Registration failed', 
-            error: error.message 
+            error: error.message,
+            details: process.env.NODE_ENV === 'development' ? error.stack : undefined
         });
     }
 });

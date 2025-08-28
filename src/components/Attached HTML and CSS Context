@@ -1,0 +1,14 @@
+Attached HTML and CSS Context
+
+<html><head></head><body></body></html>
+
+
+/* Matched Rule from user-agent */
+html {
+  display: block;
+}
+
+/* Matched Rule from user-agent */
+:root {
+  view-transition-name: root;
+}
