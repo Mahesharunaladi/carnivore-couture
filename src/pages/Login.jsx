@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { useAuth } from './context/AuthContext'; // Import useAuth from AuthContext
-import Logo from './components/NewLogo'; // Assuming NewLogo is in components
+import React, { useState } from "react";
+import { useAuth } from "./context/AuthContext.jsx";
+import Logo from "./components/NewLogo";
 import './Login.css';
 
 const Login = ({ onClose }) => {
@@ -20,7 +20,7 @@ const Login = ({ onClose }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const { login, register } = useAuth(); // Use the login and register functions from AuthContext
+  const { login, register } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -80,9 +80,9 @@ const Login = ({ onClose }) => {
       } else {
         await login(formData.email, formData.password);
       }
-      onClose(); // Close the login modal on successful authentication
+      onClose();
     } catch (err) {
-      setError(err.response?.data?.message || 'An error occurred');
+      setError(err.response?.data?.message || 'An error occurred. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -120,6 +120,7 @@ const Login = ({ onClose }) => {
                   placeholder="Enter your full name"
                   value={formData.name}
                   onChange={handleChange}
+                  required={isRegistering}
                 />
               </div>
             )}
@@ -161,6 +162,7 @@ const Login = ({ onClose }) => {
                     placeholder="Confirm your password"
                     value={formData.confirmPassword}
                     onChange={handleChange}
+                    required
                   />
                 </div>
 
@@ -174,6 +176,7 @@ const Login = ({ onClose }) => {
                       placeholder="Enter street address"
                       value={formData.address.street}
                       onChange={handleChange}
+                      required
                     />
                   </div>
 
@@ -186,6 +189,7 @@ const Login = ({ onClose }) => {
                       placeholder="Enter city"
                       value={formData.address.city}
                       onChange={handleChange}
+                      required
                     />
                   </div>
 
@@ -198,6 +202,7 @@ const Login = ({ onClose }) => {
                       placeholder="Enter state"
                       value={formData.address.state}
                       onChange={handleChange}
+                      required
                     />
                   </div>
 
@@ -210,6 +215,7 @@ const Login = ({ onClose }) => {
                       placeholder="Enter zip code"
                       value={formData.address.zipCode}
                       onChange={handleChange}
+                      required
                     />
                   </div>
                 </div>
@@ -218,17 +224,40 @@ const Login = ({ onClose }) => {
 
             {error && <p className="error-message">{error}</p>}
 
-            <button type="submit" className="login-button" disabled={loading}>
-              {loading ? 'Loading...' : (isRegistering ? 'Register' : 'Login')}
+            <button
+              type="submit"
+              className={`submit-button ${loading ? 'loading' : ''}`}
+              disabled={loading}
+            >
+              {loading ? 'Processing...' : isRegistering ? 'Register' : 'Login'}
             </button>
-          </form>
 
-          <div className="toggle-form">
-            {isRegistering ? 'Already have an account?' : 'Don\'t have an account?'}
-            <button type="button" onClick={() => setIsRegistering(!isRegistering)} className="toggle-btn">
-              {isRegistering ? 'Login here' : 'Register here'}
-            </button>
-          </div>
+            <div className="toggle-form">
+              {isRegistering ? (
+                <p>
+                  Already have an account?{' '}
+                  <button
+                    type="button"
+                    onClick={() => setIsRegistering(false)}
+                    className="toggle-btn"
+                  >
+                    Login here
+                  </button>
+                </p>
+              ) : (
+                <p>
+                  Don't have an account?{' '}
+                  <button
+                    type="button"
+                    onClick={() => setIsRegistering(true)}
+                    className="toggle-btn"
+                  >
+                    Register here
+                  </button>
+                </p>
+              )}
+            </div>
+          </form>
         </div>
       </div>
     </div>

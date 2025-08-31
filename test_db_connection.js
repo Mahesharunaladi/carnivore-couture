@@ -1,21 +1,19 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
-dotenv.config(); // Load environment variables from .env file
+dotenv.config({ path: './backend/.env' });
 
-const MONGODB_URI = process.env.MONGODB_URI;
-
-if (!MONGODB_URI) {
-  console.error('MONGODB_URI is not defined in the .env file.');
-  process.exit(1);
+async function testConnection() {
+  try {
+    console.log('Attempting to connect to MongoDB Atlas...');
+    console.log('MONGODB_URI:', process.env.MONGODB_URI.replace(/:([^:@]+)@/, ':****@'));
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log('MongoDB connected successfully');
+    await mongoose.connection.close();
+    console.log('Connection closed');
+  } catch (err) {
+    console.error('MongoDB connection error:', err);
+  }
 }
 
-mongoose.connect(MONGODB_URI)
-  .then(() => {
-    console.log('MongoDB connection successful!');
-    mongoose.connection.close(); // Close connection after successful test
-  })
-  .catch(err => {
-    console.error('MongoDB connection error:', err);
-    process.exit(1);
-  });
+testConnection();

@@ -1,9 +1,11 @@
-import 'dotenv/config';
+import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import authRoutes from './routes/auth.routes.js';
 import connectDB from './config/db.js';
+
+dotenv.config({ path: './backend/.env' }); // Add this line and remove the previous 'import \'dotenv/config\';'
 
 const app = express();
 const PORT = process.env.PORT || 5000;
