@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import './App.css';
 import { FiSearch, FiShoppingCart, FiUser, FiMenu, FiShare2, FiBookmark, FiMoreVertical, FiMapPin, FiNavigation } from 'react-icons/fi';
 import Login from '../../src/Login.jsx';
+import { AuthProvider } from './context/AuthContext'; // Import AuthProvider
 
 function App() {
   const [cartItems, setCartItems] = useState(0);
@@ -148,56 +149,57 @@ function App() {
   ];
 
   return (
-    <div className="app-container">
-      {showLogin ? (
-        <Login setShowLogin={setShowLogin} /> // Pass setShowLogin to allow Login component to toggle back
-      ) : (
-        <>
-          {/* Top Navigation Bar */}
-          <div className="top-nav">
-            <div className="nav-left">
-              <button className="menu-btn"><FiMenu /></button>
-            </div>
-            <div className="nav-center">
-              <h1>Carnivore Couture</h1>
-              <p>Premium Meat Delivery Service</p>
-            </div>
-            <div className="nav-right">
-              <button className="share-btn"><FiShare2 /></button>
-              <button className="bookmark-btn"><FiBookmark /></button>
-              <button className="more-btn"><FiMoreVertical /></button>
-              <button onClick={() => setShowLogin(true)}>Login</button>
-            </div>
-          </div>
-
-          {/* Main Header */}
-          <header className="main-header">
-            <div className="logo-container">
-              <img src="/logo-removebg-preview.png" alt="Carnivores Couture Logo" className="logo-image" />
-            </div>
-            <div className="location-selector">
-              <FiMapPin className="location-icon" />
-              <div className="location-text">
-                <span className="location-label">
-                  {userLocation ? 'Your Location' : 'Bangalore'}
-                  {locationLoading && ' (Loading...)'}
-                </span>
-                <span className="location-details">
-                  {userLocation
-                    ? `Lat: ${userLocation.latitude.toFixed(4)}, Long: ${userLocation.longitude.toFixed(4)}`
-                    : 'HSR, Koramangala, Indiranagar, New BEL Road, Marathahalli, Whitefield, Electronic City'}
-                  {locationError && <span className="location-error">{locationError}</span>}
-                </span>
+    <AuthProvider> {/* Wrap the entire application with AuthProvider */}
+      <div className="app-container">
+        {showLogin ? (
+          <Login setShowLogin={setShowLogin} /> // Pass setShowLogin to allow Login component to toggle back
+        ) : (
+          <>
+            {/* Top Navigation Bar */}
+            <div className="top-nav">
+              <div className="nav-left">
+                <button className="menu-btn"><FiMenu /></button>
               </div>
-              <button
-                className="gps-button"
-                onClick={getCurrentLocation}
-                title="Use current location"
-                disabled={locationLoading}
-              >
-                <FiNavigation className={locationLoading ? 'rotating' : ''} />
-              </button>
+              <div className="nav-center">
+                <h1>Carnivore Couture</h1>
+                <p>Premium Meat Delivery Service</p>
+              </div>
+              <div className="nav-right">
+                <button className="share-btn"><FiShare2 /></button>
+                <button className="bookmark-btn"><FiBookmark /></button>
+                <button className="more-btn"><FiMoreVertical /></button>
+                <button onClick={() => setShowLogin(true)}>Login</button>
+              </div>
             </div>
+
+            {/* Main Header */}
+            <header className="main-header">
+              <div className="logo-container">
+                <img src="/logo-removebg-preview.png" alt="Carnivores Couture Logo" className="logo-image" />
+              </div>
+              <div className="location-selector">
+                <FiMapPin className="location-icon" />
+                <div className="location-text">
+                  <span className="location-label">
+                    {userLocation ? 'Your Location' : 'Bangalore'}
+                    {locationLoading && ' (Loading...)'}
+                  </span>
+                  <span className="location-details">
+                    {userLocation
+                      ? `Lat: ${userLocation.latitude.toFixed(4)}, Long: ${userLocation.longitude.toFixed(4)}`
+                      : 'HSR, Koramangala, Indiranagar, New BEL Road, Marathahalli, Whitefield, Electronic City'}
+                    {locationError && <span className="location-error">{locationError}</span>}
+                  </span>
+                </div>
+                <button
+                  className="gps-button"
+                  onClick={getCurrentLocation}
+                  title="Use current location"
+                  disabled={locationLoading}
+                >
+                  <FiNavigation className={locationLoading ? 'rotating' : ''} />
+                </button>
+              </div>
             <div className="search-bar">
               <FiSearch className="search-icon" />
               <input

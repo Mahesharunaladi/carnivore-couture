@@ -80,10 +80,20 @@ body {
   align-items: center;
   padding: 2rem;
   background-color: #1a1a1a;
-  background-image: url('/chicken.svg'); /* Added background image */
+  background-image: none; /* Removed background image */
+  background-image: none; /* Removed background image */
   background-size: cover; /* Cover the entire area */
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
+}
+
+.login-logo {
+  height: 100px; /* Adjust as needed */
+  width: auto;
+  margin-bottom: 20px; /* Space below the logo */
+  display: block; /* Ensure the image is treated as a block element */
+  margin-left: auto; /* Center the image horizontally */
+  margin-right: auto; /* Center the image horizontally */
 }
 
 .chicken-image {
