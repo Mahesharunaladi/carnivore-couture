@@ -1,15 +1,18 @@
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: './backend/.env' });
 
 const connectDB = async () => {
   try {
     console.log('Attempting to connect to MongoDB...');
     console.log('MONGODB_URI:', process.env.MONGODB_URI);
     const conn = await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+      // useNewUrlParser: true, // Remove this line
+      // useUnifiedTopology: true, // Remove this line
       retryWrites: true,
       w: 'majority',
-      tls: false, // Temporarily set to false for testing
+      tls: true, // Change to true for MongoDB Atlas
       // Remove tlsAllowInvalidCertificates and tlsAllowInvalidHostnames
     });
 

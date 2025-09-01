@@ -108,13 +108,36 @@ body {
   border-radius: 10px;
 }
 
+/* New styles for the redesign */
+.login-container {
+  background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
+}
+
 .login-form-container {
-  background-color: #2d2d2d;
-  padding: 3rem;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  max-width: 500px;
-  width: 100%;
+  background: rgba(45, 45, 45, 0.9);
+  backdrop-filter: blur(10px);
+  border: 1px solid #ff6b47;
+}
+
+.form-toggle {
+  display: flex;
+  margin-bottom: 2rem;
+}
+
+.toggle-btn {
+  flex: 1;
+  padding: 1rem;
+  background: transparent;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.toggle-btn.active {
+  color: #ff6b47;
+  border-bottom: 3px solid #ff6b47;
 }
 
 .login-title {

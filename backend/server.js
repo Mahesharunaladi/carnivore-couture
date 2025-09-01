@@ -1,35 +1,34 @@
-import dotenv from 'dotenv';
 import express from 'express';
-import mongoose from 'mongoose';
 import cors from 'cors';
+import mongoose from 'mongoose';
 import authRoutes from './routes/auth.routes.js';
-import connectDB from './config/db.js';
+import rateLimiter from './middlewares/rateLimiter.js'; // Corrected path
+import dotenv from 'dotenv';
 
-dotenv.config({ path: './backend/.env' }); // Add this line and remove the previous 'import \'dotenv/config\';'
+dotenv.config({ path: './backend/.env' });
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+app.use(cors({ origin: process.env.FRONTEND_URL }));
 app.use(express.json());
+app.use('/api/auth', rateLimiter, authRoutes);
 
-// Connect to MongoDB
-connectDB();
+// MongoDB Connection
+console.log('Attempting to connect to MongoDB...');
+console.log('MONGODB_URI:', process.env.MONGODB_URI.replace(/:([^:@]+)@/, ':****@')); // Mask password
+mongoose
+  .connect(process.env.MONGODB_URI, {
+    retryWrites: true,
+    w: 'majority',
+    tls: true,
+  })
+  .then(() => console.log('MongoDB connected successfully'))
+  .catch((err) => {
+    console.error('MongoDB connection error:', err);
+    process.exit(1);
+  });
 
-// Routes
-app.use('/api/auth', authRoutes);
-
-app.get('/', (req, res) => {
-  res.send('Carnivore Couture Backend API is running!');
-});
-
-// Error handling middleware (optional, but good practice)
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Start Server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
