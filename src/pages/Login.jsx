@@ -1,276 +1,172 @@
-import React, { useState } from "react";
-import { useAuth } from "../context/AuthContext.jsx";
-import Logo from "../components/NewLogo";
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
+import '../public/login.css'; // Assuming this is the correct path to your CSS file
 
-const Login = ({ onClose }) => {
-  const [isRegistering, setIsRegistering] = useState(false);
+const Login = () => {
+  const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
     confirmPassword: '',
-    address: {
-      street: '',
-      city: '',
-      state: '',
-      zipCode: ''
-    }
+    address: '',
+    phoneNumber: '',
   });
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  const { login, register } = useAuth();
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    if (name.startsWith('address.')) {
-      const addressField = name.split('.')[1];
-      setFormData(prev => ({
-        ...prev,
-        address: {
-          ...prev.address,
-          [addressField]: value
-        }
-      }));
-    } else {
-      setFormData(prev => ({
-        ...prev,
-        [name]: value
-      }));
-    }
-    setError('');
-  };
-
-  const validateForm = () => {
-    if (!formData.email || !formData.password) {
-      setError('Email and password are required');
-      return false;
-    }
-    if (isRegistering) {
-      if (!formData.name) {
-        setError('Name is required');
-        return false;
-      }
-      if (formData.password !== formData.confirmPassword) {
-        setError('Passwords do not match');
-        return false;
-      }
-      if (formData.password.length < 6) {
-        setError('Password must be at least 6 characters');
-        return false;
-      }
-      if (!formData.address.street || !formData.address.city || !formData.address.state || !formData.address.zipCode) {
-        setError('All address fields are required');
-        return false;
-      }
-    }
-    return true;
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
+    setError(null);
 
-    setLoading(true);
+    if (!isLogin && formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
     try {
-      if (isRegistering) {
-        await register(formData);
+      const url = isLogin ? 'http://localhost:5000/api/auth/login' : 'http://localhost:5000/api/auth/register';
+      const payload = isLogin
+        ? { email: formData.email, password: formData.password }
+        : { name: formData.name, email: formData.email, password: formData.password, address: formData.address, phoneNumber: formData.phoneNumber };
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        if (isLogin) {
+          login(data.token, data.user);
+          navigate('/');
+        } else {
+          alert('Registration successful! Please log in.');
+          setIsLogin(true);
+        }
       } else {
-        await login(formData.email, formData.password);
+        setError(data.message || 'An error occurred');
       }
-      onClose();
     } catch (err) {
-      setError(err.response?.data?.message || 'An error occurred. Please try again.');
-    } finally {
-      setLoading(false);
+      setError('Network error or server is unreachable');
     }
   };
 
   return (
     <div className="login-container">
-      <div className="login-header">
-        <Logo className="login-logo" />
-      </div>
-
-      <div className="login-content">
-        <div className="login-form-container">
-          <h1 className="login-title">Welcome to Carnivore Couture</h1>
-          <p className="login-subtitle">Premium meat products delivered fresh</p>
-
-          <div className="form-toggle">
-            <button 
-              className={`toggle-btn ${!isRegistering ? 'active' : ''}`}
-              onClick={() => setIsRegistering(false)}
-            >
-              Sign In
-            </button>
-            <button 
-              className={`toggle-btn ${isRegistering ? 'active' : ''}`}
-              onClick={() => setIsRegistering(true)}
-            >
-              Register
-            </button>
+      <div className="login-box">
+        <h2 className="login-title">{isLogin ? 'Login' : 'Register'}</h2>
+        <form onSubmit={handleSubmit}>
+          {!isLogin && (
+            <div className="input-group">
+              <label htmlFor="name">Username</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Type your username"
+                value={formData.name}
+                onChange={handleChange}
+                required={!isLogin}
+              />
+            </div>
+          )}
+          <div className="input-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Type your email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
           </div>
-
-          <div className="chicken-image">
-            <img src="/public/chicken.svg" alt="Chicken" className="rooster-img" />
+          <div className="input-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Type your password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
           </div>
-
-          <div className="login-form-container">
-            <h1 className="login-title">Chicken and Mutton</h1>
-            <p className="login-subtitle">Leaat bicus of cive hirare ce off alegeo</p>
-
-            <form onSubmit={handleSubmit} className="login-form">
-              {isRegistering && (
-                <div className="form-group">
-                  <label htmlFor="name">Full Name</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    placeholder="Enter your full name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required={isRegistering}
-                  />
-                </div>
-              )}
-
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="Enter your email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  placeholder="Enter your password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              {isRegistering && (
-                <>
-                  <div className="form-group">
-                    <label htmlFor="confirmPassword">Confirm Password</label>
-                    <input
-                      type="password"
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      placeholder="Confirm your password"
-                      value={formData.confirmPassword}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-
-                  <div className="address-fields">
-                    <div className="form-group">
-                      <label htmlFor="street">Street Address</label>
-                      <input
-                        type="text"
-                        id="street"
-                        name="address.street"
-                        placeholder="Enter street address"
-                        value={formData.address.street}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label htmlFor="city">City</label>
-                      <input
-                        type="text"
-                        id="city"
-                        name="address.city"
-                        placeholder="Enter city"
-                        value={formData.address.city}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label htmlFor="state">State</label>
-                      <input
-                        type="text"
-                        id="state"
-                        name="address.state"
-                        placeholder="Enter state"
-                        value={formData.address.state}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label htmlFor="zipCode">Zip Code</label>
-                      <input
-                        type="text"
-                        id="zipCode"
-                        name="address.zipCode"
-                        placeholder="Enter zip code"
-                        value={formData.address.zipCode}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                  </div>
-                </>
-              )}
-
-              {error && <p className="error-message">{error}</p>}
-
-              <button
-                type="submit"
-                className={`submit-button ${loading ? 'loading' : ''}`}
-                disabled={loading}
-              >
-                {loading ? 'Processing...' : isRegistering ? 'Register' : 'Login'}
-              </button>
-
-              <div className="toggle-form">
-                {isRegistering ? (
-                  <p>
-                    Already have an account?{' '}
-                    <button
-                      type="button"
-                      onClick={() => setIsRegistering(false)}
-                      className="toggle-btn"
-                    >
-                      Login here
-                    </button>
-                  </p>
-                ) : (
-                  <p>
-                    Don't have an account?{' '}
-                    <button
-                      type="button"
-                      onClick={() => setIsRegistering(true)}
-                      className="toggle-btn"
-                    >
-                      Register here
-                    </button>
-                  </p>
-                )}
-              </div>
-            </form>
+          {!isLogin && (
+            <div className="input-group">
+              <label htmlFor="confirmPassword">Confirm Password</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder="Confirm your password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required={!isLogin}
+              />
+            </div>
+          )}
+          {!isLogin && (
+            <div className="input-group">
+              <label htmlFor="address">Address</label>
+              <input
+                type="text"
+                id="address"
+                name="address"
+                placeholder="Your address"
+                value={formData.address}
+                onChange={handleChange}
+                required={!isLogin}
+              />
+            </div>
+          )}
+          {!isLogin && (
+            <div className="input-group">
+              <label htmlFor="phoneNumber">Phone Number</label>
+              <input
+                type="text"
+                id="phoneNumber"
+                name="phoneNumber"
+                placeholder="Your phone number"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+                required={!isLogin}
+              />
+            </div>
+          )}
+          {error && <p className="error-message">{error}</p>}
+          <button type="submit" className="login-submit-btn">
+            {isLogin ? 'LOGIN' : 'REGISTER'}
+          </button>
+        </form>
+        <div className="social-login">
+          <p>Or Sign Up Using</p>
+          <div className="social-icons">
+            <a href="#" className="social-icon facebook"><i className="fab fa-facebook-f"></i></a>
+            <a href="#" className="social-icon twitter"><i className="fab fa-twitter"></i></a>
+            <a href="#" className="social-icon google"><i className="fab fa-google"></i></a>
           </div>
+        </div>
+        <div className="login-footer">
+          <p>
+            {isLogin ? "Don't have an account?" : "Already have an account?"}{' '}
+            <span onClick={() => setIsLogin(!isLogin)} className="toggle-link">
+              {isLogin ? 'SIGN UP' : 'LOGIN'}
+            </span>
+          </p>
         </div>
       </div>
     </div>
