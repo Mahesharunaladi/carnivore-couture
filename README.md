@@ -134,4 +134,3 @@ This project is licensed under the MIT License.
 -   Mahesh Arunaladi
     -   GitHub: [https://github.com/Mahesharunaladi](https://github.com/Mahesharunaladi)
 
-Feel free to add your name and GitHub profile here if you contribute to this project!
