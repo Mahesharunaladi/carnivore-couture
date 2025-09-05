@@ -2,7 +2,7 @@
 
 ## Premium Meat Fashion for the Discerning Carnivore
 
-Carnivore Couture is a fictional e-commerce website that specializes in meat-themed fashion items. This project is built with React and Vite, showcasing a modern web application with a unique theme.
+Carnivore Couture is a fictional e-commerce website that specializes in meat-themed fashion items. This project is built with React and Vite for the frontend and Node.js with Express for the backend, showcasing a modern full-stack web application with a unique theme.
 
 ## Features
 
@@ -10,6 +10,8 @@ Carnivore Couture is a fictional e-commerce website that specializes in meat-the
 - Product showcase with add to cart functionality
 - Shopping cart counter
 - Meat-themed UI with custom styling
+- User authentication (Login/Register)
+- RESTful API for backend operations
 
 ## Getting Started
 
@@ -17,6 +19,7 @@ Carnivore Couture is a fictional e-commerce website that specializes in meat-the
 
 - Node.js (v14 or higher recommended)
 - npm or yarn
+- MongoDB (for backend database)
 
 ### Installation
 
