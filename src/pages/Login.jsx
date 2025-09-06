@@ -1,7 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import "../../public/login.css";
+// REMOVE THE FOLLOWING LINE:
+// import "../../public/login.css";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
