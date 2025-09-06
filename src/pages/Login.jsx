@@ -33,10 +33,11 @@ const Login = () => {
     }
 
     try {
-      const url = isLogin ? 'http://localhost:5000/api/auth/login' : 'http://localhost:5000/api/auth/register';
+      // Use the /api prefix for both login and register endpoints
+      const url = isLogin ? '/api/auth/login' : '/api/auth/register';
       const payload = isLogin
-        ? { username: formData.username, password: formData.password } // Use username for login
-        : { firstName: formData.firstName, lastName: formData.lastName, email: formData.email, password: formData.password }; // Use new fields for register
+        ? { email: formData.email, password: formData.password } // Use email for login
+        : { username: formData.username, email: formData.email, password: formData.password }; // Use username for register
 
       const response = await fetch(url, {
         method: 'POST',
@@ -109,6 +110,20 @@ const Login = () => {
           ) : (
             // Register Form
             <>
+              <div className="input-group">
+                <label htmlFor="username">Username</label>
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  placeholder="Username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              {/* REMOVE firstName and lastName input groups if not needed by backend */}
+              {/*
               <div className="input-group-row">
                 <div className="input-group">
                   <label htmlFor="firstName">First Name</label>
@@ -135,6 +150,7 @@ const Login = () => {
                   />
                 </div>
               </div>
+              */}
               <div className="input-group">
                 <label htmlFor="email">Email</label>
                 <input

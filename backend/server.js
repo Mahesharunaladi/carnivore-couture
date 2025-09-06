@@ -44,9 +44,8 @@ const explicitAllowed = [
   // sensible dev defaults
   'http://localhost:5173',
   'http://localhost:5174',
-  'http://127.0.0.1:5173',
-  'http://127.0.0.1:5174',
-].filter(Boolean);
+  'http://localhost:5175' // Added to allow frontend development server
+];
 
 // de-duplicate
 const allowSet = new Set(explicitAllowed);
