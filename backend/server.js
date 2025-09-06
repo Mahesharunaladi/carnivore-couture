@@ -1,11 +1,12 @@
+// This line should be the very first line in the file
+import dotenv from 'dotenv';
+dotenv.config({ path: './backend/.env' });
+
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import authRoutes from './routes/auth.routes.js';
-import rateLimiter from './middlewares/rateLimiter.js'; // Corrected path
-import dotenv from 'dotenv';
-
-dotenv.config({ path: './backend/.env' });
+import rateLimiter from './middlewares/rateLimiter.js';
 
 const app = express();
 

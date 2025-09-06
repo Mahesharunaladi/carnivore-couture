@@ -32,6 +32,15 @@ body {
   margin: 20px; /* Added margin around the login box */
 }
 
+.register-box-style {
+  background-color: #f8f8f8; /* Light background for the register box */
+  border: 1px solid #ddd; /* Subtle border */
+  padding: 20px; /* Padding inside the box */
+  margin: 30px auto; /* Added margin and centered the box */
+  border-radius: 8px; /* Slightly rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0,0, 0.1); /* Soft shadow */
+}
+
 .login-title {
   font-size: 2.5rem;
   text-align: left; /* Align left as per image */

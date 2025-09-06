@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import './App.css';
 import { FiSearch, FiShoppingCart, FiShare2, FiBookmark, FiMoreVertical, FiMenu, FiMapPin, FiNavigation } from 'react-icons/fi';
 import Login from './pages/Login.jsx';
-import { AuthProvider } from './context/AuthContext'; // Import AuthProvider
+import Register from './pages/Register.jsx'; // Import the Register component
+import { AuthProvider } from './context/AuthContext';
+import { Routes, Route, Link } from 'react-router-dom'; // Import Routes, Route, and Link
 
 function App() {
   const [cartItems, setCartItems] = useState(0);
@@ -10,7 +12,7 @@ function App() {
   const [userLocation, setUserLocation] = useState(null);
   const [locationLoading, setLocationLoading] = useState(false);
   const [locationError, setLocationError] = useState(null);
-  const [showLogin, setShowLogin] = useState(false);
+  // const [showLogin, setShowLogin] = useState(false); // This state is no longer needed for routing
 
   // Function to get user's current location
   const getCurrentLocation = () => {
@@ -150,72 +152,58 @@ function App() {
   return (
     <AuthProvider>
       <div className="app-container">
-        {showLogin ? (
-          <Login setShowLogin={setShowLogin} />
-        ) : (
-          <>
-            {/* Top Navigation Bar */}
-            <div className="top-nav">
-              <div className="nav-left">
-                <button className="menu-btn"><FiMenu /></button>
-              </div>
-              <div className="nav-center">
-                <h1>Carnivore Couture</h1>
-                <p>Premium Meat Delivery Service</p>
-              </div>
-              <div className="nav-right">
-                <button className="share-btn"><FiShare2 /></button>
-                <button className="bookmark-btn"><FiBookmark /></button>
-                <button className="more-btn"><FiMoreVertical /></button>
-                <button onClick={() => setShowLogin(true)}>Login</button>
-              </div>
-            </div>
-
-            {/* Main Header */}
-            <header className="main-header">
-              <div className="logo-container">
-                <img src="/logo-removebg-preview.png" alt="Carnivores Couture Logo" className="logo-image" />
-              </div>
-              <div className="location-selector">
-                <FiMapPin className="location-icon" />
-                <div className="location-text">
-                  <span className="location-label">
-                    {userLocation ? 'Your Location' : 'Bangalore'}
-                    {locationLoading && ' (Loading...)'}
-                  </span>
-                  <span className="location-details">
-                    {userLocation
-                      ? `Lat: ${userLocation.latitude.toFixed(4)}, Long: ${userLocation.longitude.toFixed(4)}`
-                      : 'HSR, Koramangala, Indiranagar, New BEL Road, Marathahalli, Whitefield, Electronic City'}
-                    {locationError && <span className="location-error">{locationError}</span>}
-                  </span>
+        <Routes> {/* Define your routes here */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/" element={
+            <>
+              {/* Top Navigation Bar */}
+              <div className="top-nav">
+                <div className="nav-left">
+                  <button className="menu-btn"><FiMenu /></button>
                 </div>
-                <button
-                  className="gps-button"
-                  onClick={getCurrentLocation}
-                  title="Use current location"
-                  disabled={locationLoading}
-                >
-                  <FiNavigation className={locationLoading ? 'rotating' : ''} />
-                </button>
+                <div className="nav-center">
+                  <h1>Carnivore Couture</h1>
+                  <p>Premium Meat Delivery Service</p>
+                </div>
+                <div className="nav-right">
+                  <button className="share-btn"><FiShare2 /></button>
+                  <button className="bookmark-btn"><FiBookmark /></button>
+                  <button className="more-btn"><FiMoreVertical /></button>
+                  {/* Use Link or navigate to /login instead of setShowLogin */}
+                  <Link to="/login">Login</Link>
+                </div>
               </div>
-              <div className="search-bar">
-                <FiSearch className="search-icon" />
-                <input
-                  type="text"
-                  placeholder="Search for any delicious product"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </div>
-              <div className="header-actions">
-                <button className="categories-btn">Categories</button>
-                <button className="store-btn">Store</button>
-                <button className="cart-btn">
-                  <FiShoppingCart /> Cart ({cartItems})
-                </button>
-              </div>
-            </header>
+
+              {/* Main Header */}
+              <header className="main-header">
+                <div className="logo-container">
+                  <img src="/logo-removebg-preview.png" alt="Carnivores Couture Logo" className="logo-image" />
+                </div>
+                <div className="location-selector">
+                  <FiMapPin className="location-icon" />
+                  <div className="location-text">
+                    <span className="location-label">
+                      {userLocation ? 'Your Location' : 'Bangalore'}
+                      {locationLoading && ' (Loading...)'}
+                    </span>
+                    <span className="location-details">
+                      {userLocation
+                        ? `Lat: ${userLocation.latitude.toFixed(4)}, Long: ${userLocation.longitude.toFixed(4)}`
+                        : 'HSR, Koramangala, Indiranagar, New BEL Road, Marathahalli, Whitefield, Electronic City'}
+                      {locationError && <span className="location-error">{locationError}</span>}
+                    </span>
+                  </div>
+                  <button
+                    className="gps-button"
+                    onClick={getCurrentLocation}
+                    title="Use current location"
+                    disabled={locationLoading}
+                  >
+                    <FiNavigation className={locationLoading ? 'rotating' : ''} />
+                  </button>
+                </div>
+              </header>
 
             {/* Main Content */}
             <div className="main-content">
@@ -389,7 +377,8 @@ function App() {
               <p>© 2025 Carnivore Couture. All rights reserved.</p>
             </footer>
           </>
-        )}
+        } />
+        </Routes>
       </div>
     </AuthProvider>
   );
