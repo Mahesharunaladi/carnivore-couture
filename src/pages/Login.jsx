@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import '../public/login.css'; // Assuming this is the correct path to your CSS file
+import "../../public/login.css";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);

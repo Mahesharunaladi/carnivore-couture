@@ -4,6 +4,8 @@ import { API_BASE_URL } from '../config';
 
 const AuthContext = createContext();
 
+export { AuthContext }; // Add this line to export AuthContext
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token') || '');
