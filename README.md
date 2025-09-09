@@ -66,7 +66,7 @@ Ensure you have the following installed on your system:
 
     ```bash
     cd backend
-    npm run start-backend # Or npm start, depending on your package.json scripts
+    npm run start-backend # 
     ```
 
 2.  **Start the frontend development server:**
