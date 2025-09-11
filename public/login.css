@@ -20,6 +20,12 @@ body {
   background-color: #fff; /* Changed to white background */
 }
 
+.login-logo {
+    width: 150px; /* Adjust as needed */
+    height: auto;
+    margin-bottom: 20px;
+}
+
 /* Removed header styles as they are not present in the image */
 
 .login-box {

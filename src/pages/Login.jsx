@@ -1,10 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
-// REMOVE THE FOLLOWING LINE:
-// import "../../public/login.css";
+import { AuthContext } from "../context/AuthContext";
+import "../../public/login.css"; // Uncomment this line
 
-const Login = () => {
+function Login() {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     username: '', // Changed from name to username for login
