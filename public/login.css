@@ -159,7 +159,7 @@ body {
 .terms-checkbox {
   margin-bottom: 20px;
   font-size: 0.9rem;
-  color: #fff; /* White color for terms checkbox text */
+  color: #000; /* Changed color to black */
 }
 
 .terms-checkbox input[type="checkbox"] {
