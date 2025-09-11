@@ -67,7 +67,7 @@ function Login() {
   return (
     <div className="login-container">
       <div className="login-box">
-        <img src="/logo3 Background Removed.png" alt="Carnivore Couture Logo" className="login-logo" />
+        <img src="/logo.png" alt="Carnivore Couture Logo" className="login-logo" />
         <h2 className="login-title">{isLogin ? 'Log in' : 'Sign Up'}</h2>
         <form onSubmit={handleSubmit}>
           {isLogin ? (
