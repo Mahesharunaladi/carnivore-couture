@@ -1,10 +1,10 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import './App.css';
-import { FiSearch, FiShoppingCart, FiShare2, FiBookmark, FiMoreVertical, FiMenu, FiMapPin, FiNavigation } from 'react-icons/fi';
+import { FiSearch, FiShoppingCart, FiMapPin, FiNavigation } from 'react-icons/fi';
 import Login from './pages/Login.jsx';
-import Register from './pages/Register.jsx'; // Import the Register component
+import Register from './pages/Register.jsx';
 import { AuthProvider } from './context/AuthContext';
-import { Routes, Route, Link } from 'react-router-dom'; // Import Routes, Route, and Link
+import { Routes, Route, Link } from 'react-router-dom';
 
 function App() {
   const [cartItems, setCartItems] = useState(0);
@@ -12,7 +12,6 @@ function App() {
   const [userLocation, setUserLocation] = useState(null);
   const [locationLoading, setLocationLoading] = useState(false);
   const [locationError, setLocationError] = useState(null);
-  // const [showLogin, setShowLogin] = useState(false); // This state is no longer needed for routing
 
   // Function to get user's current location
   const getCurrentLocation = () => {
@@ -41,141 +40,127 @@ function App() {
   const featuredProducts = [
     {
       id: 1,
-      name: 'Chicken Curry Cut - Small Pieces',
-      originalPrice: 189,
-      discountedPrice: 160,
-      weight: '500g',
-      deliveryTime: 'Tomorrow 6AM - 8AM',
-      discount: '17% off',
-      image: 'chicken-curry',
+      name: 'Chicken Curry Cut',
+      description: 'Quick Chicken Curry',
+      details: 'Spicy and flavorful curry ready in minutes',
+      originalPrice: 250,
+      discountedPrice: 199,
+      discount: '20% OFF',
+      deliveryTime: '15 min',
+      image: '/chicken.svg' // Added image path
     },
     {
       id: 2,
       name: 'Chicken Breast - Boneless',
-      originalPrice: 249,
-      discountedPrice: 211,
-      weight: '450g',
-      deliveryTime: 'Tomorrow 6AM - 8AM',
-      discount: '15% off',
-      image: 'chicken-breast',
+      description: 'Grilled Fish Fillet',
+      details: 'Perfectly seasoned and ready to cook',
+      originalPrice: 300,
+      discountedPrice: 240,
+      discount: '20% OFF',
+      deliveryTime: '10 min',
+      image: '/product2.svg' // Added image path
     },
     {
       id: 3,
       name: 'Chicken Boneless - Mini Bites',
-      originalPrice: 229,
-      discountedPrice: 174,
-      weight: '250g',
-      deliveryTime: 'Tomorrow 6AM - 8AM',
-      discount: '25% off',
-      image: 'chicken-boneless',
+      description: 'Mutton Kebabs',
+      details: 'Juicy kebabs with special spice blend',
+      originalPrice: 350,
+      discountedPrice: 280,
+      discount: '20% OFF',
+      deliveryTime: '20 min',
+      image: '/mutton.svg' // Added image path
     },
     {
       id: 4,
-      name: 'Chicken Curry Cut - Skin-On Pieces (Large Pack)',
-      originalPrice: 304,
-      discountedPrice: 240,
-      weight: '1000g',
-      deliveryTime: 'Tomorrow 6AM - 8AM',
-      discount: '21% off',
-      image: 'chicken-curry-large',
+      name: 'Chicken Curry Cut - Soup Pieces',
+      description: 'Prawn Stir Fry',
+      details: 'Delicious seafood with minimal prep time',
+      originalPrice: 280,
+      discountedPrice: 224,
+      discount: '20% OFF',
+      deliveryTime: '12 min',
+      image: '/prawns.svg' // Added image path
     },
   ];
 
   // Sample data for categories
   const categories = [
-    { id: 1, name: 'Chicken', image: 'chicken' },
-    { id: 2, name: 'Fish & Seafood', image: 'fish' },
-    { id: 3, name: 'Ready to Cook', image: 'ready-cook' },
-    { id: 4, name: 'Mutton', image: 'mutton' },
-    { id: 5, name: 'Prawns & More', image: 'prawns' },
-    { id: 6, name: 'Liver & Crabs', image: 'liver' },
-    { id: 7, name: 'Eggs', image: 'eggs' },
-    { id: 8, name: 'Crispy Snacks', image: 'snacks' },
-    { id: 9, name: 'Plant Based Meat', image: 'plant-meat' },
-    { id: 10, name: 'Combos', image: 'combos' },
-    { id: 11, name: 'Heat & Eat', image: 'heat-eat' },
-    { id: 12, name: 'Meat Masala', image: 'masala' },
+    {
+      id: 1,
+      name: 'Chicken',
+      image: '/chicken.svg' // Added image path
+    },
+    {
+      id: 2,
+      name: 'Fish & Seafood',
+      image: '/fish.svg' // Added image path
+    },
+    {
+      id: 3,
+      name: 'Mutton',
+      image: '/mutton.svg' // Added image path
+    },
+    {
+      id: 4,
+      name: 'Eggs',
+      image: '/eggs.svg' // Added image path
+    },
+    {
+      id: 5,
+      name: 'Prawns & More',
+      image: '/prawns.svg' // Added image path
+    },
   ];
 
   // Sample data for premium fish
   const premiumFish = [
     {
       id: 1,
-      name: 'Mackerel Medium - Whole, Cleaned & Gutted',
-      originalPrice: 349,
-      discountedPrice: 244,
+      name: 'Seer Fish (Surmai) Steaks',
       weight: '500g',
-      pieces: '2-4 Pieces',
+      pieces: '2-3 pcs',
       serves: '2-3',
-      deliveryTime: 'Tomorrow 6AM - 8AM',
-      discount: '30% off',
-      image: 'mackerel',
+      originalPrice: 450,
+      discountedPrice: 360,
+      discount: '20% OFF',
+      deliveryTime: '30 min',
+      image: '/fish1.svg' // Added image path
     },
     {
       id: 2,
-      name: 'Anchovy Medium - Whole, Cleaned & Gutted',
-      originalPrice: 499,
-      discountedPrice: 351,
-      weight: '350g',
-      pieces: '20-30 Pieces',
-      serves: '2-4',
-      deliveryTime: 'Tomorrow 6AM - 8AM',
-      discount: '29% off',
-      image: 'anchovy',
+      name: 'Indian Salmon (Rawas) Fillet',
+      weight: '400g',
+      pieces: '1 pc',
+      serves: '2',
+      originalPrice: 500,
+      discountedPrice: 400,
+      discount: '20% OFF',
+      deliveryTime: '25 min',
+      image: '/fish.svg' // Added image path
     },
     {
       id: 3,
-      name: 'Seer - Steaks',
-      originalPrice: 1299,
-      discountedPrice: 1094,
-      weight: '300g',
-      pieces: '3-5 Pieces',
+      name: 'Black Pomfret Whole',
+      weight: '600g',
+      pieces: '1 pc',
       serves: '2-3',
-      deliveryTime: 'Tomorrow 6AM - 8AM',
-      discount: '20% off',
-      image: 'seer',
-    },
-    {
-      id: 4,
-      name: 'Black Pomfret Small - Cleaned & Cut With Head',
-      originalPrice: 1299,
-      discountedPrice: 894,
-      weight: '400g',
-      pieces: '1-2 Pieces',
-      serves: '2-3',
-      deliveryTime: 'Tomorrow 6AM - 8AM',
-      discount: '31% off',
-      image: 'pomfret',
+      originalPrice: 550,
+      discountedPrice: 440,
+      discount: '20% OFF',
+      deliveryTime: '35 min',
+      image: '/fish1.svg' // Added image path
     },
   ];
 
   return (
     <AuthProvider>
       <div className="app-container">
-        <Routes> {/* Define your routes here */}
+        <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/" element={
             <>
-              {/* Top Navigation Bar */}
-              <div className="top-nav">
-                <div className="nav-left">
-                  <button className="menu-btn"><FiMenu /></button>
-                </div>
-                <div className="nav-center">
-                  <h1>Carnivore Couture</h1>
-                  <p>Premium Meat Delivery Service</p>
-                </div>
-                <div className="nav-right">
-                  <button className="share-btn"><FiShare2 /></button>
-                  <button className="bookmark-btn"><FiBookmark /></button>
-                  <button className="more-btn"><FiMoreVertical /></button>
-                  {/* Use Link or navigate to /login instead of setShowLogin */}
-                  <Link to="/login">Login</Link>
-                </div>
-              </div>
-
-              {/* Main Header */}
               <header className="main-header">
                 <div className="logo-container">
                   <img src="/logo-removebg-preview.png" alt="Carnivores Couture Logo" className="logo-image" />
@@ -198,15 +183,28 @@ function App() {
                     className="gps-button"
                     onClick={getCurrentLocation}
                     title="Use current location"
-                    disabled={locationLoading}
                   >
-                    <FiNavigation className={locationLoading ? 'rotating' : ''} />
+                    <FiNavigation />
                   </button>
+                </div>
+                <div className="search-bar">
+                  <FiSearch className="search-icon" />
+                  <input
+                    type="text"
+                    placeholder="Search for products..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+                <div className="header-actions">
+                  <button className="cart-button">
+                    <FiShoppingCart />
+                    {cartItems > 0 && <span className="cart-badge">{cartItems}</span>}
+                  </button>
+                  <Link to="/login" className="login-button">Login</Link>
                 </div>
               </header>
 
-            {/* Main Content */}
-            <div className="main-content">
               {/* Welcome Banner */}
               <section className="welcome-banner">
                 <div className="welcome-text">
@@ -232,13 +230,13 @@ function App() {
               <section className="bestsellers">
                 <div className="section-header">
                   <h2>Bestsellers</h2>
-                  <p>Most popular products near you!</p>
+                  <p>Most loved products by our customers</p>
                 </div>
                 <div className="product-grid">
                   {featuredProducts.map((product) => (
                     <div className="product-card" key={product.id}>
                       <img
-                        src={`/product${product.id}.svg`}
+                        src={product.image} // Use product.image here
                         alt={product.name}
                         className="product-image"
                       />
@@ -249,10 +247,10 @@ function App() {
                         +
                       </div>
                       <h3>{product.name}</h3>
+                      <p>{product.description}</p>
                       <div className="product-details">
                         <span className="weight">{product.weight}</span>
-                        <span className="pieces">| 4-6 Pieces</span>
-                        <span className="serves">| Serves 2-3</span>
+                        <span className="serves">| Serves {product.serves}</span>
                       </div>
                       <div className="price-container">
                         <span className="original-price">₹{product.originalPrice}</span>
@@ -272,25 +270,16 @@ function App() {
                   <p>Freshest meats and much more!</p>
                 </div>
                 <div className="categories-grid">
-                  {categories.map((category) => {
-                    let imagePath = '/vite.svg';
-                    if (category.name === 'Chicken') imagePath = '/chicken.svg';
-                    else if (category.name === 'Fish & Seafood') imagePath = '/fish.svg';
-                    else if (category.name === 'Mutton') imagePath = '/mutton.svg';
-                    else if (category.name === 'Eggs') imagePath = '/eggs.svg';
-                    else if (category.name === 'Prawns & More') imagePath = '/prawns.svg';
-
-                    return (
-                      <div className="category-card" key={category.id}>
-                        <img
-                          src={imagePath}
-                          alt={category.name}
-                          className="category-image"
-                        />
-                        <h3>{category.name}</h3>
-                      </div>
-                    );
-                  })}
+                  {categories.map((category) => (
+                    <div className="category-card" key={category.id}>
+                      <img
+                        src={category.image} // Use category.image here
+                        alt={category.name}
+                        className="category-image"
+                      />
+                      <h3>{category.name}</h3>
+                    </div>
+                  ))}
                 </div>
               </section>
 
@@ -304,7 +293,7 @@ function App() {
                   {premiumFish.map((fish) => (
                     <div className="product-card" key={fish.id}>
                       <img
-                        src="/fish1.svg"
+                        src={fish.image} // Use fish.image here
                         alt={fish.name}
                         className="product-image"
                       />
@@ -331,53 +320,32 @@ function App() {
                 </div>
               </section>
 
-              {/* Meals in Minutes */}
-              <section className="meals-minutes">
-                <div className="section-header">
-                  <h2>Meals in Minutes</h2>
-                  <p>Juicy bites, Ready in no time!</p>
-                </div>
-                <div className="meals-grid">
-                  <div className="meal-card">
-                    <div className="meal-image-container">
-                      <img src="/product1.svg" alt="Quick Chicken Curry" className="meal-image" />
-                      <div className="meal-time">15 min</div>
-                    </div>
-                    <h3>Quick Chicken Curry</h3>
-                    <p>Spicy and flavorful curry ready in minutes</p>
-                  </div>
-                  <div className="meal-card">
-                    <div className="meal-image-container">
-                      <img src="/product2.svg" alt="Grilled Fish Fillet" className="meal-image" />
-                      <div className="meal-time">10 min</div>
-                    </div>
-                    <h3>Grilled Fish Fillet</h3>
-                    <p>Perfectly seasoned and ready to cook</p>
-                  </div>
-                  <div className="meal-card">
-                    <div className="meal-image-container">
-                      <img src="/product3.svg" alt="Mutton Kebabs" className="meal-image" />
-                      <div className="meal-time">20 min</div>
-                    </div>
-                    <h3>Mutton Kebabs</h3>
-                    <p>Juicy kebabs with special spice blend</p>
-                  </div>
-                  <div className="meal-card">
-                    <div className="meal-image-container">
-                      <img src="/product4.svg" alt="Prawn Stir Fry" className="meal-image" />
-                      <div className="meal-time">12 min</div>
-                    </div>
-                    <h3>Prawn Stir Fry</h3>
-                    <p>Delicious seafood with minimal prep time</p>
-                  </div>
+              {/* Remove the old SVG Images section if it exists */}
+              {/*
+              <section className="svg-gallery">
+                <h2>Our Ingredients</h2>
+                <div className="svg-grid">
+                  <img src="/chicken.svg" alt="Chicken" className="svg-item" />
+                  <img src="/eggs.svg" alt="Eggs" className="svg-item" />
+                  <img src="/fish.svg" alt="Fish" className="svg-item" />
+                  <img src="/fish1.svg" alt="Fish 1" className="svg-item" />
+                  <img src="/mutton.svg" alt="Mutton" className="svg-item" />
+                  <img src="/prawns.svg" alt="Prawns" className="svg-item" />
+                  <img src="/product1.svg" alt="Product 1" className="svg-item" />
+                  <img src="/product2.svg" alt="Product 2" className="svg-item" />
+                  <img src="/product3.svg" alt="Product 3" className="svg-item" />
+                  <img src="/product4.svg" alt="Product 4" className="svg-item" />
+                  <img src="/vite.svg" alt="Vite" className="svg-item" />
+                  <img src="/welcome-banner.svg" alt="Welcome Banner" className="svg-item" />
                 </div>
               </section>
-            </div>
-            <footer className="footer">
-              <p>© 2025 Carnivore Couture. All rights reserved.</p>
-            </footer>
-          </>
-        } />
+              */}
+
+              <footer className="footer">
+                <p>© 2025 Carnivore Couture. All rights reserved.</p>
+              </footer>
+            </>
+          } />
         </Routes>
       </div>
     </AuthProvider>
