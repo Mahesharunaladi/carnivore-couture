@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from "../context/AuthContext";
-import "../../public/login.css"; // Uncomment this line
+import "../../public/login.css"; // This line should be uncommented
 
 function Login() {
   const [isLogin, setIsLogin] = useState(true);
