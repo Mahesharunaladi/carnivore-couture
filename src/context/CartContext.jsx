@@ -6,15 +6,22 @@ export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
 
   const addToCart = (product) => {
+    console.log('Adding product:', product); // Log the product being added
     setCartItems((prevItems) => {
+      console.log('Current cart items (prevItems):', prevItems); // Log current cart items
       const existingItem = prevItems.find((item) => item.id === product.id);
+      const price = product.discountedPrice || product.originalPrice || 0; // Determine the price
+
+      let newItems;
       if (existingItem) {
-        return prevItems.map((item) =>
+        newItems = prevItems.map((item) =>
           item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
         );
       } else {
-        return [...prevItems, { ...product, quantity: 1 }];
+        newItems = [...prevItems, { ...product, quantity: 1, price }]; // Add price to the product
       }
+      console.log('New cart items (after update):', newItems); // Log new cart items
+      return newItems;
     });
   };
 
