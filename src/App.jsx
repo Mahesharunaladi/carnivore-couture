@@ -15,6 +15,9 @@ function AppContent() {
   const [locationLoading, setLocationLoading] = useState(false);
   const [locationError, setLocationError] = useState(null);
 
+  console.log('AppContent - cartItems:', cartItems);
+  console.log('AppContent - addToCart:', addToCart);
+
   // Function to get user's current location
   const getCurrentLocation = () => {
     if (!navigator.geolocation) {

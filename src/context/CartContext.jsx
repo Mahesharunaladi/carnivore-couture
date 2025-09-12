@@ -3,6 +3,7 @@ import React, { createContext, useState, useContext } from 'react';
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
+  console.log('CartProvider initialized'); // Add this line
   const [cartItems, setCartItems] = useState([]);
 
   const addToCart = (product) => {
