@@ -5,6 +5,8 @@ import '../App.css'; // Assuming you have some global styles or will create a sp
 const CartPage = () => {
   const { cartItems, updateQuantity, removeFromCart, clearCart } = useContext(CartContext);
 
+  console.log('CartPage - cartItems:', cartItems); // Add this line
+
   const calculateTotal = () => {
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
   };
