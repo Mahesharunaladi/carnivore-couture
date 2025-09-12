@@ -1,5 +1,7 @@
 # Carnivore Couture
 
+logo.png
+
 Carnivore Couture is an e-commerce platform specializing in premium meat products. This project aims to provide a seamless shopping experience for users looking to purchase high-quality meats online.
 
 ## Features
