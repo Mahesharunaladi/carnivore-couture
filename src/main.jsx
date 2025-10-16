@@ -2,10 +2,13 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext'; // Import AuthProvider
 
 const root = createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
-    <App />
+    <AuthProvider> {/* Wrap App with AuthProvider */}
+      <App />
+    </AuthProvider>
   </BrowserRouter>
 );

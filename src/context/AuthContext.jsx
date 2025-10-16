@@ -15,6 +15,7 @@ export function AuthProvider({ children }) {
     setToken(token);
     setUser(user);
     localStorage.setItem('token', token);
+    console.log('User object in saveAuth:', user); // Add this line for debugging
   };
 
   // LOGIN FUNCTION

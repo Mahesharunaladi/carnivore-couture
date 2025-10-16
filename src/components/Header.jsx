@@ -5,11 +5,9 @@ function Header() {
 
   return (
     <header>
-      // ... existing code ...
       {user && (
-        <span>Welcome, {user.name}!</span>
+        <span>Welcome, {user.username}!</span>
       )}
-      // ... existing code ...
     </header>
   );
 }
