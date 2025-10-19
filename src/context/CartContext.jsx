@@ -35,14 +35,18 @@ export function CartProvider({ children }) {
 
   // Add item to cart
   const addToCart = async (product) => {
+    if (!user || !user.token) {
+      console.error('User not logged in');
+      return;
+    }
     try {
-      const response = await fetch('http://localhost:3000/api/cart/add', {
+      const response = await fetch('http://localhost:3000/api/cart', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${user.token}`,
+          'Authorization': `Bearer ${user.token}`
         },
-        body: JSON.stringify(product),
+        body: JSON.stringify({ productId: product.id })
       });
       if (!response.ok) throw new Error('Failed to add item');
       const data = await response.json();
