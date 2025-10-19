@@ -4,18 +4,18 @@ import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 import CartPage from './pages/CartPage';
 import { AuthProvider } from './context/AuthContext';
-import { CartContext, CartProvider } from './context/CartContext';
+import { CartProvider, useCart } from './context/CartContext';
 import { Routes, Route, Link } from 'react-router-dom';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 
 function AppContent() {
-  const { cartItems, addToCart } = useContext(CartContext);
+  const { cart, addToCart } = useCart(); // Use the useCart hook here
   const [searchQuery, setSearchQuery] = useState('');
   const [userLocation, setUserLocation] = useState(null);
   const [locationLoading, setLocationLoading] = useState(false);
   const [locationError, setLocationError] = useState(null);
 
-  console.log('AppContent - cartItems:', cartItems);
+  console.log('AppContent - cartItems:', cart);
   console.log('AppContent - addToCart:', addToCart);
 
   // Function to get user's current location
@@ -193,7 +193,7 @@ function AppContent() {
               <div className="header-actions">
                 <button className="cart-button" onClick={() => window.location.href='/cart'}>
                   <FiShoppingCart />
-                  {cartItems.length > 0 && <span className="cart-badge">{cartItems.length}</span>}
+                  {cart.length > 0 && <span className="cart-badge">{cart.length}</span>}
                 </button>
                 <Link to="/login" className="login-button">Login</Link>
               </div>

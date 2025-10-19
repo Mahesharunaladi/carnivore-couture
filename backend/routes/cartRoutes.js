@@ -1,7 +1,8 @@
-const express = require('express');
+import express from 'express';
+import jwt from 'jsonwebtoken';
+import Cart from '../models/CartModel.js'; // Corrected import path and ES module syntax
+
 const router = express.Router();
-const jwt = require('jsonwebtoken');
-const Cart = require('../models/CartModel'); // Corrected import path
 
 // Middleware to verify JWT
 const authenticate = (req, res, next) => {
@@ -72,4 +73,4 @@ router.post('/remove', authenticate, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

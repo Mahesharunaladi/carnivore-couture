@@ -1,24 +1,24 @@
-require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const cartRoutes = require('./routes/cartRoutes'); // Corrected path
+import 'dotenv/config';
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import authRoutes from './routes/auth.routes.js';
+import cartRoutes from './routes/cartRoutes.js';
+import connectDB from './config/db.js';
 
 const app = express();
 
+// Connect Database
+connectDB();
+
 // Middleware
-app.use(cors());
 app.use(express.json());
+app.use(cors());
 
-// Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/shopping', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-// Routes
+// Define Routes
+app.use('/api/auth', authRoutes);
 app.use('/api/cart', cartRoutes);
 
-// Start server
 const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
