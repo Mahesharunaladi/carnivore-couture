@@ -1,52 +1,84 @@
-import React, { useContext } from 'react';
-import { CartContext } from '../context/CartContext';
-import '../App.css'; // Assuming you have some global styles or will create a specific CartPage.css
+import { useState } from 'react'; 
+import { useAuth } from '../context/AuthContext'; 
+import { useCart } from '../context/CartContext'; 
 
-const CartPage = () => {
-  const { cartItems, updateQuantity, removeFromCart, clearCart } = useContext(CartContext);
+function Cart() { 
+  const { user } = useAuth(); 
+  const { cart, addToCart, removeFromCart } = useCart(); 
 
-  console.log('CartPage - cartItems:', cartItems); // Add this line
+  // Sample products (replace with API fetch if needed) 
+  const products = [ 
+    { id: '1', name: 'Laptop', price: 999.99 }, 
+    { id: '2', name: 'Phone', price: 499.99 }, 
+    { id: '3', name: 'Headphones', price: 79.99 }, 
+  ]; 
 
-  const calculateTotal = () => {
-    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
-  };
+  // Calculate total price 
+  const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2); 
 
-  if (cartItems.length === 0) {
-    return (
-      <div className="cart-page-container">
-        <h2>Your Cart is Empty</h2>
-        <p>Looks like you haven't added anything to your cart yet.</p>
-      </div>
-    );
-  }
+  return ( 
+    <div className="container mx-auto p-4"> 
+      <h1 className="text-2xl font-bold mb-4">Shopping Cart</h1> 
 
-  return (
-    <div className="cart-page-container">
-      <h2>Your Shopping Cart</h2>
-      <div className="cart-items">
-        {cartItems.map((item) => (
-          <div key={item.id} className="cart-item">
-            <img src={item.image} alt={item.name} className="cart-item-image" />
-            <div className="cart-item-details">
-              <h3>{item.name}</h3>
-              <p>Price: ${item.price.toFixed(2)}</p>
-              <div className="cart-item-quantity-control">
-                <button onClick={() => updateQuantity(item.id, item.quantity - 1)} disabled={item.quantity === 1}>-</button>
-                <span>{item.quantity}</span>
-                <button onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
-              </div>
-              <button onClick={() => removeFromCart(item.id)} className="remove-item-button">Remove</button>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="cart-summary">
-        <h3>Total: ${calculateTotal()}</h3>
-        <button onClick={clearCart} className="clear-cart-button">Clear Cart</button>
-        <button className="checkout-button">Proceed to Checkout</button>
-      </div>
-    </div>
-  );
-};
+      {!user ? ( 
+        <p className="text-red-500">Please log in to manage your cart.</p> 
+      ) : ( 
+        <> 
+          {/* Products List */} 
+          <div className="mb-8"> 
+            <h2 className="text-xl font-semibold mb-2">Available Products</h2> 
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"> 
+              {products.map((product) => ( 
+                <div key={product.id} className="border p-4 rounded shadow"> 
+                  <h3 className="text-lg font-medium">{product.name}</h3> 
+                  <p className="text-gray-600">${product.price.toFixed(2)}</p> 
+                  <button 
+                    onClick={() => addToCart(product)} 
+                    className="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" 
+                  > 
+                    Add to Cart 
+                  </button> 
+                </div> 
+              ))} 
+            </div> 
+          </div> 
 
-export default CartPage;
+          {/* Cart Contents */} 
+          <div> 
+            <h2 className="text-xl font-semibold mb-2">Your Cart</h2> 
+            {cart.length === 0 ? ( 
+              <p className="text-gray-500">Your cart is empty.</p> 
+            ) : ( 
+              <div> 
+                {cart.map((item) => ( 
+                  <div 
+                    key={item.id} 
+                    className="flex justify-between items-center border-b py-2" 
+                  > 
+                    <div> 
+                      <span>{item.name}</span> 
+                      <span className="text-gray-600 ml-2"> 
+                        (${item.price.toFixed(2)} x {item.quantity}) 
+                      </span> 
+                    </div> 
+                    <button 
+                      onClick={() => removeFromCart(item.id)} 
+                      className="text-red-500 hover:text-red-700" 
+                    > 
+                      Remove 
+                    </button> 
+                  </div> 
+                ))} 
+                <div className="mt-4 text-lg font-bold"> 
+                  Total: ${totalPrice} 
+                </div> 
+              </div> 
+            )} 
+          </div> 
+        </> 
+      )} 
+    </div> 
+  ); 
+} 
+
+export default Cart;
