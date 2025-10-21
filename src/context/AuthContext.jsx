@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react'; // Add useEffect import
 import authService from '../services/authService'; // Import authService
 import { API_BASE_URL } from '../config';
 
@@ -9,6 +9,24 @@ export { AuthContext }; // Add this line to export AuthContext
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token') || '');
+
+  // Add this useEffect to load user when token exists
+  useEffect(() => {
+    const loadUser = async () => {
+      if (token) {
+        try {
+          const currentUser = await getCurrentUser();
+          setUser(currentUser);
+        } catch (error) {
+          console.error('Failed to load user:', error);
+          // Optionally clear invalid token
+          localStorage.removeItem('token');
+          setToken('');
+        }
+      }
+    };
+    loadUser();
+  }, [token]); // Run when token changes
 
   // Helper to save token and user info after successful login/register
   const saveAuth = (token, user) => {

@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt'; // Add this line
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken'; // Add this line
 import User from '../models/user.model.js';
 
 // @desc    Register new user
@@ -65,9 +65,21 @@ const loginUser = async (req, res) => {
   }
 };
 
+// @desc    Get current user
+// @route   GET /api/auth/me
+// @access  Private
+const getMe = async (req, res) => {
+  const user = await User.findById(req.user.id).select('-password');
+  if (user) {
+    res.json(user);
+  } else {
+    res.status(404).json({ message: 'User not found' });
+  }
+};
+
 // Generate JWT
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 };
 
-export { registerUser, loginUser };
+export { registerUser, loginUser, getMe }; // Add getMe to exports
