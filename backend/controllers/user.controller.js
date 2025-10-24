@@ -8,6 +8,13 @@ import User from '../models/user.model.js';
 const registerUser = async (req, res) => {
   const { username, email, password } = req.body;
 
+  // Add email format check
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    res.status(400).json({ message: 'Invalid email format' });
+    return;
+  }
+
   if (!username || !email || !password) {
     res.status(400).json({ message: 'Please enter all fields' });
     return;
