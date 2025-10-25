@@ -1,4 +1,5 @@
-import 'dotenv/config';
+// Add this at the top of the file
+require('dotenv').config();
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';

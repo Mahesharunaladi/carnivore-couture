@@ -37,7 +37,12 @@ function Login() {
         navigate('/');
       } else {
         // Use the register function from AuthContext
-        const userData = { username: formData.username, email: formData.email, password: formData.password };
+        const userData = { 
+          username: formData.username, 
+          email: formData.email, 
+          password: formData.password, 
+          name: formData.username // Add this line to match server expectations
+        };
         await register(userData);
         alert('Registration successful! Please log in.');
         setIsLogin(true);
