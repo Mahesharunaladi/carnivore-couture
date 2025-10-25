@@ -1,5 +1,5 @@
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken'; // Add this line
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs'; // Add this line
 import User from '../models/user.model.js';
 
 // @desc    Register new user

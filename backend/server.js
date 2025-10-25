@@ -1,5 +1,6 @@
 // Add this at the top of the file
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config({ path: './backend/.env' }); // Updated path and ES module syntax
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
