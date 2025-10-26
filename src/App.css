@@ -75,7 +75,7 @@
 
 .logo-image {
   height: 80px; /* Increased height */
-  width: 160px; /* Increased width */
+  width: 100px; /* Decreased width for smaller size */
   transform-origin: center;
   /* Remove or comment out: filter: brightness(0) saturate(100%); */
 }
