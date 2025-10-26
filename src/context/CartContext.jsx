@@ -35,10 +35,13 @@ export function CartProvider({ children }) {
       const data = await response.json();
       console.log('Cart fetched:', data.cart);
       setCart(data.cart || []);
+      setCartError(null); // Clear error on success
     } catch (error) {
       console.error('Error fetching cart:', error.message);
-      setCartError('Unable to load cart. Please try again.');
-      setCart([]); // Ensure cart is defined
+      setCartError('Unable to load cart from server. Using local cart.'); // Improved message
+      // Fallback to local storage if needed (optional)
+      const localCart = JSON.parse(localStorage.getItem('localCart')) || [];
+      setCart(localCart);
     }
   };
 

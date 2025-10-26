@@ -77,7 +77,7 @@
   height: 80px; /* Increased height */
   width: 160px; /* Increased width */
   transform-origin: center;
-  filter: brightness(0) saturate(100%);
+  /* Remove or comment out: filter: brightness(0) saturate(100%); */
 }
 
 @keyframes logo-slide {

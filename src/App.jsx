@@ -158,7 +158,7 @@ function AppContent() {
           <>
             <header className="main-header">
               <div className="logo-container">
-                <img src="/logo-removebg-preview.png" alt="Carnivores Couture Logo" className="logo-image" />
+                <img src="/logo.png" alt="Carnivore Couture Logo" className="logo-image" />
               </div>
               <div className="location-selector">
                 <FiMapPin className="location-icon" />
