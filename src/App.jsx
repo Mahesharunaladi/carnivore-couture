@@ -1,3 +1,4 @@
+
 import './App.css';
 import { FiSearch, FiShoppingCart, FiMapPin, FiNavigation } from 'react-icons/fi';
 import Login from './pages/Login.jsx';
@@ -9,7 +10,7 @@ import { Routes, Route, Link } from 'react-router-dom';
 import { useState } from 'react';
 
 function AppContent() {
-  const { cart, addToCart } = useCart(); // Use the useCart hook here
+  const { cart, addToCart } = useCart();
   const [searchQuery, setSearchQuery] = useState('');
   const [userLocation, setUserLocation] = useState(null);
   const [locationLoading, setLocationLoading] = useState(false);
@@ -191,10 +192,15 @@ function AppContent() {
                 />
               </div>
               <div className="header-actions">
-                <button className="cart-button" onClick={() => window.location.href='/cart'}>
+                <Link to="/cart" className="cart-button">
                   <FiShoppingCart />
-                  {cart.length > 0 && <span className="cart-badge">{cart.length}</span>}
-                </button>
+                  <div className="cart-icon">
+                    <img src="/cart.svg" alt="Cart" />
+                    {cart && cart.length > 0 && (
+                      <span className="cart-count">{cart.length}</span>
+                    )}
+                  </div>
+                </Link>
                 <Link to="/login" className="login-button">Login</Link>
               </div>
             </header>
@@ -314,8 +320,7 @@ function AppContent() {
               </div>
             </section>
           </>
-        }
-        />
+        } />
       </Routes>
     </div>
   );
