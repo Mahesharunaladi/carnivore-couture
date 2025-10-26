@@ -61,27 +61,32 @@ const loginUser = async (req, res) => {
   const user = await User.findOne({ email });
 
   if (user && (await bcrypt.compare(password, user.password))) {
+    // Generate token
+    const token = generateToken(user._id);
+
     // Send welcome email
-    try {
-      const transporter = nodemailer.createTransport({
+    const transporter = nodemailer.createTransport({
         host: process.env.EMAIL_HOST,
         port: process.env.EMAIL_PORT,
-        secure: true,
+        secure: true, // Use SSL for port 465
         auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASS,
-        },
-      });
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
+        }
+    });
 
-      await transporter.sendMail({
+    const mailOptions = {
         from: process.env.EMAIL_FROM,
         to: user.email,
-        subject: 'Welcome Back!',
-        text: 'Thank you for logging in to Carnivore Couture. Happy shopping!',
-      });
-    } catch (emailError) {
-      console.error('Email sending failed:', emailError);
-      // Note: We don't fail the login if email fails, but you can adjust
+        subject: 'Welcome to Carnivore Couture!',
+        text: `Hello ${user.username}, welcome to our platform!`
+    };
+
+    try {
+        await transporter.sendMail(mailOptions);
+        console.log('Welcome email sent successfully');
+    } catch (error) {
+        console.error('Email sending failed:', error);
     }
 
     res.json({

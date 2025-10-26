@@ -13,20 +13,21 @@ export function AuthProvider({ children }) {
   // Add this useEffect to load user when token exists
   useEffect(() => {
     const loadUser = async () => {
-      if (token) {
-        try {
-          const currentUser = await getCurrentUser();
-          setUser(currentUser);
-        } catch (error) {
-          console.error('Failed to load user:', error);
-          // Optionally clear invalid token
-          localStorage.removeItem('token');
-          setToken('');
+        if (token) {
+            try {
+                console.log('Loading user with token:', token); // Add log
+                const currentUser = await getCurrentUser();
+                console.log('Loaded user:', currentUser); // Add log
+                setUser(currentUser);
+            } catch (error) {
+                console.error('Failed to load user:', error);
+                localStorage.removeItem('token');
+                setToken('');
+            }
         }
-      }
     };
     loadUser();
-  }, [token]); // Run when token changes
+}, [token]); // Run when token changes
 
   // Helper to save token and user info after successful login/register
   const saveAuth = (token, user) => {

@@ -32,8 +32,8 @@ function Login() {
 
     try {
       if (isLogin) {
-        // Use the login function from AuthContext
-        await login(formData.email, formData.password);
+        const userData = await login(formData.email, formData.password);
+        console.log('Logged in user:', userData); // Add log
         navigate('/');
       } else {
         // Use the register function from AuthContext
