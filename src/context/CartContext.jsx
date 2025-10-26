@@ -3,33 +3,27 @@ import { useAuth } from './AuthContext';
 
 const CartContext = createContext();
 
-export function CartProvider({ children }) {
+function CartProvider({ children }) {
   const { user } = useAuth();
-  const [cart, setCart] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
 
-  // Fetch cart when user logs in
+  // Fetch cart only when user is available
   useEffect(() => {
-    if (user) {
+    if (user?.token) {
       fetchCart();
-    } else {
-      setCart([]); // Clear cart on logout
     }
   }, [user]);
 
-  // Fetch cart from server
   const fetchCart = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/cart', {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${user.token}`,
-        },
+      const response = await fetch("http://localhost:3000/api/cart", {
+        headers: { Authorization: `Bearer ${user.token}` }
       });
-      if (!response.ok) throw new Error('Failed to fetch cart');
+      if (!response.ok) throw new Error("Failed to fetch cart");
       const data = await response.json();
-      setCart(data.cart || []);
+      setCartItems(data);
     } catch (error) {
-      console.error('Error fetching cart:', error);
+      console.error("Error fetching cart:", error);
     }
   };
 

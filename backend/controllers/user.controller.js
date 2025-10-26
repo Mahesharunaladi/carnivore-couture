@@ -61,11 +61,10 @@ const loginUser = async (req, res) => {
   const user = await User.findOne({ email });
 
   if (user && (await bcrypt.compare(password, user.password))) {
+    // Example login response
     res.json({
-      _id: user.id,
-      username: user.username,
-      email: user.email,
-      token: generateToken(user._id),
+      token: generatedToken,
+      user: { ...user._doc, password: undefined } // Ensure `user` is included
     });
   } else {
     res.status(400).json({ message: 'Invalid credentials' });
