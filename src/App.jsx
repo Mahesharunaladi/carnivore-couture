@@ -194,12 +194,9 @@ function AppContent() {
               <div className="header-actions">
                 <Link to="/cart" className="cart-button">
                   <FiShoppingCart />
-                  <div className="cart-icon">
-                    <img src="/cart.svg" alt="Cart" />
-                    {cart && cart.length > 0 && (
-                      <span className="cart-count">{cart.length}</span>
-                    )}
-                  </div>
+                  {cart && cart.length > 0 && (
+                    <span className="cart-badge">{cart.length}</span>
+                  )}
                 </Link>
                 <Link to="/login" className="login-button">Login</Link>
               </div>

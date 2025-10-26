@@ -205,11 +205,11 @@
 
 .cart-button {
   position: relative; /* Needed for positioning the badge */
-  background-color: white; /* White background */
+  background-color: #d11243; /* Red background */
   border: 1px solid #eee; /* Optional: subtle border */
   padding: 0.5rem 0.8rem; /* Adjust padding as needed */
   border-radius: 4px; /* Slightly rounded corners */
-  color: #333; /* Darker text/icon color */
+  color: white; /* White text/icon color */
   display: flex; /* Ensure it's always displayed */
   align-items: center;
   justify-content: center;
@@ -217,15 +217,15 @@
 }
 
 .cart-button:hover {
-  background-color: #f0f0f0; /* Light hover effect */
+  background-color: #b00f38; /* Darker red for hover */
 }
 
 .cart-badge {
   position: absolute;
   top: -8px; /* Adjust as needed */
   right: -8px; /* Adjust as needed */
-  background-color: #d11243; /* Red background for the badge */
-  color: white;
+  background-color: white; /* White background for contrast */
+  color: #d11243; /* Red text */
   border-radius: 50%;
   padding: 0.2em 0.5em;
   font-size: 0.7rem;

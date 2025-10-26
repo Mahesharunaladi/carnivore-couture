@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs'; // Add this line
 import User from '../models/user.model.js';
+import nodemailer from 'nodemailer';
 
 // @desc    Register new user
 // @route   POST /api/users/register
@@ -60,6 +61,29 @@ const loginUser = async (req, res) => {
   const user = await User.findOne({ email });
 
   if (user && (await bcrypt.compare(password, user.password))) {
+    // Send welcome email
+    try {
+      const transporter = nodemailer.createTransport({
+        host: process.env.EMAIL_HOST,
+        port: process.env.EMAIL_PORT,
+        secure: true,
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
+        },
+      });
+
+      await transporter.sendMail({
+        from: process.env.EMAIL_FROM,
+        to: user.email,
+        subject: 'Welcome Back!',
+        text: 'Thank you for logging in to Carnivore Couture. Happy shopping!',
+      });
+    } catch (emailError) {
+      console.error('Email sending failed:', emailError);
+      // Note: We don't fail the login if email fails, but you can adjust
+    }
+
     res.json({
       token: generateToken(user._id),
       user: {
