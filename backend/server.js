@@ -1,26 +1,27 @@
-// Add this at the top of the file
-import dotenv from 'dotenv';
-dotenv.config({ path: './backend/.env' }); // Updated path and ES module syntax
 import express from 'express';
-import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 import cors from 'cors';
-import authRoutes from './routes/auth.routes.js';
-import cartRoutes from './routes/cartRoutes.js';
 import connectDB from './config/db.js';
+import authRoutes from './routes/authRoutes.js';
+import cartRoutes from './routes/cartRoutes.js';
+
+// Load environment variables
+dotenv.config({ path: './.env' });
 
 const app = express();
 
-// Connect Database
+// Connect to MongoDB
 connectDB();
 
 // Middleware
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
 
-// Define Routes
+// Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/cart', cartRoutes);
 
 const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
