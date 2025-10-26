@@ -7,7 +7,7 @@ const Header = () => {
     <header>
       <div className="user-section">
         {user ? (
-          <span>Welcome, {user.name || user.username}</span> // Prefer name if available, else username
+          <span>Hey {user.name || user.username}, welcome!</span>
         ) : (
           <a href="/login">Login</a>
         )}
