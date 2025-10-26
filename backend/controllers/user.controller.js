@@ -2,55 +2,59 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs'; // Add this line
 import User from '../models/user.model.js';
 import nodemailer from 'nodemailer';
+import asyncHandler from 'express-async-handler';
 
 // @desc    Register new user
 // @route   POST /api/users/register
 // @access  Public
-const registerUser = async (req, res) => {
-  const { username, email, password } = req.body;
+const registerUser = asyncHandler(async (req, res) => {
+    const { name, email, password, username } = req.body;
 
-  // Add email format check
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    res.status(400).json({ message: 'Invalid email format' });
-    return;
-  }
+    // Validate email format
+    if (!email.includes('@')) {
+        res.status(400);
+        throw new Error('Invalid email format');
+    }
 
-  if (!username || !email || !password) {
-    res.status(400).json({ message: 'Please enter all fields' });
-    return;
-  }
+    // Check if user exists by email
+    const userExists = await User.findOne({ email });
 
-  // Check if user exists
-  const userExists = await User.findOne({ email });
+    if (userExists) {
+        res.status(400);
+        throw new Error('User already exists');
+    }
 
-  if (userExists) {
-    res.status(400).json({ message: 'User already exists' });
-    return;
-  }
+    // Add this new check for username
+    const usernameExists = await User.findOne({ username });
 
-  // Hash password
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
+    if (usernameExists) {
+        res.status(400);
+        throw new Error('Username already taken');
+    }
 
-  // Create user
-  const user = await User.create({
-    username,
-    email,
-    password: hashedPassword,
-  });
+    // Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-  if (user) {
-    res.status(201).json({
-      _id: user.id,
-      username: user.username,
-      email: user.email,
-      token: generateToken(user._id),
+    // Create user
+    const user = await User.create({
+        username,
+        email,
+        password: hashedPassword,
     });
-  } else {
-    res.status(400).json({ message: 'Invalid user data' });
-  }
-};
+
+    if (user) {
+        res.status(201).json({
+            _id: user.id,
+            username: user.username,
+            email: user.email,
+            token: generateToken(user._id),
+        });
+    } else {
+        res.status(400);
+        throw new Error('Invalid user data');
+    }
+});
 
 // @desc    Authenticate a user
 // @route   POST /api/users/login
