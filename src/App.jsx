@@ -8,6 +8,7 @@ import { AuthProvider } from './context/AuthContext';
 import { CartProvider, useCart } from './context/CartContext';
 import { Routes, Route, Link } from 'react-router-dom';
 import { useState } from 'react';
+import Header from './components/Header'; // Add this import
 
 function AppContent() {
   const { cart, addToCart } = useCart();
@@ -156,51 +157,7 @@ function AppContent() {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/" element={
           <>
-            <header className="main-header">
-              <div className="logo-container">
-                <img src="/logo.png" alt="Carnivore Couture Logo" className="logo-image" />
-              </div>
-              <div className="location-selector">
-                <FiMapPin className="location-icon" />
-                <div className="location-text">
-                  <span className="location-label">
-                    {userLocation ? 'Your Location' : 'Bangalore'}
-                    {locationLoading && ' (Loading...)'}
-                  </span>
-                  <span className="location-details">
-                    {userLocation
-                      ? `Lat: ${userLocation.latitude.toFixed(4)}, Long: ${userLocation.longitude.toFixed(4)}`
-                      : 'HSR, Koramangala, Indiranagar, New BEL Road, Marathahalli, Whitefield, Electronic City'}
-                    {locationError && <span className="location-error">{locationError}</span>}
-                  </span>
-                </div>
-                <button
-                  className="gps-button"
-                  onClick={getCurrentLocation}
-                  title="Use current location"
-                >
-                  <FiNavigation />
-                </button>
-              </div>
-              <div className="search-bar">
-                <FiSearch className="search-icon" />
-                <input
-                  type="text"
-                  placeholder="Search for products..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </div>
-              <div className="header-actions">
-                <Link to="/cart" className="cart-button">
-                  <FiShoppingCart />
-                  {cart && cart.length > 0 && (
-                    <span className="cart-badge">{cart.length}</span>
-                  )}
-                </Link>
-                <Link to="/login" className="login-button">Login</Link>
-              </div>
-            </header>
+            <Header /> {/* Replace the inline <header> with this */}
 
             {/* Welcome Banner */}
             <section className="welcome-banner">
