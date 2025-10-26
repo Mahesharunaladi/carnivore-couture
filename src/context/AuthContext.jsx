@@ -60,7 +60,7 @@ export function AuthProvider({ children }) {
 
   // GET CURRENT USER
   async function getCurrentUser() {
-    const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
+    const res = await fetch('/api/auth/me', { // Changed to relative path
       headers: { "Authorization": `Bearer ${token}` }
     });
     if (!res.ok) throw new Error("Not authenticated");
