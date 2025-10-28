@@ -60,6 +60,32 @@
 /* Main Header */
 .main-header {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.login-section {
+  margin-left: auto;
+}
+
+.login-button {
+  padding: 8px 16px;
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.login-button:hover {
+  background-color: #1976D2;
+}
+/* The extra '}' was here, it has been removed */
+
+.main-header {
+  display: flex;
   flex-wrap: wrap;
   justify-content: space-between; /* Changed from space-evenly to space-between */
   align-items: center;
@@ -204,16 +230,21 @@
 }
 
 .cart-button {
-  position: relative; /* Needed for positioning the badge */
-  background-color: #d11243; /* Red background */
-  border: 1px solid #eee; /* Optional: subtle border */
-  padding: 0.5rem 0.8rem; /* Adjust padding as needed */
-  border-radius: 4px; /* Slightly rounded corners */
-  color: white; /* White text/icon color */
-  display: flex; /* Ensure it's always displayed */
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease-in-out;
+  position: relative;
+  margin-left: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.cart-count {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
 }
 
 .cart-button:hover {
@@ -722,3 +753,26 @@
   max-height: 100%;
   object-fit: contain;
 }
+
+  .logout-button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  }
+  .login-button {
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .login-button:hover {
+    background-color: #45a049;
+  }
