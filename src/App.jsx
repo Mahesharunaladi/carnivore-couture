@@ -9,6 +9,7 @@ import { CartProvider, useCart } from './context/CartContext';
 import { Routes, Route, Link } from 'react-router-dom';
 import { useState } from 'react';
 import Header from './components/Header'; // Add this import
+import Hero from './components/Hero'; // Import the new Hero component
 
 function AppContent() {
   const { cart, addToCart } = useCart();
@@ -157,9 +158,11 @@ function AppContent() {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/" element={
           <>
-            <Header /> {/* Replace the inline <header> with this */}
+            <Header />
+            <Hero /> {/* Render the Hero component here */}
 
-            {/* Welcome Banner */}
+            {/* The old Welcome Banner section will be removed */}
+            {/*
             <section className="welcome-banner">
               <div className="welcome-text">
                 <h2>Welcome to Carnivore Couture</h2>
@@ -179,6 +182,7 @@ function AppContent() {
                 </div>
               </div>
             </section>
+            */}
 
             {/* Bestsellers Section */}
             <section className="bestsellers">
