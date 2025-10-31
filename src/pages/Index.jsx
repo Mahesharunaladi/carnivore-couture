@@ -254,3 +254,4 @@ import { Hero } from "../components/Hero";
  }; 
  
  export default Index;
+// Remove the duplicate/misplaced imports here
