@@ -9,15 +9,27 @@ import { useCart } from "../hooks/useCart";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
 
-interface CartDrawerProps {
-  open: boolean;
-  onClose: () => void;
-}
+/**
+ * @typedef {Object} CartDrawerProps
+ * @property {boolean} open - Whether the cart drawer is open
+ * @property {() => void} onClose - Function to close the cart drawer
+ */
 
 // If possible, type your cart items for stricter validation:
-// interface CartItem { id: string|number; name: string; image: string; price: number; quantity: number; }
+// /**
+//  * @typedef {Object} CartItem
+//  * @property {string|number} id - Product ID
+//  * @property {string} name - Product name
+//  * @property {string} image - Product image URL
+//  * @property {number} price - Product price
+//  * @property {number} quantity - Product quantity in cart
+//  * /
 
-export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
+/**
+ * @param {CartDrawerProps} props
+ */
+export const CartDrawer = (props) => {
+  const { open, onClose } = props;
   const { items = [], updateQuantity, removeItem, clearCart, total = 0 } = useCart();
 
   return (
@@ -111,4 +123,4 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
       </SheetContent>
     </Sheet>
   );
-};
+}
