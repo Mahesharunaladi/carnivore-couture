@@ -1,5 +1,5 @@
 import { ProductCard } from "../components/ProductCard"; 
-import { CategoryCard } from "../components/CategoryCard"; 
+import CategoryCard from "../components/CategoryCard"; 
 import { Navbar } from "../components/Navbar"; 
 import { CartDrawer } from "../components/CartDrawer"; 
 import { motion } from "framer-motion"; 
@@ -254,4 +254,3 @@ const Index = () => {
 }; 
 
 export default Index;
-// Remove the duplicate Hero/CategoryCard imports here (lines 257-258)
