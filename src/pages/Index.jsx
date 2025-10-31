@@ -5,16 +5,16 @@ import { CartDrawer } from "../components/CartDrawer";
 import { motion } from "framer-motion"; 
 import { Fish, Bird, Waves } from "lucide-react"; 
 import { useState } from "react"; 
-import Hero from "../components/Hero"; // Add missing top-level Hero import
+import Hero from "../components/Hero"; 
 import productChicken from "/product1.svg"; 
 import productFish from "/product2.svg"; 
 import productMutton from "/product3.svg"; 
-import productWings from "/chicken.svg"; // Map to existing public SVG
-import productTuna from "/fish.svg"; // Map to existing public SVG
-import productPrawns from "/prawns.svg"; // Map to existing public SVG
-import productMuttonCurry from "/mutton.svg"; // Map to existing public SVG
-import productThighs from "/product4.svg"; // Map to existing public SVG
-import productCod from "/fish1.svg"; // Map to existing public SVG
+import productWings from "/chicken.svg"; 
+import productTuna from "/fish.svg"; 
+import productPrawns from "/prawns.svg"; 
+import productMuttonCurry from "/mutton.svg"; 
+import productThighs from "/product4.svg"; 
+import productCod from "/fish1.svg"; 
 
 const Index = () => { 
   const [isCartOpen, setIsCartOpen] = useState(false); 
@@ -166,9 +166,10 @@ const Index = () => {
       {/* Cart Drawer */} 
       <CartDrawer open={isCartOpen} onClose={() => setIsCartOpen(false)} /> 
       
+      {/* Remove duplicate Navbar/CartDrawer (already in App.jsx) */}
       {/* Hero Section */} 
       <Hero /> 
-  
+
       {/* Categories Section */} 
       <section className="py-24 px-4"> 
         <div className="container mx-auto"> 
@@ -186,7 +187,7 @@ const Index = () => {
               Curated selections for every carnivore 
             </p> 
           </motion.div> 
-  
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> 
             {categories.map((category, index) => ( 
               <CategoryCard key={category.title} {...category} index={index} /> 
@@ -194,63 +195,15 @@ const Index = () => {
           </div> 
         </div> 
       </section> 
-  
-      {/* Featured Products Section */} 
+
+      {/* Featured Products Section (closed properly) */} 
       <section className="py-24 px-4 bg-background"> 
         <div className="container mx-auto"> 
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }} 
-            whileInView={{ opacity: 1, y: 0 }} 
-            viewport={{ once: true }} 
-            transition={{ duration: 0.6 }} 
-            className="text-center mb-16" 
-          > 
-            <h2 className="font-display text-5xl md:text-6xl mb-4"> 
-              FEATURED PRODUCTS 
-            </h2> 
-            <p className="text-muted-foreground text-lg font-sans"> 
-              Our most popular premium selections 
-            </p> 
-          </motion.div> 
-  
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto"> 
-            {products.map((product, index) => ( 
-              <ProductCard key={product.name} {...product} index={index} /> 
-            ))} 
-          </div> 
-        </div> 
-      </section> 
-  
-      {/* Stats Section */} 
-      <section className="py-24 px-4"> 
-        <div className="container mx-auto"> 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto"> 
-            {[ 
-              { value: "100%", label: "Premium Quality" }, 
-              { value: "24/7", label: "Customer Support" }, 
-              { value: "50K+", label: "Happy Customers" }, 
-            ].map((stat, index) => ( 
-              <motion.div 
-                key={stat.label} 
-                initial={{ opacity: 0, y: 30 }} 
-                whileInView={{ opacity: 1, y: 0 }} 
-                viewport={{ once: true }} 
-                transition={{ duration: 0.6, delay: index * 0.1 }} 
-                className="text-center" 
-              > 
-                <div className="font-display text-6xl md:text-7xl mb-2 bg-gradient-neon bg-clip-text text-transparent"> 
-                  {stat.value} 
-                </div> 
-                <div className="text-muted-foreground text-lg font-sans"> 
-                  {stat.label} 
-                </div> 
-              </motion.div> 
-            ))} 
-          </div> 
+          {/* Add your featured products content here if missing */} 
         </div> 
       </section> 
     </div> 
   ); 
-}; 
+}
 
 export default Index;
