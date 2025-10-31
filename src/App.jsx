@@ -4,7 +4,6 @@ import { CartDrawer } from "./components/CartDrawer";
 import { Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Header from "./components/Header"; // Import Header
-import Hero from "./components/Hero";     // Import Hero
 import { Toaster } from "sonner"; // Import Toaster
 
 function App() {
@@ -24,7 +23,7 @@ function App() {
           element={
             <>
               <Header />
-              <Hero />
+              {/* Remove duplicate Hero (rendered in Index.jsx) */}
               <Index />
             </>
           }

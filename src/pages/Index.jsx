@@ -1,7 +1,6 @@
+// Correct named import for ProductCard (matches its export type)
 import { ProductCard } from "../components/ProductCard"; 
 import CategoryCard from "../components/CategoryCard"; 
-import { Navbar } from "../components/Navbar"; 
-import { CartDrawer } from "../components/CartDrawer"; 
 import { motion } from "framer-motion"; 
 import { Fish, Bird, Waves } from "lucide-react"; 
 import { useState } from "react"; 
@@ -160,19 +159,16 @@ const Index = () => {
   
   return ( 
     <div className="min-h-screen bg-gradient-dark"> 
-      {/* Navbar */} 
-      <Navbar onCartClick={() => setIsCartOpen(true)} /> 
-      
-      {/* Cart Drawer */} 
-      <CartDrawer open={isCartOpen} onClose={() => setIsCartOpen(false)} /> 
-      
-      {/* Remove duplicate Navbar/CartDrawer (already in App.jsx) */}
-      {/* Hero Section */} 
-      <Hero /> 
+      {/* Hero Section - Added consistent padding for alignment */} 
+      <section className="py-16 px-4"> 
+        <div className="container mx-auto max-w-7xl"> 
+          <Hero /> 
+        </div> 
+      </section> 
 
-      {/* Categories Section */} 
+      {/* Categories Section - Aligned grid and container constraints */} 
       <section className="py-24 px-4"> 
-        <div className="container mx-auto"> 
+        <div className="container mx-auto max-w-7xl"> 
           <motion.div 
             initial={{ opacity: 0, y: 30 }} 
             whileInView={{ opacity: 1, y: 0 }} 
@@ -188,7 +184,8 @@ const Index = () => {
             </p> 
           </motion.div> 
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> 
+          {/* Consistent grid columns across device sizes */} 
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"> 
             {categories.map((category, index) => ( 
               <CategoryCard key={category.title} {...category} index={index} /> 
             ))} 
@@ -196,10 +193,15 @@ const Index = () => {
         </div> 
       </section> 
 
-      {/* Featured Products Section (closed properly) */} 
+      {/* Featured Products Section - Aligned with Categories section */} 
       <section className="py-24 px-4 bg-background"> 
-        <div className="container mx-auto"> 
-          {/* Add your featured products content here if missing */} 
+        <div className="container mx-auto max-w-7xl"> 
+          {/* Matching grid layout and gap for visual consistency */} 
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"> 
+            {products.map((product, index) => ( 
+              <ProductCard key={product.name} {...product} index={index} /> 
+            ))} 
+          </div> 
         </div> 
       </section> 
     </div> 
