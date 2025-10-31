@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Navbar } from "./components/Navbar";
 import { CartDrawer } from "./components/CartDrawer";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Header from "./components/Header"; // Import Header
 import Hero from "./components/Hero";     // Import Hero
@@ -14,23 +14,22 @@ function App() {
 
   return (
     <div className="app-container">
-      <Router>
-        <Navbar onCartClick={toggleCart} />
-        <CartDrawer open={isCartOpen} onClose={toggleCart} />
-        <Toaster position="top-center" /> {/* Add Toaster here */}
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <Header />
-                <Hero />
-                <Index />
-              </>
-            }
-          />
-        </Routes>
-      </Router>
+      {/* Remove <Router> here */}
+      <Navbar onCartClick={toggleCart} />
+      <CartDrawer open={isCartOpen} onClose={toggleCart} />
+      <Toaster position="top-center" /> {/* Add Toaster here */}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <Header />
+              <Hero />
+              <Index />
+            </>
+          }
+        />
+      </Routes>
     </div>
   );
 }
