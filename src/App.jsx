@@ -22,7 +22,7 @@ function App() {
           path="/"
           element={
             <>
-              <Header />
+              {/* <Header /> */}
               {/* Remove duplicate Hero (rendered in Index.jsx) */}
               <Index />
             </>

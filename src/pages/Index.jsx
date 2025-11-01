@@ -193,11 +193,24 @@ const Index = () => {
         </div> 
       </section> 
 
-      {/* Featured Products Section - Aligned with Categories section */} 
-      <section className="py-24 px-4 bg-background"> 
+      {/* Featured Products Section - Aligned with reference image */} 
+      <section className="py-24 px-4 bg-gradient-dark"> 
         <div className="container mx-auto max-w-7xl"> 
-          {/* Matching grid layout and gap for visual consistency */} 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"> 
+          {/* Added missing section title matching reference */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="font-display text-4xl mb-2">
+              Our most popular premium selections
+            </h2>
+          </motion.div>
+
+          {/* Updated to 4-column grid on large screens */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {products.map((product, index) => ( 
               <ProductCard key={product.name} {...product} index={index} /> 
             ))} 
