@@ -1,24 +1,30 @@
 import { motion } from "framer-motion";
+import { LucideIcon } from "lucide-react";
 
-const CategoryCard = ({ category, image }) => {
+export const CategoryCard = ({ title, icon: Icon, count, index }) => {
   return (
     <motion.div
-      className="relative flex flex-col items-center justify-center w-full h-64 bg-cover bg-center rounded-lg shadow-lg overflow-hidden cursor-pointer"
-      style={{ backgroundImage: `url(${image})` }}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
+      initial={{ opacity: 0, scale: 0.9 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      whileHover={{ scale: 1.05, y: -5 }}
+      className="bg-card border border-border rounded-lg p-6 cursor-pointer group"
     >
-      <div className="absolute inset-0 bg-black opacity-40"></div>
-      <motion.h3
-        className="relative z-10 text-white text-3xl font-bold text-center drop-shadow-md"
-        initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
+      <motion.div
+        whileHover={{ rotate: [0, -10, 10, -10, 0] }}
         transition={{ duration: 0.5 }}
+        className="inline-block mb-4"
       >
-        {category}
-      </motion.h3>
+        <div className="w-16 h-16 bg-gradient-primary rounded-lg flex items-center justify-center shadow-glow group-hover:shadow-neon transition-shadow">
+          <Icon className="w-8 h-8 text-primary-foreground" />
+        </div>
+      </motion.div>
+      
+      <h3 className="font-display text-2xl mb-2">{title}</h3>
+      <p className="text-muted-foreground font-sans">
+        {count} Products
+      </p>
     </motion.div>
   );
 };
-
-export default CategoryCard;

@@ -1,36 +1,20 @@
-import { 
-  Sheet, 
-  SheetContent, 
-  SheetHeader, 
-  SheetTitle 
-} from "./ui/sheet";
-import { Button } from "./ui/button";
-import { useCart } from "../hooks/useCart";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "./ui/sheet"; // Adjusted import path to be relative
+import { Button } from "./ui/button"; // Adjusted import path to be relative
+import { useCart } from "../hooks/useCart"; // Adjusted import path to be relative
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
 
-/**
- * @typedef {Object} CartDrawerProps
- * @property {boolean} open - Whether the cart drawer is open
- * @property {() => void} onClose - Function to close the cart drawer
- */
+export const CartDrawer = ({ open, onClose }) => {
+  const { items, updateQuantity, removeItem, clearCart, total } = useCart();
 
-// If possible, type your cart items for stricter validation:
-// /**
-//  * @typedef {Object} CartItem
-//  * @property {string|number} id - Product ID
-//  * @property {string} name - Product name
-//  * @property {string} image - Product image URL
-//  * @property {number} price - Product price
-//  * @property {number} quantity - Product quantity in cart
-//  * /
-
-/**
- * @param {CartDrawerProps} props
- */
-export const CartDrawer = (props) => {
-  const { open, onClose } = props;
-  const { items = [], updateQuantity, removeItem, clearCart, total = 0 } = useCart();
+  // Ensure items is an array and total is a number, providing default values if useCart returns undefined
+  const cartItems = items || [];
+  const cartTotal = total || 0;
 
   return (
     <Sheet open={open} onOpenChange={onClose}>
@@ -40,48 +24,46 @@ export const CartDrawer = (props) => {
         </SheetHeader>
 
         <div className="mt-8 flex flex-col h-[calc(100vh-200px)]">
-          {items.length === 0 ? (
+          {cartItems.length === 0 ? (
             <div className="flex-1 flex items-center justify-center">
               <p className="text-muted-foreground text-lg">Your cart is empty</p>
             </div>
           ) : (
             <>
               <div className="flex-1 overflow-y-auto space-y-4">
-                {items.map((item, index) => (
+                {cartItems.map((item, index) => (
                   <motion.div
-                    key={item.id || index}
+                    key={item.id ?? index}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
                     className="flex gap-4 bg-card border border-border rounded-lg p-4"
                   >
                     <img
-                      src={item.image || ""}
-                      alt={item.name || "Product Image"}
+                      src={item.image ?? ""}
+                      alt={item.name ?? "Product"}
                       className="w-20 h-20 object-cover rounded-lg"
                     />
                     <div className="flex-1">
-                      <h3 className="font-display text-lg mb-1">{item.name || "Unnamed Item"}</h3>
+                      <h3 className="font-display text-lg mb-1">{item.name ?? "Unnamed"}</h3>
                       <p className="text-primary font-bold">
-                        ₹{(item.price || 0).toLocaleString("en-IN")}
+                        ₹{(item.price ?? 0).toLocaleString('en-IN')}
                       </p>
                       <div className="flex items-center gap-2 mt-2">
                         <Button
                           size="icon"
                           variant="outline"
                           className="h-8 w-8"
-                          onClick={() =>
-                            item.quantity > 1 && updateQuantity(item.id, item.quantity - 1)
-                          }
+                          onClick={() => item.quantity > 1 && updateQuantity?.(item.id, item.quantity - 1)} // Added optional chaining
                         >
                           <Minus className="w-4 h-4" />
                         </Button>
-                        <span className="font-bold w-8 text-center">{item.quantity}</span>
+                        <span className="font-bold w-8 text-center">{item.quantity ?? 1}</span>
                         <Button
                           size="icon"
                           variant="outline"
                           className="h-8 w-8"
-                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                          onClick={() => updateQuantity?.(item.id, (item.quantity ?? 1) + 1)} // Added optional chaining
                         >
                           <Plus className="w-4 h-4" />
                         </Button>
@@ -89,7 +71,7 @@ export const CartDrawer = (props) => {
                           size="icon"
                           variant="ghost"
                           className="h-8 w-8 ml-auto text-destructive"
-                          onClick={() => removeItem(item.id)}
+                          onClick={() => removeItem?.(item.id)} // Added optional chaining
                         >
                           <Trash2 className="w-4 h-4" />
                         </Button>
@@ -103,7 +85,7 @@ export const CartDrawer = (props) => {
                 <div className="flex justify-between items-center">
                   <span className="font-display text-2xl">TOTAL</span>
                   <span className="font-display text-3xl text-primary">
-                    ₹{total.toLocaleString("en-IN")}
+                    ₹{cartTotal.toLocaleString('en-IN')}
                   </span>
                 </div>
                 <Button className="w-full" size="lg">
@@ -123,4 +105,4 @@ export const CartDrawer = (props) => {
       </SheetContent>
     </Sheet>
   );
-}
+};
