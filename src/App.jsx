@@ -18,16 +18,7 @@ function App() {
       <CartDrawer open={isCartOpen} onClose={toggleCart} />
       <Toaster position="top-center" /> {/* Add Toaster here */}
       <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              {/* <Header /> */}
-              {/* Remove duplicate Hero (rendered in Index.jsx) */}
-              <Index />
-            </>
-          }
-        />
+        <Route path="/" element={<Index />} />
       </Routes>
     </div>
   );
