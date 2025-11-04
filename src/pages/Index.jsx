@@ -33,7 +33,7 @@ function Index() {
         /* HERO */
         .hero {
           height: 100vh;
-          background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('/hero-meat%20(1).jpg') center/cover no-repeat;
+          background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('/hero-meat.jpg') center/cover no-repeat;
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -281,6 +281,7 @@ function Index() {
 
         <div className="product-card">
           <img src="/product-prawns.jpg" alt="Prawns" />
+          <div className="badge">FRESH</div>
           <div className="product-info">
             <h3>FRESH PRAWNS</h3>
             <div className="price">
@@ -290,7 +291,16 @@ function Index() {
           </div>
         </div>
 
-        // Update any additional cards similarly with your local images
+        <div className="product-card">
+          <img src="/product-fish.jpg" alt="Fish" />
+          <div className="product-info">
+            <h3>FRESH FISH</h3>
+            <div className="price">
+              <span className="current">₹3,200</span>
+            </div>
+            <button className="add-to-cart">Add to Cart</button>
+          </div>
+        </div>
       </div>
     </>
   );
