@@ -33,7 +33,7 @@ function Index() {
         /* HERO */
         .hero {
           height: 100vh;
-          background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('/hero-meat.jpg') center/cover no-repeat;
+          background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('/hero-meat%20(1).jpg') center/cover no-repeat;
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -164,7 +164,7 @@ function Index() {
       </header>
 
       <section className="hero">
-        <h1>CarnivoreCouture</h1>
+        <h1>Carnivore Couture</h1>
         <p>Premium meat delivery service with exciting offers just for you!</p>
         <button className="btn">Shop Now</button>
       </section>
@@ -176,62 +176,10 @@ function Index() {
 
       <div className="products">
         <div className="product-card">
-          <img src="https://images.unsplash.com/photo-1606890658317-7d14490b76fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Chicken Breast" />
+          <img src="/product-chicken.jpg" alt="Chicken" />
           <div className="badge">PREMIUM</div>
           <div className="product-info">
-            <h3>PREMIUM CHICKEN BREAST</h3>
-            <div className="price">
-              <span className="current">₹3,750</span>
-              <span className="old">₹5,200</span>
-            </div>
-            <button className="add-to-cart">Add to Cart</button>
-          </div>
-        </div>
-
-        <div className="product-card">
-          <img src="https://images.unsplash.com/photo-1625937288805-2d59eaccd7a4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Chicken Wings" />
-          <div className="badge">BESTSELLER</div>
-          <div className="product-info">
-            <h3>CHICKEN WINGS</h3>
-            <div className="price">
-              <span className="current">₹2,800</span>
-              <span className="old">₹3,500</span>
-            </div>
-            <button className="add-to-cart">Add to Cart</button>
-          </div>
-        </div>
-
-        <div className="product-card">
-          <img src="/steak.jpg" alt="Steak Slices" />
-          <div className="badge">PREMIUM</div>
-          <div className="product-info">
-            <h3>PREMIUM STEAK</h3>
-            <div className="price">
-              <span className="current">₹3,750</span>
-              <span className="old">₹5,200</span>
-            </div>
-            <button className="add-to-cart">Add to Cart</button>
-          </div>
-        </div>
-
-        <div className="product-card">
-          <img src="/chicken-breast.jpg" alt="Chicken Breast" />
-          <div className="badge">BESTSELLER</div>
-          <div className="product-info">
-            <h3>CHICKEN BREAST</h3>
-            <div className="price">
-              <span className="current">₹2,800</span>
-              <span className="old">₹3,500</span>
-            </div>
-            <button className="add-to-cart">Add to Cart</button>
-          </div>
-        </div>
-
-        <div className="product-card">
-          <img src="/product-chicken.jpg" alt="Chicken Breast" />
-          <div className="badge">PREMIUM</div>
-          <div className="product-info">
-            <h3>PREMIUM CHICKEN BREAST</h3>
+            <h3>PREMIUM CHICKEN</h3>
             <div className="price">
               <span className="current">₹3,750</span>
               <span className="old">₹5,200</span>
@@ -297,6 +245,30 @@ function Index() {
             <h3>FRESH FISH</h3>
             <div className="price">
               <span className="current">₹3,200</span>
+            </div>
+            <button className="add-to-cart">Add to Cart</button>
+          </div>
+        </div>
+
+        <div className="product-card">
+          <img src="/product-cod.jpg" alt="Cod" />
+          <div className="badge">PREMIUM</div>
+          <div className="product-info">
+            <h3>PREMIUM COD</h3>
+            <div className="price">
+              <span className="current">₹4,000</span>
+            </div>
+            <button className="add-to-cart">Add to Cart</button>
+          </div>
+        </div>
+
+        <div className="product-card">
+          <img src="/product-tuna.jpg" alt="Tuna" />
+          <div className="badge">FRESH</div>
+          <div className="product-info">
+            <h3>FRESH TUNA</h3>
+            <div className="price">
+              <span className="current">₹3,500</span>
             </div>
             <button className="add-to-cart">Add to Cart</button>
           </div>
