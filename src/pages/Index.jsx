@@ -163,7 +163,16 @@ function Index() {
         <div className="cart">Cart</div>
       </header>
 
-      <section className="hero">
+      <section
+        className="hero"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('/hero-meat%20(1).jpg')",
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
         <h1>Carnivore Couture</h1>
         <p>Premium meat delivery service with exciting offers just for you!</p>
         <button className="btn">Shop Now</button>
