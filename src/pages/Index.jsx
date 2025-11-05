@@ -33,7 +33,7 @@ function Index() {
         /* HERO */
         .hero {
           height: 100vh;
-          background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('/hero-meat%20(1).jpg') center/cover no-repeat;
+          background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('/product-fish.jpg') center/cover no-repeat;
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -167,7 +167,7 @@ function Index() {
         className="hero"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('/hero-meat%20(1).jpg')",
+            "linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('/product-fish.jpg')",
           backgroundPosition: "center",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
