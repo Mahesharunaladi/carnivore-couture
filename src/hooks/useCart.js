@@ -1,44 +1,48 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 
-export const useCart = create(persist(
-  (set, get) => ({
-    items: [],
-    addItem: (product) => {
-      set((state) => {
-        const existingItem = state.items.find((item) => item.id === product.id);
-        if (existingItem) {
+export const useCart = create((set) => ({
+  items: [],
+  itemCount: 0,
+  addToCart: (product) =>
+    set((state) => {
+      const existingItem = state.items.find((item) => item.id === product.id);
+      if (existingItem) {
+        return {
+          items: state.items.map((item) =>
+            item.id === product.id
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
+          ),
+          itemCount: state.itemCount + 1,
+        };
+      } else {
+        return {
+          items: [...state.items, { ...product, quantity: 1 }],
+          itemCount: state.itemCount + 1,
+        };
+      }
+    }),
+  removeFromCart: (productId) =>
+    set((state) => {
+      const existingItem = state.items.find((item) => item.id === productId);
+      if (existingItem) {
+        if (existingItem.quantity > 1) {
           return {
             items: state.items.map((item) =>
-              item.id === product.id
-                ? { ...item, quantity: item.quantity + 1 }
+              item.id === productId
+                ? { ...item, quantity: item.quantity - 1 }
                 : item
             ),
+            itemCount: state.itemCount - 1,
           };
         } else {
-          return { items: [...state.items, { ...product, quantity: 1 }] };
+          return {
+            items: state.items.filter((item) => item.id !== productId),
+            itemCount: state.itemCount - 1,
+          };
         }
-      });
-    },
-    updateQuantity: (id, quantity) => {
-      set((state) => ({
-        items: state.items
-          .map((item) => (item.id === id ? { ...item, quantity } : item))
-          .filter((item) => item.quantity > 0),
-      }));
-    },
-    removeItem: (id) => {
-      set((state) => ({
-        items: state.items.filter((item) => item.id !== id),
-      }));
-    },
-    clearCart: () => set({ items: [] }),
-    get total() {
-      return get().items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    },
-  }),
-  {
-    name: 'cart-storage',
-    getStorage: () => localStorage,
-  }
-));
+      }
+      return state; // Should not happen if UI is correct
+    }),
+  clearCart: () => set({ items: [], itemCount: 0 }),
+}));
