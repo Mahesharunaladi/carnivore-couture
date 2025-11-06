@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 import { ShoppingCart } from "lucide-react";
 import { useState } from "react";
-import { useCart } from "../hooks/useCart";
+import { useCart } from "@/hooks/useCart";
 import { toast } from "sonner";
 
 /**
