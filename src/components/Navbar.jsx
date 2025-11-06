@@ -256,6 +256,10 @@ const Index = () => {
 export default Index;
 
 
+import { ShoppingCart } from "lucide-react";
+import { Button } from "@/components/ui/button"; // Adjust path if your Button is elsewhere
+import useCart from "@/hooks/useCart";
+
 function Navbar({ onCartClick }) {
   const items = useCart((state) => state.items);
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
