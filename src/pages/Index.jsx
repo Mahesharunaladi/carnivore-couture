@@ -6,15 +6,15 @@ import { CartDrawer } from "@/components/CartDrawer";
 import { motion } from "framer-motion";
 import { Fish, Bird, Waves } from "lucide-react";
 import { useState } from "react";
-import productChicken from "@/assets/product-chicken.jpg";
-import productFish from "@/assets/product-fish.jpg";
-import productMutton from "@/assets/product-mutton.jpg";
-import productWings from "@/assets/product-wings.jpg";
-import productTuna from "@/assets/product-tuna.jpg";
-import productPrawns from "@/assets/product-prawns.jpg";
-import productMuttonCurry from "@/assets/product-mutton-curry.jpg";
-import productThighs from "@/assets/product-thighs.jpg";
-import productCod from "@/assets/product-cod.jpg";
+import productChicken from "/public/product-chicken.jpg";
+import productFish from "/public/product-fish.jpg";
+import productMutton from "/public/product-mutton.jpg";
+import productWings from "/public/product-wings.jpg";
+import productTuna from "/public/product-tuna.jpg";
+import productPrawns from "/public/product-prawns.jpg";
+import productMuttonCurry from "/public/product-mutton-curry.jpg";
+import productThighs from "/public/product-thighs.jpg";
+import productCod from "/public/product-cod.jpg";
 
 const Index = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -57,6 +57,7 @@ const Index = () => {
       image: productThighs,
       badge: "POPULAR",
     },
+    
     // Fish Products
     {
       name: "Wild Salmon Fillet",
@@ -112,6 +113,7 @@ const Index = () => {
       image: productPrawns,
       badge: "LUXURY",
     },
+    
     // Mutton Products
     {
       name: "Lamb Chops",
