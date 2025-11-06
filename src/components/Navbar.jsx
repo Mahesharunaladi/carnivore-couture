@@ -256,8 +256,9 @@ const Index = () => {
 export default Index;
 
 
+import { motion } from "framer-motion";
 import { ShoppingCart } from "lucide-react";
-import { Button } from "@/components/ui/button"; // Adjust path if your Button is elsewhere
+import { Button } from "@/components/ui/button";
 import useCart from "@/hooks/useCart";
 
 function Navbar({ onCartClick }) {

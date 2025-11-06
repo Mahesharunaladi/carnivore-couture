@@ -1,4 +1,3 @@
-import React from 'react';
 import { Hero } from "@/components/Hero";
 import { ProductCard } from "@/components/ProductCard";
 import { CategoryCard } from "@/components/CategoryCard";
@@ -29,7 +28,35 @@ const Index = () => {
       image: productChicken,
       badge: "PREMIUM",
     },
-    // ... existing code ... (include all chicken products here)
+    {
+      name: "Chicken Wings",
+      price: 2800,
+      originalPrice: 3500,
+      image: productWings,
+      badge: "BESTSELLER",
+    },
+    {
+      name: "Chicken Thighs",
+      price: 3200,
+      image: productThighs,
+    },
+    {
+      name: "Whole Chicken",
+      price: 4500,
+      image: productChicken,
+    },
+    {
+      name: "Chicken Drumsticks",
+      price: 2500,
+      originalPrice: 3000,
+      image: productWings,
+    },
+    {
+      name: "Chicken Curry Cut",
+      price: 3800,
+      image: productThighs,
+      badge: "POPULAR",
+    },
     // Fish Products
     {
       name: "Wild Salmon Fillet",
@@ -38,7 +65,53 @@ const Index = () => {
       image: productFish,
       badge: "PREMIUM",
     },
-    // ... existing code ... (include all fish products here)
+    {
+      name: "Tuna Steak",
+      price: 7800,
+      image: productTuna,
+      badge: "FRESH",
+    },
+    {
+      name: "Tiger Prawns",
+      price: 8500,
+      originalPrice: 10000,
+      image: productPrawns,
+      badge: "BESTSELLER",
+    },
+    {
+      name: "Cod Fish Fillet",
+      price: 5500,
+      image: productCod,
+    },
+    {
+      name: "King Fish Steaks",
+      price: 6800,
+      image: productFish,
+    },
+    {
+      name: "Pomfret Whole",
+      price: 7200,
+      originalPrice: 8500,
+      image: productTuna,
+      badge: "PREMIUM",
+    },
+    {
+      name: "Sea Bass",
+      price: 8900,
+      image: productCod,
+    },
+    {
+      name: "Mackerel",
+      price: 3500,
+      image: productFish,
+    },
+    {
+      name: "Jumbo Prawns",
+      price: 9500,
+      originalPrice: 11000,
+      image: productPrawns,
+      badge: "LUXURY",
+    },
     // Mutton Products
     {
       name: "Lamb Chops",
@@ -46,7 +119,35 @@ const Index = () => {
       image: productMutton,
       badge: "PREMIUM",
     },
-    // ... existing code ... (include all mutton products here)
+    {
+      name: "Mutton Curry Cut",
+      price: 6200,
+      originalPrice: 7500,
+      image: productMuttonCurry,
+      badge: "BESTSELLER",
+    },
+    {
+      name: "Mutton Leg",
+      price: 8900,
+      image: productMutton,
+    },
+    {
+      name: "Mutton Ribs",
+      price: 6800,
+      originalPrice: 8000,
+      image: productMuttonCurry,
+    },
+    {
+      name: "Mutton Keema",
+      price: 5500,
+      image: productMuttonCurry,
+      badge: "POPULAR",
+    },
+    {
+      name: "Mutton Shoulder",
+      price: 7200,
+      image: productMutton,
+    },
   ];
 
   const categories = [
@@ -57,114 +158,95 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-dark">
+      {/* Navbar */}
       <Navbar onCartClick={() => setIsCartOpen(true)} />
+      
+      {/* Cart Drawer */}
       <CartDrawer open={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      
+      {/* Hero Section */}
       <Hero />
-      <div className="section-title">
-        <h2>FEATURED PRODUCTS</h2>
-        <p>Our most popular premium selections</p>
-      </div>
 
-      <div className="products">
-        <div className="product-card">
-          <img src="/product-chicken.jpg" alt="Chicken" />
-          <div className="badge">PREMIUM</div>
-          <div className="product-info">
-            <h3>PREMIUM CHICKEN</h3>
-            <div className="price">
-              <span className="current">₹3,750</span>
-              <span className="old">₹5,200</span>
-            </div>
-            <button className="add-to-cart">Add to Cart</button>
+      {/* Categories Section */}
+      <section className="py-24 px-4">
+        <div className="container mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="font-display text-5xl md:text-6xl mb-4">
+              EXPLORE CATEGORIES
+            </h2>
+            <p className="text-muted-foreground text-lg font-sans">
+              Curated selections for every carnivore
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {categories.map((category, index) => (
+              <CategoryCard key={category.title} {...category} index={index} />
+            ))}
           </div>
         </div>
+      </section>
 
-        <div className="product-card">
-          <img src="/product-wings.jpg" alt="Chicken Wings" />
-          <div className="badge">BESTSELLER</div>
-          <div className="product-info">
-            <h3>CHICKEN WINGS</h3>
-            <div className="price">
-              <span className="current">₹2,800</span>
-              <span className="old">₹3,500</span>
-            </div>
-            <button className="add-to-cart">Add to Cart</button>
+      {/* Featured Products Section */}
+      <section className="py-24 px-4 bg-background">
+        <div className="container mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="font-display text-5xl md:text-6xl mb-4">
+              FEATURED PRODUCTS
+            </h2>
+            <p className="text-muted-foreground text-lg font-sans">
+              Our most popular premium selections
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto">
+            {products.map((product, index) => (
+              <ProductCard key={product.name} {...product} index={index} />
+            ))}
           </div>
         </div>
+      </section>
 
-        <div className="product-card">
-          <img src="/product-mutton.jpg" alt="Mutton" />
-          <div className="badge">PREMIUM</div>
-          <div className="product-info">
-            <h3>PREMIUM MUTTON</h3>
-            <div className="price">
-              <span className="current">₹3,750</span>
-              <span className="old">₹5,200</span>
-            </div>
-            <button className="add-to-cart">Add to Cart</button>
+      {/* Stats Section */}
+      <section className="py-24 px-4">
+        <div className="container mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            {[
+              { value: "100%", label: "Premium Quality" },
+              { value: "24/7", label: "Customer Support" },
+              { value: "50K+", label: "Happy Customers" },
+            ].map((stat, index) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="text-center"
+              >
+                <div className="font-display text-6xl md:text-7xl mb-2 bg-gradient-neon bg-clip-text text-transparent">
+                  {stat.value}
+                </div>
+                <div className="text-muted-foreground text-lg font-sans">
+                  {stat.label}
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
-
-        <div className="product-card">
-          <img src="/product-thighs.jpg" alt="Chicken Thighs" />
-          <div className="badge">BESTSELLER</div>
-          <div className="product-info">
-            <h3>CHICKEN THIGHS</h3>
-            <div className="price">
-              <span className="current">₹2,800</span>
-              <span className="old">₹3,500</span>
-            </div>
-            <button className="add-to-cart">Add to Cart</button>
-          </div>
-        </div>
-
-        <div className="product-card">
-          <img src="/product-prawns.jpg" alt="Prawns" />
-          <div className="badge">FRESH</div>
-          <div className="product-info">
-            <h3>FRESH PRAWNS</h3>
-            <div className="price">
-              <span className="current">₹4,500</span>
-            </div>
-            <button className="add-to-cart">Add to Cart</button>
-          </div>
-        </div>
-
-        <div className="product-card">
-          <img src="/product-fish.jpg" alt="Fish" />
-          <div className="product-info">
-            <h3>FRESH FISH</h3>
-            <div className="price">
-              <span className="current">₹3,200</span>
-            </div>
-            <button className="add-to-cart">Add to Cart</button>
-          </div>
-        </div>
-
-        <div className="product-card">
-          <img src="/product-cod.jpg" alt="Cod" />
-          <div className="badge">PREMIUM</div>
-          <div className="product-info">
-            <h3>PREMIUM COD</h3>
-            <div className="price">
-              <span className="current">₹4,000</span>
-            </div>
-            <button className="add-to-cart">Add to Cart</button>
-          </div>
-        </div>
-
-        <div className="product-card">
-          <img src="/product-tuna.jpg" alt="Tuna" />
-          <div className="badge">FRESH</div>
-          <div className="product-info">
-            <h3>FRESH TUNA</h3>
-            <div className="price">
-              <span className="current">₹3,500</span>
-            </div>
-            <button className="add-to-cart">Add to Cart</button>
-          </div>
-        </div>
-      </div>
+      </section>
     </div>
   );
 };
