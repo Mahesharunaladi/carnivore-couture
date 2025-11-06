@@ -1,11 +1,13 @@
-import { Hero } from "@/components/Hero";
-import { ProductCard } from "@/components/ProductCard";
-import { CategoryCard } from "@/components/CategoryCard";
-import { Navbar } from "@/components/Navbar";
-import { CartDrawer } from "@/components/CartDrawer";
+import { Hero } from "../components/Hero";
+import { ProductCard } from "../components/ProductCard";
+import { CategoryCard } from "../components/CategoryCard";
+import { Navbar } from "../components/Navbar";
+import { CartDrawer } from "../components/CartDrawer";
 import { motion } from "framer-motion";
 import { Fish, Bird, Waves } from "lucide-react";
 import { useState } from "react";
+
+// Corrected relative paths for images
 import productChicken from "/public/product-chicken.jpg";
 import productFish from "/public/product-fish.jpg";
 import productMutton from "/public/product-mutton.jpg";
