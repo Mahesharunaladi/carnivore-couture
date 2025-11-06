@@ -258,32 +258,32 @@ export default Index;
 
 
 function Navbar({ onCartClick }) {
-    const items = useCart((state) => state.items);
-    const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
-  
-    return (
-      <motion.div
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
+  const items = useCart((state) => state.items);
+  const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+    >
+      <Button
+        onClick={onCartClick}
+        variant="outline"
+        size="lg"
+        className="relative"
       >
-        <Button
-          onClick={onCartClick}
-          variant="outline"
-          size="lg"
-          className="relative"
-        >
-          {itemCount > 0 && (
-            <motion.span
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              className="absolute -top-2 -right-2 bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold"
-            >
-              {itemCount}
-            </motion.span>
-          )}
-        </Button>
-      </motion.div>
-    );
+        {itemCount > 0 && (
+          <motion.span
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            className="absolute -top-2 -right-2 bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold"
+          >
+            {itemCount}
+          </motion.span>
+        )}
+      </Button>
+    </motion.div>
+  );
 }
 
 import { Button } from "@/components/ui/button";

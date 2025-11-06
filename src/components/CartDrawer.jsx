@@ -12,10 +12,6 @@ import { motion } from "framer-motion";
 export const CartDrawer = ({ open, onClose }) => {
   const { items = [], updateQuantity, removeItem, clearCart, total = 0 } = useCart();
 
-  // Ensure items is an array and total is a number, providing default values if useCart returns undefined
-  const cartItems = items || [];
-  const cartTotal = total || 0;
-
   return (
     <Sheet open={open} onOpenChange={onClose}>
       <SheetContent className="w-full sm:max-w-lg">
@@ -24,14 +20,14 @@ export const CartDrawer = ({ open, onClose }) => {
         </SheetHeader>
 
         <div className="mt-8 flex flex-col h-[calc(100vh-200px)]">
-          {cartItems.length === 0 ? (
+          {items.length === 0 ? (
             <div className="flex-1 flex items-center justify-center">
               <p className="text-muted-foreground text-lg">Your cart is empty</p>
             </div>
           ) : (
             <>
               <div className="flex-1 overflow-y-auto space-y-4">
-                {cartItems.map((item, index) => (
+                {items.map((item, index) => (
                   <motion.div
                     key={item.id ?? index}
                     initial={{ opacity: 0, x: 20 }}
@@ -46,15 +42,13 @@ export const CartDrawer = ({ open, onClose }) => {
                     />
                     <div className="flex-1">
                       <h3 className="font-display text-lg mb-1">{item.name ?? "Unnamed"}</h3>
-                      <p className="text-primary font-bold">
-                        ₹{(item.price ?? 0).toLocaleString('en-IN')}
-                      </p>
+                      <p className="text-primary font-bold">₹{(item.price ?? 0).toLocaleString('en-IN')}</p>
                       <div className="flex items-center gap-2 mt-2">
                         <Button
                           size="icon"
                           variant="outline"
                           className="h-8 w-8"
-                          onClick={() => item.quantity > 1 && updateQuantity?.(item.id, item.quantity - 1)} // Added optional chaining
+                          onClick={() => item.quantity > 1 && updateQuantity?.(item.id, item.quantity - 1)}
                         >
                           <Minus className="w-4 h-4" />
                         </Button>
@@ -63,7 +57,7 @@ export const CartDrawer = ({ open, onClose }) => {
                           size="icon"
                           variant="outline"
                           className="h-8 w-8"
-                          onClick={() => updateQuantity?.(item.id, (item.quantity ?? 1) + 1)} // Added optional chaining
+                          onClick={() => updateQuantity?.(item.id, (item.quantity ?? 1) + 1)}
                         >
                           <Plus className="w-4 h-4" />
                         </Button>
@@ -71,7 +65,7 @@ export const CartDrawer = ({ open, onClose }) => {
                           size="icon"
                           variant="ghost"
                           className="h-8 w-8 ml-auto text-destructive"
-                          onClick={() => removeItem?.(item.id)} // Added optional chaining
+                          onClick={() => removeItem?.(item.id)}
                         >
                           <Trash2 className="w-4 h-4" />
                         </Button>
@@ -85,7 +79,7 @@ export const CartDrawer = ({ open, onClose }) => {
                 <div className="flex justify-between items-center">
                   <span className="font-display text-2xl">TOTAL</span>
                   <span className="font-display text-3xl text-primary">
-                    ₹{cartTotal.toLocaleString('en-IN')}
+                    ₹{total.toLocaleString('en-IN')}
                   </span>
                 </div>
                 <Button className="w-full" size="lg">
