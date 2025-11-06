@@ -3,14 +3,14 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle,
-} from "./ui/sheet"; // Adjusted import path to be relative
-import { Button } from "./ui/button"; // Adjusted import path to be relative
-import { useCart } from "../hooks/useCart"; // Adjusted import path to be relative
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { useCart } from "@/hooks/useCart";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
 
 export const CartDrawer = ({ open, onClose }) => {
-  const { items, updateQuantity, removeItem, clearCart, total } = useCart();
+  const { items = [], updateQuantity, removeItem, clearCart, total = 0 } = useCart();
 
   // Ensure items is an array and total is a number, providing default values if useCart returns undefined
   const cartItems = items || [];

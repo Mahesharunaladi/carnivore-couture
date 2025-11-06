@@ -286,6 +286,6 @@ function Navbar({ onCartClick }) {
     );
 }
 
-import { Button } from "./ui/button";
-import { useCart } from "../hooks/useCart";
+import { Button } from "@/components/ui/button";
+import { useCart } from "@/hooks/useCart";
 export { Navbar };
