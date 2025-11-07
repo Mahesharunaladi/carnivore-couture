@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Navbar } from "./components/Navbar";
 import { CartDrawer } from "./components/CartDrawer";
 import { Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
+import Index from './pages/Index.tsx';  // Update to .tsx
 import Header from "./components/Header"; // Import Header
 import { Toaster } from "sonner"; // Import Toaster
 
