@@ -6,9 +6,9 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
-    "strict": false,  // Change to false to relax rules
-    "allowJs": true,  // Allow JS files
-    "checkJs": false  // Disable JS checking
+    "strict": true,
+    "allowJs": true,
+    "types": ["vite/client"]  // Add this to include Vite's built-in types
   },
-  "include": ["vite.config.js"]
+  "include": ["vite.config.ts"]  // Update to .ts
 }
