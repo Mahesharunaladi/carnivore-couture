@@ -1,258 +1,60 @@
-import { Hero } from "../components/Hero";
-import { ProductCard } from "../components/ProductCard";
-import { CategoryCard } from "../components/CategoryCard";
-import { Navbar } from "../components/Navbar";
-import { CartDrawer } from "../components/CartDrawer";
-import { motion } from "framer-motion";
-import { Fish, Bird, Waves } from "lucide-react";
-import { useState } from "react";
+import React from 'react';
+import Hero from '../components/Hero';
+import CategoryCard from '../components/CategoryCard';
+import ProductCard from '../components/ProductCard';
 
-// Corrected relative paths for images, assuming they are in the public directory
-import productChicken from "/public/product-chicken.jpg";
-import productFish from "/public/product-fish.jpg";
-import productMutton from "/public/product-mutton.jpg";
-import productWings from "/public/product-wings.jpg";
-import productTuna from "/public/product-tuna.jpg";
-import productPrawns from "/public/product-prawns.jpg";
-import productMuttonCurry from "/public/product-mutton-curry.jpg";
-import productThighs from "/public/product-thighs.jpg";
-import productCod from "/public/product-cod.jpg";
+// Image imports (these should work in JS without declarations)
+import productChicken from '/public/product-chicken.jpg';
+import productThighs from '/public/product-thighs.jpg';
+import productWings from '/public/product-wings.jpg';
+import productMutton from '/public/product-mutton.jpg';
+import productMuttonCurry from '/public/product-mutton-curry.jpg';
+import productPrawns from '/public/product-prawns.jpg';
+import productCod from '/public/product-cod.jpg';
+import productTuna from '/public/product-tuna.jpg';
+import productFish from '/public/product-fish.jpg';
 
-const Index = () => {
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  
-  const products = [
-    // Chicken Products
-    {
-      name: "Premium Chicken Breast",
-      price: 3750,
-      originalPrice: 5200,
-      image: productChicken,
-      badge: "PREMIUM",
-    },
-    {
-      name: "Chicken Wings",
-      price: 2800,
-      originalPrice: 3500,
-      image: productWings,
-      badge: "BESTSELLER",
-    },
-    {
-      name: "Chicken Thighs",
-      price: 3200,
-      image: productThighs,
-    },
-    {
-      name: "Whole Chicken",
-      price: 4500,
-      image: productChicken,
-    },
-    {
-      name: "Chicken Drumsticks",
-      price: 2500,
-      originalPrice: 3000,
-      image: productWings,
-    },
-    {
-      name: "Chicken Curry Cut",
-      price: 3800,
-      image: productThighs,
-      badge: "POPULAR",
-    },
-    
-    // Fish Products
-    {
-      name: "Wild Salmon Fillet",
-      price: 6500,
-      originalPrice: 7900,
-      image: productFish,
-      badge: "PREMIUM",
-    },
-    {
-      name: "Tuna Steak",
-      price: 7800,
-      image: productTuna,
-      badge: "FRESH",
-    },
-    {
-      name: "Tiger Prawns",
-      price: 8500,
-      originalPrice: 10000,
-      image: productPrawns,
-      badge: "BESTSELLER",
-    },
-    {
-      name: "Cod Fish Fillet",
-      price: 5500,
-      image: productCod,
-    },
-    {
-      name: "King Fish Steaks",
-      price: 6800,
-      image: productFish,
-    },
-    {
-      name: "Pomfret Whole",
-      price: 7200,
-      originalPrice: 8500,
-      image: productTuna,
-      badge: "PREMIUM",
-    },
-    {
-      name: "Sea Bass",
-      price: 8900,
-      image: productCod,
-    },
-    {
-      name: "Mackerel",
-      price: 3500,
-      image: productFish,
-    },
-    {
-      name: "Jumbo Prawns",
-      price: 9500,
-      originalPrice: 11000,
-      image: productPrawns,
-      badge: "LUXURY",
-    },
-    
-    // Mutton Products
-    {
-      name: "Lamb Chops",
-      price: 7400,
-      image: productMutton,
-      badge: "PREMIUM",
-    },
-    {
-      name: "Mutton Curry Cut",
-      price: 6200,
-      originalPrice: 7500,
-      image: productMuttonCurry,
-      badge: "BESTSELLER",
-    },
-    {
-      name: "Mutton Leg",
-      price: 8900,
-      image: productMutton,
-    },
-    {
-      name: "Mutton Ribs",
-      price: 6800,
-      originalPrice: 8000,
-      image: productMuttonCurry,
-    },
-    {
-      name: "Mutton Keema",
-      price: 5500,
-      image: productMuttonCurry,
-      badge: "POPULAR",
-    },
-    {
-      name: "Mutton Shoulder",
-      price: 7200,
-      image: productMutton,
-    },
-  ];
+const categories = [
+  { name: 'Chicken', image: productChicken },
+  { name: 'Mutton', image: productMutton },
+  { name: 'Seafood', image: productFish },
+];
 
-  const categories = [
-    { title: "Fish", icon: Fish, count: 9 },
-    { title: "Chicken", icon: Bird, count: 6 },
-    { title: "Mutton", icon: Waves, count: 6 },
-  ];
+const products = [
+  { id: 1, name: 'Chicken Thighs', price: 12.99, image: productThighs },
+  { id: 2, name: 'Chicken Wings', price: 9.99, image: productWings },
+  { id: 3, name: 'Mutton Curry Cut', price: 19.99, image: productMuttonCurry },
+  { id: 4, name: 'Prawns', price: 24.99, image: productPrawns },
+  { id: 5, name: 'Cod Fillet', price: 22.99, image: productCod },
+  { id: 6, name: 'Tuna Steak', price: 26.99, image: productTuna },
+];
 
+function Index() {
   return (
-    <div className="min-h-screen bg-gradient-dark">
-      {/* Navbar */}
-      <Navbar onCartClick={() => setIsCartOpen(true)} />
-      
-      {/* Cart Drawer */}
-      <CartDrawer open={isCartOpen} onClose={() => setIsCartOpen(false)} />
-      
-      {/* Hero Section */}
+    <div className="min-h-screen bg-background">
       <Hero />
-
-      {/* Categories Section */}
-      <section className="py-24 px-4">
-        <div className="container mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="font-display text-5xl md:text-6xl mb-4">
-              EXPLORE CATEGORIES
-            </h2>
-            <p className="text-muted-foreground text-lg font-sans">
-              Curated selections for every carnivore
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {categories.map((category, index) => (
-              <CategoryCard key={category.title} {...category} index={index} />
+      <section className="py-12">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-8 text-center">Shop by Category</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {categories.map((category) => (
+              <CategoryCard key={category.name} {...category} />
             ))}
           </div>
         </div>
       </section>
-
-      {/* Featured Products Section */}
-      <section className="py-24 px-4 bg-background">
-        <div className="container mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="font-display text-5xl md:text-6xl mb-4">
-              FEATURED PRODUCTS
-            </h2>
-            <p className="text-muted-foreground text-lg font-sans">
-              Our most popular premium selections
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto">
-            {products.map((product, index) => (
-              <ProductCard key={product.name} {...product} index={index} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-24 px-4">
-        <div className="container mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            {[
-              { value: "100%", label: "Premium Quality" },
-              { value: "24/7", label: "Customer Support" },
-              { value: "50K+", label: "Happy Customers" },
-            ].map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="text-center"
-              >
-                <div className="font-display text-6xl md:text-7xl mb-2 bg-gradient-neon bg-clip-text text-transparent">
-                  {stat.value}
-                </div>
-                <div className="text-muted-foreground text-lg font-sans">
-                  {stat.label}
-                </div>
-              </motion.div>
+      <section className="py-12 bg-muted">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-8 text-center">Featured Products</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {products.map((product) => (
+              <ProductCard key={product.id} {...product} />
             ))}
           </div>
         </div>
       </section>
     </div>
   );
-};
+}
 
 export default Index;
