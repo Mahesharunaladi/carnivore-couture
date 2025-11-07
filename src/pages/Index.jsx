@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { Fish, Bird, Waves } from "lucide-react";
 import { useState } from "react";
 
-// Corrected relative paths for images
+// Corrected relative paths for images, assuming they are in the public directory
 import productChicken from "/public/product-chicken.jpg";
 import productFish from "/public/product-fish.jpg";
 import productMutton from "/public/product-mutton.jpg";
