@@ -5,25 +5,12 @@ import { useState } from "react";
 import { useCart } from "@/hooks/useCart";
 import { toast } from "sonner";
 
-/**
- * @typedef {object} ProductCardProps
- * @property {string} name
- * @property {number} price
- * @property {number} [originalPrice]
- * @property {string} image
- * @property {string} [badge]
- * @property {number} index
- */
-
-/**
- * @param {ProductCardProps} props
- */
 export const ProductCard = ({ name, price, originalPrice, image, badge, index }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const addItem = useCart((state) => state.addItem);
+  const addToCart = useCart((state) => state.addToCart);
 
   const handleAddToCart = () => {
-    addItem({
+    addToCart({
       id: name.toLowerCase().replace(/\s+/g, '-'),
       name,
       price,

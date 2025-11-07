@@ -1,8 +1,7 @@
 import { create } from 'zustand';
 
-export const useCart = create((set) => ({
+export const useCart = create((set, get) => ({
   items: [],
-  itemCount: 0,
   addToCart: (product) =>
     set((state) => {
       const existingItem = state.items.find((item) => item.id === product.id);
@@ -13,36 +12,33 @@ export const useCart = create((set) => ({
               ? { ...item, quantity: item.quantity + 1 }
               : item
           ),
-          itemCount: state.itemCount + 1,
         };
       } else {
         return {
           items: [...state.items, { ...product, quantity: 1 }],
-          itemCount: state.itemCount + 1,
         };
       }
     }),
-  removeFromCart: (productId) =>
+  updateQuantity: (id, quantity) =>
     set((state) => {
-      const existingItem = state.items.find((item) => item.id === productId);
-      if (existingItem) {
-        if (existingItem.quantity > 1) {
-          return {
-            items: state.items.map((item) =>
-              item.id === productId
-                ? { ...item, quantity: item.quantity - 1 }
-                : item
-            ),
-            itemCount: state.itemCount - 1,
-          };
-        } else {
-          return {
-            items: state.items.filter((item) => item.id !== productId),
-            itemCount: state.itemCount - 1,
-          };
-        }
+      if (quantity <= 0) {
+        return { items: state.items.filter((item) => item.id !== id) };
       }
-      return state; // Should not happen if UI is correct
+      return {
+        items: state.items.map((item) =>
+          item.id === id ? { ...item, quantity } : item
+        ),
+      };
     }),
-  clearCart: () => set({ items: [], itemCount: 0 }),
+  removeItem: (id) =>
+    set((state) => ({
+      items: state.items.filter((item) => item.id !== id),
+    })),
+  clearCart: () => set({ items: [] }),
+  get itemCount() {
+    return get().items.reduce((sum, item) => sum + item.quantity, 0);
+  },
+  get total() {
+    return get().items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  },
 }));
