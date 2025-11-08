@@ -1,7 +1,6 @@
 import { Hero } from "@/components/Hero";
 import { ProductCard } from "@/components/ProductCard";
 import { CategoryCard } from "@/components/CategoryCard";
-import { Navbar } from "@/components/Navbar";
 import { CartDrawer } from "@/components/CartDrawer";
 import { motion } from "framer-motion";
 import { ShoppingCart } from "lucide-react";

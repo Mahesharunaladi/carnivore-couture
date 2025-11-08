@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "./ui/button";
 import { ChevronRight } from "lucide-react";
-import heroImage from "@/assets/hero-meat.jpg";
+import heroImage from "/hero-meat.jpg"; // Fixed public asset path
 
 export const Hero = () => {
   const { scrollY } = useScroll();

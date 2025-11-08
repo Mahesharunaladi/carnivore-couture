@@ -4,15 +4,15 @@ import CategoryCard from '../components/CategoryCard';
 import ProductCard from '../components/ProductCard';
 
 // Image imports (these should work in JS without declarations)
-import productChicken from '/public/product-chicken.jpg';
-import productThighs from '/public/product-thighs.jpg';
-import productWings from '/public/product-wings.jpg';
-import productMutton from '/public/product-mutton.jpg';
-import productMuttonCurry from '/public/product-mutton-curry.jpg';
-import productPrawns from '/public/product-prawns.jpg';
-import productCod from '/public/product-cod.jpg';
-import productTuna from '/public/product-tuna.jpg';
-import productFish from '/public/product-fish.jpg';
+import productChicken from '/product-chicken.jpg';
+import productThighs from '/product-thighs.jpg';
+import productWings from '/product-wings.jpg';
+import productMutton from '/product-mutton.jpg';
+import productMuttonCurry from '/product-mutton-curry.jpg';
+import productPrawns from '/product-prawns.jpg';
+import productCod from '/product-cod.jpg';
+import productTuna from '/product-tuna.jpg';
+import productFish from '/product-fish.jpg';
 
 const categories = [
   { name: 'Chicken', image: productChicken },

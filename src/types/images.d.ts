@@ -1,9 +1,24 @@
-declare module '*.jpg' {
+declare module "*.jpg" {
   const src: string;
   export default src;
 }
-declare module '*.png' {
+
+declare module "*.png" {
   const src: string;
   export default src;
 }
-// Add similar for other image types
+
+declare module "*.jpeg" {
+  const src: string;
+  export default src;
+}
+
+declare module "*.gif" {
+  const src: string;
+  export default src;
+}
+
+declare module "*.svg" {
+  const src: string;
+  export default src;
+}
