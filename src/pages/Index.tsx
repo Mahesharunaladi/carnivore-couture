@@ -3,16 +3,16 @@ import Hero from '../components/Hero';
 import CategoryCard from '../components/CategoryCard';
 import ProductCard from '../components/ProductCard';
 
-// Image imports (these should work in JS without declarations)
-import productChicken from '/product-chicken.jpg';
-import productThighs from '/product-thighs.jpg';
-import productWings from '/product-wings.jpg';
-import productMutton from '/product-mutton.jpg';
-import productMuttonCurry from '/product-mutton-curry.jpg';
-import productPrawns from '/product-prawns.jpg';
-import productCod from '/product-cod.jpg';
-import productTuna from '/product-tuna.jpg';
-import productFish from '/product-fish.jpg';
+// Fixed public image imports using process.env.PUBLIC_URL
+import productChicken from `${process.env.PUBLIC_URL}/product-chicken.jpg`;
+import productThighs from `${process.env.PUBLIC_URL}/product-thighs.jpg`;
+import productWings from `${process.env.PUBLIC_URL}/product-wings.jpg`;
+import productMutton from `${process.env.PUBLIC_URL}/product-mutton.jpg`;
+import productMuttonCurry from `${process.env.PUBLIC_URL}/product-mutton-curry.jpg`;
+import productPrawns from `${process.env.PUBLIC_URL}/product-prawns.jpg`;
+import productCod from `${process.env.PUBLIC_URL}/product-cod.jpg`;
+import productTuna from `${process.env.PUBLIC_URL}/product-tuna.jpg`;
+import productFish from `${process.env.PUBLIC_URL}/product-fish.jpg`;
 
 const categories = [
   { name: 'Chicken', image: productChicken },
