@@ -2,10 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingCart } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useCart } from '../hooks/useCart'; // Import useCart hook
 import logo from '/logo.png'; // Assuming logo.png is in the public directory
 
 const Header = () => {
   const { user, logout } = useAuth();
+  const { itemCount } = useCart(); // Use itemCount from useCart hook
 
   return (
     <header className="main-header">
@@ -17,16 +19,20 @@ const Header = () => {
       <div className="header-actions">
         {!user ? (
           <div className="login-section">
+            <Link to="/cart" className="cart-button">
+              <ShoppingCart size={20} />
+              <span className="cart-count">{itemCount()}</span> {/* Display dynamic cart count */}
+            </Link>
             <Link to="/login" className="login-button">
               Login
             </Link>
           </div>
         ) : (
           <div className="user-section">
-            <span className="welcome-message">Welcome, {user.name}!</span>
+            <span className="welcome-message">Welcome, {user?.name || user?.username || 'User'}!</span> {/* Safely access user.name */}
             <Link to="/cart" className="cart-button">
               <ShoppingCart size={20} />
-              <span className="cart-count">0</span> {/* Placeholder for cart count */}
+              <span className="cart-count">{itemCount()}</span> {/* Display dynamic cart count */}
             </Link>
             <button onClick={logout} className="logout-button">
               Logout
