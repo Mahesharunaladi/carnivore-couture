@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   Sheet,
   SheetContent,
@@ -5,20 +6,30 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { useCart } from "@/hooks/useCart";
+// @ts-ignore
+import { useCart, CartItem } from "@/hooks/useCart";
+import { useAuth } from "@/context/AuthContext";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
 
-export const CartDrawer = ({ open, onClose }) => {
-    const { items = [], updateQuantity, removeItem, clearCart, total = 0 } = useCart();
+export const CartDrawer = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
+    const { items, total, cartError, fetchCart, updateQuantity, removeItem, clearCart } = useCart();
+    const { token } = useAuth();
+
+    useEffect(() => {
+      if (open && token) {
+        fetchCart(token);
+      }
+    }, [open, token, fetchCart]);
 
     return (
       <Sheet open={open} onOpenChange={onClose}>
-        <SheetContent className="w-full sm:max-w-lg">
+          <SheetContent className="w-full sm:max-w-lg">
           <SheetHeader>
             <SheetTitle className="font-display text-3xl">YOUR CART</SheetTitle>
           </SheetHeader>
           <div className="mt-8 flex flex-col h-[calc(100vh-200px)]">
+            {cartError && <p className="text-destructive text-center mb-4">{cartError}</p>}
             {items.length === 0 ? (
               <div className="flex-1 flex items-center justify-center">
                 <p className="text-muted-foreground text-lg">Your cart is empty</p>
@@ -26,7 +37,7 @@ export const CartDrawer = ({ open, onClose }) => {
             ) : (
               <>
                 <div className="flex-1 overflow-y-auto space-y-4">
-                  {items.map((item, index) => (
+                  {items.map((item: CartItem, index: number) => (
                     <motion.div
                       key={item.id ?? index}
                       initial={{ opacity: 0, x: 20 }}
@@ -47,7 +58,7 @@ export const CartDrawer = ({ open, onClose }) => {
                             size="icon"
                             variant="outline"
                             className="h-8 w-8"
-                            onClick={() => (item.quantity ?? 1) > 1 && updateQuantity?.(item.id, (item.quantity ?? 1) - 1)}
+                            onClick={() => (item.quantity ?? 1) > 1 && updateQuantity(item.id, (item.quantity ?? 1) - 1, token)}
                           >
                             <Minus className="w-4 h-4" />
                           </Button>
@@ -56,7 +67,7 @@ export const CartDrawer = ({ open, onClose }) => {
                             size="icon"
                             variant="outline"
                             className="h-8 w-8"
-                            onClick={() => updateQuantity?.(item.id, (item.quantity ?? 1) + 1)}
+                            onClick={() => updateQuantity(item.id, (item.quantity ?? 1) + 1, token)}
                           >
                             <Plus className="w-4 h-4" />
                           </Button>
@@ -64,7 +75,7 @@ export const CartDrawer = ({ open, onClose }) => {
                             size="icon"
                             variant="ghost"
                             className="h-8 w-8 ml-auto text-destructive"
-                            onClick={() => removeItem?.(item.id)}
+                            onClick={() => removeItem(item.id, token)}
                           >
                             <Trash2 className="w-4 h-4" />
                           </Button>
@@ -78,7 +89,7 @@ export const CartDrawer = ({ open, onClose }) => {
                   <div className="flex justify-between items-center">
                     <span className="font-display text-2xl">TOTAL</span>
                     <span className="font-display text-3xl text-primary">
-                      ₹{total.toLocaleString('en-IN')}
+₹{total.toLocaleString()}
                     </span>
                   </div>
                   <Button className="w-full" size="lg">
@@ -87,7 +98,7 @@ export const CartDrawer = ({ open, onClose }) => {
                   <Button
                     variant="outline"
                     className="w-full"
-                    onClick={clearCart}
+                    onClick={() => clearCart(token)}
                   >
                     Clear Cart
                   </Button>
