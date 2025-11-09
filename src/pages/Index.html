@@ -30,7 +30,31 @@
       backdrop-filter: blur(10px);
     }
     .logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; }
-    .cart { font-size: 1.5rem; cursor: pointer; }
+    .cart {
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background-color: #e63946;
+      position: relative;
+    }
+    .cart-count {
+      position: absolute;
+      top: -0.5rem;
+      right: -0.5rem;
+      background-color: #0f0f0f;
+      color: white;
+      border-radius: 50%;
+      padding: 0.2em 0.5em;
+      font-size: 0.8em;
+      min-width: 1.5em;
+      text-align: center;
+    }
 
     /* HERO */
     .hero {
@@ -166,7 +190,9 @@
   <!-- HEADER -->
   <header>
     <div class="logo">Carnivore Couture</div>
-    <div class="cart">Cart</div>
+    <div class="cart" id="cart-icon">
+      🛒 <span id="cart-item-count">0</span>
+    </div>
   </header>
 
   <!-- HERO -->
@@ -236,6 +262,27 @@
       </div>
     </div>
   </div>
+
+  <script>
+    function updateCartItemCount(count) {
+      const cartCountElement = document.getElementById('cart-item-count');
+      if (cartCountElement) {
+        cartCountElement.textContent = count;
+      }
+    }
+
+    const cartElement = document.getElementById('cart-icon');
+    if (cartElement) {
+      cartElement.addEventListener('click', () => {
+        console.log('Cart clicked! Displaying cart contents...');
+        alert('Cart clicked! (This is a placeholder for actual cart display)');
+        // In a real application, you would open a cart drawer or navigate to a cart page here.
+      });
+    }
+
+    // Example of how to update the cart count (you would integrate this with your actual cart logic)
+    // updateCartItemCount(3);
+  </script>
 
 </body>
 </html>
