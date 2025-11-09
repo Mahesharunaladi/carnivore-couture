@@ -1,18 +1,19 @@
 import React from 'react';
-import Hero from '../components/Hero';
+// Added explicit .tsx extensions for component imports
+import Hero from '../components/Hero.tsx';
 import CategoryCard from '../components/CategoryCard';
-import ProductCard from '../components/ProductCard';
+import { ProductCard } from '../components/ProductCard.tsx';
 
-// Fixed public image imports using process.env.PUBLIC_URL
-import productChicken from `${process.env.PUBLIC_URL}/product-chicken.jpg`;
-import productThighs from `${process.env.PUBLIC_URL}/product-thighs.jpg`;
-import productWings from `${process.env.PUBLIC_URL}/product-wings.jpg`;
-import productMutton from `${process.env.PUBLIC_URL}/product-mutton.jpg`;
-import productMuttonCurry from `${process.env.PUBLIC_URL}/product-mutton-curry.jpg`;
-import productPrawns from `${process.env.PUBLIC_URL}/product-prawns.jpg`;
-import productCod from `${process.env.PUBLIC_URL}/product-cod.jpg`;
-import productTuna from `${process.env.PUBLIC_URL}/product-tuna.jpg`;
-import productFish from `${process.env.PUBLIC_URL}/product-fish.jpg`;
+// Replaced invalid template literal imports with require (supports dynamic PUBLIC_URL)
+const productChicken = require(`${process.env.PUBLIC_URL}/product-chicken.jpg`) as string;
+const productThighs = require(`${process.env.PUBLIC_URL}/product-thighs.jpg`) as string;
+const productWings = require(`${process.env.PUBLIC_URL}/product-wings.jpg`) as string;
+const productMutton = require(`${process.env.PUBLIC_URL}/product-mutton.jpg`) as string;
+const productMuttonCurry = require(`${process.env.PUBLIC_URL}/product-mutton-curry.jpg`) as string;
+const productPrawns = require(`${process.env.PUBLIC_URL}/product-prawns.jpg`) as string;
+const productCod = require(`${process.env.PUBLIC_URL}/product-cod.jpg`) as string;
+const productTuna = require(`${process.env.PUBLIC_URL}/product-tuna.jpg`) as string;
+const productFish = require(`${process.env.PUBLIC_URL}/product-fish.jpg`) as string;
 
 const categories = [
   { name: 'Chicken', image: productChicken },
