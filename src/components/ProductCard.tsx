@@ -2,14 +2,24 @@ import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 import { ShoppingCart } from "lucide-react";
 import { useState } from "react";
-import { useCart } from "@/hooks/useCart";
+import { useCart, CartStore } from "@/hooks/useCart";
 import { toast } from "sonner";
 
-export const ProductCard = ({ name, price, originalPrice, image, badge, index }) => {
+interface ProductCardProps {
+  name: string;
+  price: number;
+  originalPrice?: number;
+  image: string;
+  badge?: string;
+  index: number;
+}
+
+export const ProductCard = ({ name, price, originalPrice, image, badge, index }: ProductCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
-  const addToCart = useCart((state) => state.addToCart);
+  const addToCart = useCart((state: CartStore) => state.addToCart);
 
   const handleAddToCart = () => {
+    console.log("Add to cart button clicked!");
     addToCart({
       id: name.toLowerCase().replace(/\s+/g, '-'),
       name,

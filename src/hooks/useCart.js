@@ -1,3 +1,4 @@
+/// <reference types="./useCart" />
 import { create } from 'zustand';
 export const useCart = create((set, get) => ({
   items: [],
