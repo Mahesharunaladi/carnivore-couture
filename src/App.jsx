@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import Index from './pages/Index.tsx';  // Update to .tsx
 import Header from "./components/Header"; // Import Header
 import { Toaster } from "sonner"; // Import Toaster
+import CartPage from './pages/CartPage';
 
 function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -19,6 +20,7 @@ function App() {
       <Toaster position="top-center" /> {/* Add Toaster here */}
       <Routes>
         <Route path="/" element={<Index />} />
+        <Route path="/cart" element={<CartPage />} />
       </Routes>
     </div>
   );

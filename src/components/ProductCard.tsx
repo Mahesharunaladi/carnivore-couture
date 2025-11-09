@@ -30,6 +30,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   const handleAddToCart = () => {
     console.log('Add to cart button clicked!');
+    console.log('Auth Token:', token);
     addToCart(
       {
         id: String(index),
@@ -41,6 +42,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
     );
     toast.success('Added to cart!');
   };
+
+  console.log('ProductCard rendering, handleAddToCart defined:', !!handleAddToCart);
 
   return (
     <motion.div
@@ -118,10 +121,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
             animate={isHovered ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
             transition={{ duration: 0.2 }}
           >
-            <Button className="w-full shadow-glow hover:shadow-neon" onClick={handleAddToCart}>
+            <button className="w-full shadow-glow hover:shadow-neon" onClick={handleAddToCart}>
               <ShoppingCart className="mr-2 h-4 w-4" />
               Add to Cart
-            </Button>
+            </button>
           </motion.div>
         </div>
       </div>
