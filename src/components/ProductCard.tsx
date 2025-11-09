@@ -2,7 +2,9 @@ import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 import { ShoppingCart } from "lucide-react";
 import { useState } from "react";
-import { useCart, CartStore } from "@/hooks/useCart";
+// @ts-ignore
+import { useAuth } from '@/context/AuthContext';
+import { useCart, CartStore } from '@/hooks/useCart';
 import { toast } from "sonner";
 
 interface ProductCardProps {
@@ -14,19 +16,30 @@ interface ProductCardProps {
   index: number;
 }
 
-export const ProductCard = ({ name, price, originalPrice, image, badge, index }: ProductCardProps) => {
+const ProductCard: React.FC<ProductCardProps> = ({
+  name,
+  price,
+  originalPrice,
+  image,
+  badge,
+  index,
+}) => {
   const [isHovered, setIsHovered] = useState(false);
   const addToCart = useCart((state: CartStore) => state.addToCart);
+  const { token } = useAuth();
 
   const handleAddToCart = () => {
-    console.log("Add to cart button clicked!");
-    addToCart({
-      id: name.toLowerCase().replace(/\s+/g, '-'),
-      name,
-      price,
-      image,
-    });
-    toast.success(`${name} added to cart!`);
+    console.log('Add to cart button clicked!');
+    addToCart(
+      {
+        id: String(index),
+        name,
+        price,
+        image,
+      },
+      token,
+    );
+    toast.success('Added to cart!');
   };
 
   return (
