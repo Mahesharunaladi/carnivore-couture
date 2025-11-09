@@ -20,6 +20,7 @@ interface CartActions {
   removeItem: (id: string, token: string) => Promise<void>;
   clearCart: (token: string) => Promise<void>;
   itemCount: () => number;
+  totalUniqueItems: () => number; // Add this line
   total: () => number;
 }
 

@@ -1,4 +1,7 @@
 declare module "@/context/AuthContext" {
+  import React from 'react';
+
+module "../context/AuthContext" {
   interface User {
   id: string;
   email: string;
@@ -20,4 +23,5 @@ export const AuthContext: React.Context<AuthContextType>;
 export function useAuth(): AuthContextType;
 
 export { User, AuthContextType };
+}
 }
