@@ -280,6 +280,20 @@
       });
     }
 
+    const addToCartButtons = document.querySelectorAll('.add-to-cart');
+    addToCartButtons.forEach(button => {
+      button.addEventListener('click', (event) => {
+        const productCard = event.target.closest('.product-card');
+        const productName = productCard.querySelector('h3').textContent;
+        console.log(`Added "${productName}" to cart!`);
+        alert(`Added "${productName}" to cart!`);
+        // Here you would typically add logic to update the cart state
+        // For now, let's just increment a placeholder cart count
+        let currentCartCount = parseInt(document.getElementById('cart-item-count').textContent);
+        updateCartItemCount(currentCartCount + 1);
+      });
+    });
+
     // Example of how to update the cart count (you would integrate this with your actual cart logic)
     // updateCartItemCount(3);
   </script>
