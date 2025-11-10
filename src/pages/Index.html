@@ -264,38 +264,48 @@
   </div>
 
   <script>
-    function updateCartItemCount(count) {
-      const cartCountElement = document.getElementById('cart-item-count');
-      if (cartCountElement) {
-        cartCountElement.textContent = count;
+    document.addEventListener('DOMContentLoaded', () => {
+      function updateCartItemCount(count) {
+        const cartCountElement = document.getElementById('cart-item-count');
+        if (cartCountElement) {
+          cartCountElement.textContent = count;
+        }
       }
-    }
 
-    const cartElement = document.getElementById('cart-icon');
-    if (cartElement) {
-      cartElement.addEventListener('click', () => {
-        console.log('Cart clicked! Displaying cart contents...');
-        alert('Cart clicked! (This is a placeholder for actual cart display)');
-        // In a real application, you would open a cart drawer or navigate to a cart page here.
-      });
-    }
+      const cartElement = document.getElementById('cart-icon');
+      if (cartElement) {
+        cartElement.addEventListener('click', () => {
+          console.log('Cart clicked! Displaying cart contents...');
+          alert('Cart clicked! (This is a placeholder for actual cart display)');
+          // In a real application, you would open a cart drawer or navigate to a cart page here.
+        });
+      }
 
-    const addToCartButtons = document.querySelectorAll('.add-to-cart');
-    addToCartButtons.forEach(button => {
-      button.addEventListener('click', (event) => {
-        const productCard = event.target.closest('.product-card');
-        const productName = productCard.querySelector('h3').textContent;
-        console.log(`Added "${productName}" to cart!`);
-        alert(`Added "${productName}" to cart!`);
-        // Here you would typically add logic to update the cart state
-        // For now, let's just increment a placeholder cart count
-        let currentCartCount = parseInt(document.getElementById('cart-item-count').textContent);
-        updateCartItemCount(currentCartCount + 1);
+      const addToCartButtons = document.querySelectorAll('.add-to-cart');
+      addToCartButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+          const productCard = event.target.closest('.product-card');
+          const productName = productCard.querySelector('h3').textContent;
+          console.log(`Added "${productName}" to cart!`);
+          alert(`Added "${productName}" to cart!`);
+          // Here you would typically add logic to update the cart state
+          // For now, let's just increment a placeholder cart count
+          let currentCartCount = parseInt(document.getElementById('cart-item-count').textContent);
+          updateCartItemCount(currentCartCount + 1);
+        });
       });
+
+      // Example of how to update the cart count (you would integrate this with your actual cart logic)
+      // updateCartItemCount(3);
+
+      const shopNowButton = document.querySelector('.hero .btn');
+      if (shopNowButton) {
+        shopNowButton.addEventListener('click', () => {
+          console.log('Shop Now button clicked!');
+          alert('Redirecting to shop page! (Placeholder)');
+        });
+      }
     });
-
-    // Example of how to update the cart count (you would integrate this with your actual cart logic)
-    // updateCartItemCount(3);
   </script>
 
 </body>
