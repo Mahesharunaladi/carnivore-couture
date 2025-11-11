@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Carnivore Couture</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="icon" href="/public/logo.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800&family=Playfair+Display:wght=700&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary-red: #e63946;
@@ -272,6 +273,11 @@
 
     /* RESPONSIVE */
     @media (max-width: 768px) {
+      header {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+      }
       .hero h1 {
         font-size: 3.5rem;
       }
@@ -323,6 +329,10 @@
       }
       .section-title h2 {
         font-size: 2rem;
+      }
+      .search-bar {
+        width: 100%;
+        justify-content: center;
       }
       .search-bar input {
         width: 100px;
