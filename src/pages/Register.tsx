@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext, AuthContextValue } from "../context/AuthContext";
+import { AuthContext } from "../context/AuthContext.jsx";
+import { AuthContextValue } from "../types/auth";
 import "../../public/login.css"; // Assuming you want to reuse some login styles
 
 function Register() {
@@ -28,13 +29,12 @@ function Register() {
     }
 
     try {
-      const userData = { 
-        username: formData.username, 
-        email: formData.email, 
-        password: formData.password, 
-        name: formData.username // Assuming 'name' is required by your backend
-      };
-      await register(userData);
+      const { confirmPassword, ...registerPayload } = formData;
+      await register({
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+      });
       alert('Registration successful! Please log in.');
       navigate('/login'); // Redirect to login after successful registration
     } catch (err: any) {

@@ -1,23 +1,23 @@
-import React, { createContext, useContext, useState, useEffect } from 'react'; // Add useEffect import
-import authService from '../services/authService'; // Import authService
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import authService from '../services/authService';
 import { API_BASE_URL } from '../config';
+import { AuthContextValue, User } from '../types/auth';
 
-const AuthContext = createContext();
+const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
-export { AuthContext }; // Add this line to export AuthContext
+export { AuthContext };
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem('token') || '');
+  const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string>(localStorage.getItem('token') || '');
 
-  // Add this useEffect to load user when token exists
   useEffect(() => {
     const loadUser = async () => {
         if (token) {
             try {
-                console.log('Loading user with token:', token); // Add log
+                console.log('Loading user with token:', token);
                 const currentUser = await getCurrentUser();
-                console.log('Loaded user:', currentUser); // Add log
+                console.log('Loaded user:', currentUser);
                 setUser(currentUser);
             } catch (error) {
                 console.error('Failed to load user:', error);
@@ -27,40 +27,36 @@ export function AuthProvider({ children }) {
         }
     };
     loadUser();
-}, [token]); // Run when token changes
+}, [token]);
 
-  // Helper to save token and user info after successful login/register
-  const saveAuth = (token, user) => {
+  const saveAuth = (token: string, user: User) => {
     setToken(token);
     setUser(user);
     localStorage.setItem('token', token);
-    console.log('User object in saveAuth:', user); // Add this line for debugging
+    console.log('User object in saveAuth:', user);
   };
 
-  // LOGIN FUNCTION
-  async function login(email, password) {
+  async function login(email: string, password: string): Promise<User> {
     try {
       const data = await authService.login(email, password);
       saveAuth(data.token, data.user);
       return data.user;
-    } catch (error) {
+    } catch (error: any) {
       throw error.response?.data?.message || 'Login failed';
     }
   }
 
-  // REGISTER FUNCTION
-  async function register(formData) {
+  async function register(formData: { username: string; email: string; password: string; name?: string }): Promise<User> {
     try {
       const data = await authService.register(formData);
       saveAuth(data.token, data.user);
       return data.user;
-    } catch (error) {
+    } catch (error: any) {
       throw error.response?.data?.message || 'Registration failed';
     }
   }
 
-  // GET CURRENT USER
-  async function getCurrentUser() {
+  async function getCurrentUser(): Promise<User> {
     const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
       headers: { "Authorization": `Bearer ${token}` }
     });
@@ -68,7 +64,6 @@ export function AuthProvider({ children }) {
     return res.json();
   }
 
-  // LOGOUT FUNCTION
   function logout() {
     setUser(null);
     setToken('');
@@ -83,5 +78,9 @@ export function AuthProvider({ children }) {
 }
 
 export function useAuth() {
-  return useContext(AuthContext);
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
 }

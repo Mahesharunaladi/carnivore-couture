@@ -8,7 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 // @ts-ignore
 import { useCart, CartItem } from "@/hooks/useCart";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from '../context/AuthContext.jsx';
 
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
