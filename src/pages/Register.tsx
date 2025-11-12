@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react';
+// src/pages/Register.tsx
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from "../context/AuthContext.jsx";
-import { AuthContextValue } from "../types/auth";
-import "../../public/login.css"; // Assuming you want to reuse some login styles
+import { useAuth } from '../context/AuthContext';  // REMOVE .js + use custom hook
+import '../../public/login.css';
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -13,7 +13,8 @@ function Register() {
   });
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const { register } = useContext(AuthContext) as AuthContextValue;
+  const auth = useAuth();  // ← Destructure after verifying the method exists
+  const register = auth.register;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -29,17 +30,15 @@ function Register() {
     }
 
     try {
-      const { confirmPassword, ...registerPayload } = formData;
       await register({
         username: formData.username,
         email: formData.email,
         password: formData.password,
       });
       alert('Registration successful! Please log in.');
-      navigate('/login'); // Redirect to login after successful registration
+      navigate('/login');
     } catch (err: any) {
-      console.error('Registration error:', err);
-      setError(err.message || 'An error occurred during registration');
+      setError(err.message || 'Registration failed');
     }
   };
 
@@ -108,8 +107,7 @@ function Register() {
           {error && <p className="error-message">{error}</p>}
           <div className="switch-form-link">
             <p>
-              Already have an account?{' '}
-              <Link to="/login">Log in</Link>
+              Already have an account? <Link to="/login">Log in</Link>
             </p>
           </div>
         </form>

@@ -1,27 +1,25 @@
-import React, { useState, useContext } from 'react';
+// src/pages/Login.tsx  (or wherever your file is)
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from "../context/AuthContext";
-import { AuthContextValue } from "../types/auth";
+import { useAuth } from "../context/AuthContext";  // ← REMOVE .js
 import "../../public/login.css";
 
 function Login() {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const { login } = useContext(AuthContext) as AuthContextValue;
+  const { login } = useAuth();  // ← Now works!
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
 
     try {
-      const userData = await login(email, password);
-      console.log('Logged in user:', userData);
+      await login(email, password);
       navigate('/');
     } catch (err: any) {
-      console.error('Login error:', err);
-      setError(err.message || 'An error occurred during login');
+      setError(err.message || 'Invalid email or password');
     }
   };
 
@@ -36,10 +34,9 @@ function Login() {
             <input
               type="email"
               id="email"
-              name="email"
-              placeholder="Email"
               value={email}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"
               required
             />
           </div>
@@ -48,10 +45,9 @@ function Login() {
             <input
               type="password"
               id="password"
-              name="password"
-              placeholder="Password"
               value={password}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
               required
             />
           </div>
@@ -67,8 +63,7 @@ function Login() {
           {error && <p className="error-message">{error}</p>}
           <div className="switch-form-link">
             <p>
-              Don't have an account?{' '}
-              <Link to="/register">Sign Up</Link>
+              Don't have an account? <Link to="/register">Sign Up</Link>
             </p>
           </div>
         </form>
