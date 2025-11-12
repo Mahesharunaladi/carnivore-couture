@@ -6,6 +6,8 @@ import Index from './pages/Index.tsx';  // Update to .tsx
 import Header from "./components/Header"; // Import Header
 import { Toaster } from "sonner"; // Import Toaster
 import CartPage from './pages/CartPage';
+import Login from './pages/Login'; // Import Login component
+import Register from './pages/Register'; // Import Register component
 
 function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -21,6 +23,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/login" element={<Login />} /> {/* Add Login Route */}
+        <Route path="/register" element={<Register />} /> {/* Add Register Route */}
       </Routes>
     </div>
   );

@@ -1,0 +1,139 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #0f0f0f; /* Dark background */
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.login-box {
+  background-color: #1a1a1a; /* Darker card background */
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login-logo {
+  width: 100px;
+  margin-bottom: 20px;
+}
+
+.login-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  color: #e63946; /* Accent color */
+}
+
+.input-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #ccc;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #0f0f0f; /* Input background */
+  color: #fff;
+  box-sizing: border-box;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #e63946;
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.3);
+}
+
+.options-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  color: #ccc;
+}
+
+.remember-me input {
+  margin-right: 8px;
+}
+
+.forgot-password {
+  color: #e63946;
+  text-decoration: none;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+.login-submit-btn {
+  background-color: #e63946;
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.login-submit-btn:hover {
+  background-color: #d00000;
+}
+
+.error-message {
+  color: #ff6b6b;
+  margin-top: 15px;
+  font-size: 0.9rem;
+}
+
+.switch-form-link {
+  margin-top: 20px;
+  color: #ccc;
+}
+
+.switch-form-link span,
+.switch-form-link a {
+  color: #e63946;
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.switch-form-link span:hover,
+.switch-form-link a:hover {
+  text-decoration: underline;
+}
+
+.terms-checkbox {
+  margin-bottom: 20px;
+  text-align: left;
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.terms-checkbox input {
+  margin-right: 8px;
+}
