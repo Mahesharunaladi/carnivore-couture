@@ -3,6 +3,8 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 interface User {
   username: string;
   email: string;
+  name: string;
+  token?: string; // Add token property
 }
 
 interface AuthContextType {
@@ -19,7 +21,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (email: string, password: string): Promise<User> => {
     if (email === 'test@carnivore.com' && password === '123') {
-      const userData = { username: 'John', email };
+      const userData: User = { username: 'John', email, name: 'John Doe', token: 'mock-token' };
       setUser(userData);
       return userData;
     }

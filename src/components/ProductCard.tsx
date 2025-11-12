@@ -26,11 +26,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const addToCart = useCart((state: CartStore) => state.addToCart);
-  const { token } = useAuth();
+  const { user } = useAuth();
 
   const handleAddToCart = () => {
     console.log('Add to cart button clicked!');
-    console.log('Auth Token:', token);
+    console.log('Auth Token:', user?.token);
     addToCart(
       {
         id: String(index),
@@ -38,7 +38,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         price,
         image,
       },
-      token,
+      user?.token || '',
     );
     toast.success('Added to cart!');
   };
