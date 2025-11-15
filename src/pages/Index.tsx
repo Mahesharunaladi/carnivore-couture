@@ -1,19 +1,19 @@
 import React from 'react';
 // Added explicit .tsx extensions for component imports
-import Hero from '../components/Hero.tsx';
-import CategoryCard from '../components/CategoryCard';
+import { Hero } from '../components/Hero.tsx';
+import { CategoryCard } from '../components/CategoryCard.tsx';
 import { ProductCard } from '../components/ProductCard.tsx';
 
 // Replaced invalid template literal imports with require (supports dynamic PUBLIC_URL)
-const productChicken = require(`${process.env.PUBLIC_URL}/product-chicken.jpg`) as string;
-const productThighs = require(`${process.env.PUBLIC_URL}/product-thighs.jpg`) as string;
-const productWings = require(`${process.env.PUBLIC_URL}/product-wings.jpg`) as string;
-const productMutton = require(`${process.env.PUBLIC_URL}/product-mutton.jpg`) as string;
-const productMuttonCurry = require(`${process.env.PUBLIC_URL}/product-mutton-curry.jpg`) as string;
-const productPrawns = require(`${process.env.PUBLIC_URL}/product-prawns.jpg`) as string;
-const productCod = require(`${process.env.PUBLIC_URL}/product-cod.jpg`) as string;
-const productTuna = require(`${process.env.PUBLIC_URL}/product-tuna.jpg`) as string;
-const productFish = require(`${process.env.PUBLIC_URL}/product-fish.jpg`) as string;
+const productChicken = '/product-chicken.jpg';
+const productThighs = '/product-thighs.jpg';
+const productWings = '/product-wings.jpg';
+const productMutton = '/product-mutton.jpg';
+const productMuttonCurry = '/product-mutton-curry.jpg';
+const productPrawns = '/product-prawns.jpg';
+const productCod = '/product-cod.jpg';
+const productTuna = '/product-tuna.jpg';
+const productFish = '/product-fish.jpg';
 
 const categories = [
   { name: 'Chicken', image: productChicken },
@@ -39,7 +39,7 @@ function Index() {
           <h2 className="text-3xl font-bold mb-8 text-center">Shop by Category</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {categories.map((category) => (
-              <CategoryCard key={category.name} {...category} />
+              <CategoryCard key={category.name} title={category.name} icon={category.image} count={0} index={0} />
             ))}
           </div>
         </div>
@@ -49,7 +49,7 @@ function Index() {
           <h2 className="text-3xl font-bold mb-8 text-center">Featured Products</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {products.map((product) => (
-              <ProductCard key={product.id} {...product} />
+              <ProductCard key={product.id} {...product} index={product.id} />
             ))}
           </div>
         </div>

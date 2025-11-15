@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider } from './context/AuthContext.tsx';
 import { CartProvider } from './context/CartContext'; // Add CartProvider import
 
 const root = createRoot(document.getElementById('root'));

@@ -1,7 +1,7 @@
 import { ChevronRight } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "./ui/button";
-import heroImage from "@/assets/hero-meat.jpg";
+import heroImage from "/hero-meat (1).jpg";
 
 export const Hero = () => {
   const { scrollY } = useScroll();
