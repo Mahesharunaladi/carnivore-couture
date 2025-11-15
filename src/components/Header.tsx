@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingCart } from 'lucide-react';
-// @ts-ignore
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../hooks/useCart'; // Import useCart hook
 import logo from '/logo.png'; // Assuming logo.png is in the public directory
@@ -9,6 +8,8 @@ import logo from '/logo.png'; // Assuming logo.png is in the public directory
 const Header = () => {
   const { user, logout } = useAuth();
   const { itemCount } = useCart(); // Use itemCount from useCart hook
+
+  console.log('User object in Header:', user);
 
   return (
     <header className="main-header">

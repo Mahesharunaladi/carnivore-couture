@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+// @ts-ignore
+import authService from '../services/authService';
 
 interface User {
   username: string;
@@ -19,13 +21,24 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
-  const login = async (email: string, password: string): Promise<User> => {
-    if (email === 'test@carnivore.com' && password === '123') {
-      const userData: User = { username: 'John', email, name: 'John Doe', token: 'mock-token' };
-      setUser(userData);
-      return userData;
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (error) {
+        console.error("Failed to parse user from localStorage:", error);
+        localStorage.removeItem('user'); // Clear invalid data
+      }
     }
-    throw new Error('Invalid credentials');
+  }, []);
+
+  const login = async (email: string, password: string): Promise<User> => {
+    const response = await authService.login(email, password);
+    const userData: User = { username: response.username, email: response.email, name: response.name, token: response.token };
+    setUser(userData);
+    localStorage.setItem('user', JSON.stringify(userData));
+    return userData;
   };
 
   const register = async (data: { username: string; email: string; password: string }) => {
@@ -36,7 +49,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     console.log('Registered:', data);
   };
 
-  const logout = () => setUser(null);
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem('user');
+  };
 
   return (
     <AuthContext.Provider value={{ user, login, register, logout }}>
