@@ -5,7 +5,9 @@ export default function Home() {
   return (
     <>
       <Header />
-      <Hero />
+      <div className="pt-24">
+        <Hero />
+      </div>
     </>
   );
 }
