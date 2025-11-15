@@ -1,49 +1,50 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { ShoppingCart } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
-import { useCart } from '../hooks/useCart'; // Import useCart hook
-import logo from '/logo.png'; // Assuming logo.png is in the public directory
+// src/components/Header.tsx
+import { Link } from "react-router-dom";
+import { LogIn, ShoppingCart } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
-const Header = () => {
+export default function Header() {
   const { user, logout } = useAuth();
-  const { itemCount } = useCart(); // Use itemCount from useCart hook
-
-  console.log('User object in Header:', user);
 
   return (
-    <header className="main-header">
-      <div className="logo-container">
-        <Link to="/">
-          <img src={logo} alt="Carnivore Couture Logo" className="logo-image" />
-        </Link>
-      </div>
-      <div className="header-actions">
-        {!user ? (
-          <div className="login-section">
-            <Link to="/cart" className="cart-button">
-              <ShoppingCart size={20} />
-              <span className="cart-count">{itemCount()}</span> {/* Display dynamic cart count */}
-            </Link>
-            <Link to="/login" className="login-button">
-              Login
-            </Link>
-          </div>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md px-6 py-4 flex justify-between items-center border-b border-white/10">
+      <Link to="/" className="flex items-center">
+        <h1 className="text-2xl md:text-3xl font-bold">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500">
+            CARNIVORE
+          </span>{" "}
+          <span className="text-white">COUTURE</span>
+        </h1>
+      </Link>
+
+      <div className="flex items-center gap-6">
+        {/* LOGIN / LOGOUT */}
+        {user ? (
+          <button
+            onClick={logout}
+            className="text-white hover:text-red-400 font-medium flex items-center gap-2 transition"
+          >
+            <LogIn className="w-5 h-5" />
+            Logout
+          </button>
         ) : (
-          <div className="user-section">
-            <span className="welcome-message">Welcome, {user?.name || user?.username || 'User'}!</span> {/* Safely access user.name */}
-            <Link to="/cart" className="cart-button">
-              <ShoppingCart size={20} />
-              <span className="cart-count">{itemCount()}</span> {/* Display dynamic cart count */}
-            </Link>
-            <button onClick={logout} className="logout-button">
-              Logout
-            </button>
-          </div>
+          <Link
+            to="/login"
+            className="text-white hover:text-red-400 font-medium flex items-center gap-2 transition"
+          >
+            <LogIn className="w-5 h-5" />
+            Log in
+          </Link>
         )}
+
+        {/* CART */}
+        <Link to="/cart" className="relative">
+          <ShoppingCart className="w-8 h-8 text-white hover:text-red-400 transition" />
+          <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold">
+            0
+          </span>
+        </Link>
       </div>
     </header>
   );
-};
-
-export default Header;
+}
