@@ -16,9 +16,9 @@ const productTuna = '/product-tuna.jpg';
 const productFish = '/product-fish.jpg';
 
 const categories = [
-  { name: 'Chicken', image: productChicken },
-  { name: 'Mutton', image: productMutton },
-  { name: 'Seafood', image: productFish },
+  { name: 'Chicken', image: productChicken, count: 3 },
+  { name: 'Mutton', image: productMutton, count: 2 },
+  { name: 'Seafood', image: productFish, count: 3 },
 ];
 
 const products = [
@@ -34,23 +34,31 @@ function Index() {
   return (
     <div className="min-h-screen bg-background">
       <Hero />
-      <section className="py-12">
+      <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 text-center">Shop by Category</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {categories.map((category) => (
-              <CategoryCard key={category.name} title={category.name} icon={category.image} count={0} index={0} />
+          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center font-display">
+            Shop by <span className="text-primary">Category</span>
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 justify-items-center items-stretch">
+            {categories.map((category, index) => (
+              <CategoryCard key={category.name} title={category.name} icon={category.image} count={category.count} index={index} />
             ))}
           </div>
         </div>
       </section>
-      <section className="py-12 bg-muted">
+      <section className="py-16 md:py-24 bg-muted">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 text-center">Featured Products</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((product) => (
-              <ProductCard key={product.id} {...product} index={product.id} />
-            ))}
+          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center font-display">
+            Featured <span className="text-primary">Products</span>
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-12 justify-items-center items-stretch">
+            {products.length > 0 ? (
+              products.map((product) => (
+                <ProductCard key={product.id} {...product} index={product.id} />
+              ))
+            ) : (
+              <p className="col-span-full text-center text-gray-500">No featured products available.</p>
+            )}
           </div>
         </div>
       </section>

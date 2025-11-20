@@ -53,9 +53,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       transition={{ duration: 0.5, delay: index * 0.1 }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      className="group relative"
+      className="group relative h-full"
     >
-      <div className="relative bg-card rounded-lg overflow-hidden border border-border">
+      <div className="relative bg-card rounded-lg overflow-hidden border border-border flex flex-col h-full">
         {/* Badge */}
         {badge && (
           <div className="absolute top-4 right-4 z-10 bg-gradient-neon text-foreground px-3 py-1 rounded-full text-sm font-bold shadow-neon">
@@ -96,11 +96,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         </motion.div>
 
         {/* Content */}
-        <div className="p-6">
+        <div className="p-6 flex-grow flex flex-col">
           <h3 className="font-display text-2xl mb-2">{name}</h3>
           
           {/* Animated Price */}
-          <div className="flex items-center gap-3 mb-4">
+          <div className="flex items-center gap-3 mb-4 mt-auto">
             <motion.span
               className="font-sans text-3xl font-bold text-primary"
               animate={isHovered ? { scale: 1.1 } : { scale: 1 }}
@@ -121,10 +121,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             animate={isHovered ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
             transition={{ duration: 0.2 }}
           >
-            <button className="w-full shadow-glow hover:shadow-neon" onClick={handleAddToCart}>
+            <Button className="w-full shadow-glow hover:shadow-neon" onClick={handleAddToCart}>
               <ShoppingCart className="mr-2 h-4 w-4" />
               Add to Cart
-            </button>
+            </Button>
           </motion.div>
         </div>
       </div>
