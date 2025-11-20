@@ -55,7 +55,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       onHoverEnd={() => setIsHovered(false)}
       className="group relative h-full"
     >
-      <div className="relative bg-card rounded-lg overflow-hidden border border-border flex flex-col h-full">
+      <div className="relative bg-card rounded-lg shadow-lg overflow-hidden border border-border flex flex-col h-full">
         {/* Badge */}
         {badge && (
           <div className="absolute top-4 right-4 z-10 bg-gradient-neon text-foreground px-3 py-1 rounded-full text-sm font-bold shadow-neon">

@@ -34,7 +34,7 @@ function Index() {
   return (
     <div className="min-h-screen bg-background">
       <Hero />
-      <section className="py-16 md:py-24">
+      <section className="py-16 md:py-24 shadow-lg rounded-lg mb-12">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center font-display">
             Shop by <span className="text-primary">Category</span>
@@ -46,7 +46,7 @@ function Index() {
           </div>
         </div>
       </section>
-      <section className="py-16 md:py-24 bg-muted">
+      <section className="py-16 md:py-24 bg-muted shadow-lg rounded-lg">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center font-display">
             Featured <span className="text-primary">Products</span>

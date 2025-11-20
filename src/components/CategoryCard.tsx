@@ -18,7 +18,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ title, icon, count, 
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       whileHover={{ scale: 1.05, y: -5 }}
-      className="bg-card border border-border rounded-lg p-6 cursor-pointer group flex flex-col justify-between min-h-[200px]"
+      className="bg-card border border-border rounded-lg shadow-md p-6 cursor-pointer group flex flex-col justify-between min-h-[200px]"
     >
       <motion.div
         whileHover={{ rotate: [0, -10, 10, -10, 0] }}
