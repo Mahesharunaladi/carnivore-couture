@@ -33,7 +33,7 @@ export const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <h1 className="font-display text-7xl md:text-9xl font-bold mb-6 tracking-tight">
+          <h1 className="font-display text-7xl md:text-9xl font-bold mb-6 tracking-tight font-playfair">
             <span className="bg-gradient-primary bg-clip-text text-transparent">
               CARNIVORE
             </span>

@@ -36,7 +36,7 @@ function Index() {
       <Hero />
       <section className="py-16 md:py-24 shadow-lg rounded-lg mb-12">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center font-display">
+          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center font-playfair">
             Shop by <span className="text-primary">Category</span>
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 justify-items-center items-stretch">
@@ -48,7 +48,7 @@ function Index() {
       </section>
       <section className="py-16 md:py-24 bg-muted shadow-lg rounded-lg">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center font-display">
+          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center font-playfair">
             Featured <span className="text-primary">Products</span>
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-12 justify-items-center items-stretch">
