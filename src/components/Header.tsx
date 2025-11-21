@@ -3,7 +3,7 @@ import { LogIn, ShoppingCart } from "lucide-react";
 
 export default function Header() {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-white/10">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-b border-white/10">
       <div className="container mx-auto px-6 py-5 flex justify-between items-center">
         {/* Logo */}
         <Link to="/" className="flex items-center">

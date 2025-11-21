@@ -46,12 +46,12 @@ function Index() {
           </div>
         </div>
       </section>
-      <section className="py-16 md:py-24 bg-muted shadow-lg rounded-lg">
+      <section className="py-16 md:py-24 bg-background shadow-lg rounded-lg">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center font-playfair">
             Featured <span className="text-primary">Products</span>
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-12 justify-items-center items-stretch">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 justify-items-center items-stretch">
             {products.length > 0 ? (
               products.map((product) => (
                 <ProductCard key={product.id} {...product} index={product.id} />
