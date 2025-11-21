@@ -1,88 +1,55 @@
-import { ChevronRight } from "lucide-react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { Button } from "./ui/button";
-import heroImage from "/hero-meat (1).jpg";
+import { motion } from "framer-motion";
+import heroMeat from "/public/hero-meat (1).jpg";
 
-export const Hero = () => {
-  const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 500], [0, 150]);
-  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
-
+const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden shadow-lg">
-      {/* Parallax Background */}
-      <motion.div
-        style={{ y }}
-        className="absolute inset-0 z-0"
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background z-10" />
-        <img
-          src={heroImage}
-          alt="Premium meat selection"
-          className="w-full h-full object-cover"
-        />
-      </motion.div>
-
-      {/* HERO CONTENT — WITH pt-24 */}
-      <motion.div
-        style={{ opacity }}
-        className="relative z-20 container mx-auto px-4 text-center pt-24"  // ← THIS LINE
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
+    <div className="relative h-[80vh] flex items-center justify-center text-white">
+      <img
+        src={heroMeat}
+        alt="Carnivore Couture Hero"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      <div className="absolute inset-0 bg-black opacity-50"></div>
+      <div className="relative z-10 text-center">
+        <motion.h1
+          initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.8 }}
+          className="text-6xl md:text-8xl font-extrabold uppercase tracking-widest mb-4"
         >
-          <h1 className="font-display text-7xl md:text-9xl font-bold mb-6 tracking-tight font-playfair">
-            <span className="text-red-600">
-              CARNIVORE
-            </span>
-            <br />
-            <span className="text-white">COUTURE</span>
-          </h1>
-        </motion.div>
-
+          Carnivore Couture
+        </motion.h1>
         <motion.p
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-xl md:text-2xl text-white mb-10 max-w-2xl mx-auto font-sans"
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="text-xl md:text-2xl mb-8"
         >
           Experience the finest selection of premium meats.
           <br />
-          <span className="text-red-400 font-semibold">Bold flavors. Exceptional quality.</span>
+          <span className="text-red-500 font-semibold">Bold flavors. Exceptional quality.</span>
         </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-        >
-          <Button size="lg" className="group text-lg px-8 py-6 bg-red-600 hover:bg-red-700 shadow-lg">
+        <div className="flex justify-center space-x-4">
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+            className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full text-lg"
+          >
             Shop Now
-            <ChevronRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-          </Button>
-          <Button variant="outline" size="lg" className="text-lg px-8 py-6 border-white text-white hover:bg-white hover:text-black">
+          </motion.button>
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.7 }}
+            className="bg-transparent border-2 border-white hover:bg-white hover:text-black font-bold py-3 px-8 rounded-full text-lg"
+          >
             View Collection
-          </Button>
-        </motion.div>
-
-        {/* Floating Scroll Indicator */}
-        <motion.div
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2"
-        >
-          <div className="w-6 h-10 border-2 border-foreground/30 rounded-full flex justify-center p-2">
-            <motion.div
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-              className="w-1.5 h-1.5 bg-foreground/50 rounded-full"
-            />
-          </div>
-        </motion.div>
-      </motion.div>
-    </section>
+          </motion.button>
+        </div>
+      </div>
+    </div>
   );
 };
+
+export default Hero;

@@ -53,79 +53,43 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       transition={{ duration: 0.5, delay: index * 0.1 }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      className="group relative h-full"
+      className="group relative h-full rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out bg-gray-800"
     >
-      <div className="relative bg-card rounded-lg shadow-lg overflow-hidden border border-border flex flex-col h-full">
-        {/* Badge */}
+      <div className="relative w-full h-64 overflow-hidden">
+        <img
+          src={image}
+          alt={name}
+          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-in-out"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20" />
         {badge && (
-          <div className="absolute top-4 right-4 z-10 bg-gradient-neon text-foreground px-3 py-1 rounded-full text-sm font-bold shadow-neon">
+          <div className="absolute top-4 left-4 z-10 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
             {badge}
           </div>
         )}
+      </div>
 
-        {/* Image Container */}
-        <motion.div
-          animate={isHovered ? { scale: 1.05 } : { scale: 1 }}
-          transition={{ duration: 0.4 }}
-          className="relative aspect-square overflow-hidden bg-black"
-        >
-          <motion.img
-            src={image}
-            alt={name}
-            className="w-full h-full object-cover"
-            animate={isHovered ? { scale: 1.1 } : { scale: 1 }}
-            transition={{ duration: 0.4 }}
-          />
-          
-          {/* Animated Glow Overlay */}
-          <motion.div
-            className="absolute inset-0 bg-gradient-primary opacity-0 mix-blend-overlay"
-            animate={isHovered ? { opacity: 0.3 } : { opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          />
-
-          {/* Pulse Effect */}
-          {isHovered && (
-            <motion.div
-              className="absolute inset-0 border-4 border-primary rounded-lg"
-              initial={{ scale: 1, opacity: 1 }}
-              animate={{ scale: 1.05, opacity: 0 }}
-              transition={{ duration: 1, repeat: Infinity }}
-            />
-          )}
-        </motion.div>
-
-        {/* Content */}
-        <div className="p-6 flex-grow flex flex-col">
-          <h3 className="font-display text-2xl mb-2">{name}</h3>
-          
-          {/* Animated Price */}
-          <div className="flex items-center gap-3 mb-4 mt-auto">
-            <motion.span
-              className="font-sans text-3xl font-bold text-primary"
-              animate={isHovered ? { scale: 1.1 } : { scale: 1 }}
-              transition={{ duration: 0.2 }}
-            >
+      <div className="p-4 flex-grow flex flex-col justify-between">
+        <h3 className="font-display text-xl font-bold text-white mb-2 group-hover:text-red-400 transition-colors duration-300">
+          {name}
+        </h3>
+        <div className="flex items-center justify-between mt-auto">
+          <div className="flex items-baseline gap-2">
+            <span className="font-sans text-2xl font-bold text-red-500">
               ₹{price.toLocaleString('en-IN')}
-            </motion.span>
+            </span>
             {originalPrice && (
-              <span className="text-muted-foreground line-through text-lg">
+              <span className="text-gray-400 line-through text-base">
                 ₹{originalPrice.toLocaleString('en-IN')}
               </span>
             )}
           </div>
-
-          {/* CTA Button */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={isHovered ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-            transition={{ duration: 0.2 }}
+          <Button
+            className="bg-red-600 hover:bg-red-700 text-white rounded-full px-4 py-2 shadow-lg transform transition-transform duration-200 ease-in-out hover:scale-105"
+            onClick={handleAddToCart}
           >
-            <Button className="w-full shadow-glow hover:shadow-neon" onClick={handleAddToCart}>
-              <ShoppingCart className="mr-2 h-4 w-4" />
-              Add to Cart
-            </Button>
-          </motion.div>
+            <ShoppingCart className="h-5 w-5" />
+          </Button>
         </div>
       </div>
     </motion.div>
