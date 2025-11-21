@@ -34,11 +34,11 @@ export const Hero = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <h1 className="font-display text-7xl md:text-9xl font-bold mb-6 tracking-tight font-playfair">
-            <span className="bg-gradient-primary bg-clip-text text-transparent">
+            <span className="text-red-600">
               CARNIVORE
             </span>
             <br />
-            <span className="text-foreground">COUTURE</span>
+            <span className="text-white">COUTURE</span>
           </h1>
         </motion.div>
 
@@ -46,11 +46,11 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-2xl mx-auto font-sans"
+          className="text-xl md:text-2xl text-white mb-10 max-w-2xl mx-auto font-sans"
         >
           Experience the finest selection of premium meats.
           <br />
-          <span className="text-secondary font-semibold">Bold flavors. Exceptional quality.</span>
+          <span className="text-red-400 font-semibold">Bold flavors. Exceptional quality.</span>
         </motion.p>
 
         <motion.div
@@ -59,11 +59,11 @@ export const Hero = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
-          <Button size="lg" className="group text-lg px-8 py-6 shadow-glow hover:shadow-neon">
+          <Button size="lg" className="group text-lg px-8 py-6 bg-red-600 hover:bg-red-700 shadow-lg">
             Shop Now
             <ChevronRight className="ml-2 group-hover:translate-x-1 transition-transform" />
           </Button>
-          <Button variant="outline" size="lg" className="text-lg px-8 py-6">
+          <Button variant="outline" size="lg" className="text-lg px-8 py-6 border-white text-white hover:bg-white hover:text-black">
             View Collection
           </Button>
         </motion.div>

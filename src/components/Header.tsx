@@ -7,8 +7,8 @@ export default function Header() {
       <div className="container mx-auto px-6 py-5 flex justify-between items-center">
         {/* Logo */}
         <Link to="/" className="flex items-center">
-          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
-            <span className="bg-gradient-to-r from-red-600 to-orange-500 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
+            <span className="text-red-600">
               CARNIVORE
             </span>{" "}
             <span className="text-white">COUTURE</span>
