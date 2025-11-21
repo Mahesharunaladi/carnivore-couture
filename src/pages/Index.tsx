@@ -32,32 +32,32 @@ const products = [
 
 function Index() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-black text-white">
       <Hero />
-      <section className="py-16 md:py-24 shadow-lg rounded-lg mb-12">
+      <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center font-playfair">
-            Shop by <span className="text-primary">Category</span>
+          <h2 className="text-5xl md:text-6xl font-extrabold mb-12 text-center font-display leading-tight">
+            Shop by <span className="text-red-600">Category</span>
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 justify-items-center items-stretch">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
             {categories.map((category, index) => (
               <CategoryCard key={category.name} title={category.name} icon={category.image} count={category.count} index={index} />
             ))}
           </div>
         </div>
       </section>
-      <section className="py-16 md:py-24 bg-background shadow-lg rounded-lg">
+      <section className="py-16 md:py-24 bg-gray-900">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center font-playfair">
-            Featured <span className="text-primary">Products</span>
+          <h2 className="text-5xl md:text-6xl font-extrabold mb-12 text-center font-display leading-tight">
+            Featured <span className="text-red-600">Products</span>
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 justify-items-center items-stretch">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
             {products.length > 0 ? (
               products.map((product) => (
                 <ProductCard key={product.id} {...product} index={product.id} />
               ))
             ) : (
-              <p className="col-span-full text-center text-gray-500">No featured products available.</p>
+              <p className="col-span-full text-center text-gray-500 text-lg">No featured products available.</p>
             )}
           </div>
         </div>

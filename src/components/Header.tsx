@@ -17,19 +17,8 @@ export default function Header() {
 
         {/* Right Side */}
         <div className="flex items-center gap-8">
-          <Link
-            to="/login"
-            className="text-white hover:text-red-400 font-medium flex items-center gap-2 transition duration-200"
-          >
-            <LogIn className="w-5 h-5" />
-            <span className="hidden md:inline">Log in</span>
-          </Link>
-
           <Link to="/cart" className="relative">
             <ShoppingCart className="w-7 h-7 text-white hover:text-red-400 transition" />
-            <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
-              0
-            </span>
           </Link>
         </div>
       </div>

@@ -10,14 +10,7 @@ import autoprefixer from 'autoprefixer';
 export default defineConfig({
   root: './',
   plugins: [react()],
-  css: {
-    postcss: {
-      plugins: [
-        tailwindcss,
-        autoprefixer,
-      ],
-    },
-  },
+
   resolve: {
     alias: {
       '@': '/src',

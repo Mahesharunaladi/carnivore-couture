@@ -1,8 +1,8 @@
 // src/pages/Register.tsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';  // REMOVE .js + use custom hook
-import '../../public/login.css';
+import { useAuth } from '../context/AuthContext';  // ← No .js, no casting
+import '../login.css';
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -13,8 +13,7 @@ function Register() {
   });
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const auth = useAuth();  // ← Destructure after verifying the method exists
-  const register = auth.register;
+  const { register } = useAuth();  // ← Now valid!
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
