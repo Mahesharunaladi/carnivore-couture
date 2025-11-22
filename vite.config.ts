@@ -9,6 +9,7 @@ import autoprefixer from 'autoprefixer';
 // https://vitejs.dev/config/
 export default defineConfig({
   root: './',
+  publicDir: 'carnivore-couture/public',
   plugins: [react()],
 
   resolve: {

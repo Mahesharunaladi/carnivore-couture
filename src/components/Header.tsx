@@ -3,15 +3,16 @@ import { LogIn, ShoppingCart } from "lucide-react";
 
 export default function Header() {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-b border-white/10">
-      <div className="container mx-auto px-6 py-5 flex justify-between items-center">
-        {/* Logo */}
+    <div
+      className="relative h-64 bg-cover bg-center flex flex-col items-center justify-center"
+      style={{ backgroundImage: `url('/header-meat.jpg')` }}
+    >
+      <div className="absolute inset-0 bg-black opacity-40"></div> {/* Overlay for better text readability */}
+      <div className="relative z-10 w-full flex justify-between items-center px-6 py-5">
+        {/* Logo - now part of the main title */}
         <Link to="/" className="flex items-center">
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
-            <span className="text-red-600">
-              CARNIVORE
-            </span>{" "}
-            <span className="text-white">COUTURE</span>
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-red-600">
+            CARNIVORE COUTURE
           </h1>
         </Link>
 
@@ -22,6 +23,6 @@ export default function Header() {
           </Link>
         </div>
       </div>
-    </header>
+    </div>
   );
 }

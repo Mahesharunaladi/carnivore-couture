@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Tailwind base styles imported via PostCSS; remove raw @tailwind at-rule from CSS file */
+/* @tailwind components; */
+/* Tailwind utilities are imported via PostCSS; remove raw @tailwind at-rule from CSS file */
 
 @layer base {
   :root {
@@ -17,6 +17,23 @@
     --border: 0 0% 14.9%;
     --input: 0 0% 14.9%;
     --ring: 0 84.2% 60.2%;
+  }
+}
+
+/* App.css */
+
+.animated-background {
+  background-image: url('/product-mutton.jpg'); /* Placeholder, replace with actual pattern */
+  background-size: 100px 100px;
+  animation: background-pan 20s linear infinite;
+}
+
+@keyframes background-pan {
+  from {
+    background-position: 0% 0%;
+  }
+  to {
+    background-position: -200% 0%;
   }
 }
 

@@ -1,53 +1,61 @@
-import { motion } from "framer-motion";
-import heroMeat from "/public/hero-meat (1).jpg";
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
+import heroMeat from '/hero-meat (1).jpg';
 
 const Hero = () => {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+
   return (
-    <div className="relative h-[80vh] flex items-center justify-center text-white">
-      <img
-        src={heroMeat}
-        alt="Carnivore Couture Hero"
-        className="absolute inset-0 w-full h-full object-cover"
+    <div
+      ref={ref}
+      className="relative h-screen flex items-center justify-center overflow-hidden"
+    >
+      <motion.div
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: `url(${heroMeat})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          y,
+        }}
       />
-      <div className="absolute inset-0 bg-black opacity-50"></div>
-      <div className="relative z-10 text-center">
-        <motion.h1
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-6xl md:text-8xl font-extrabold uppercase tracking-widest mb-4"
-        >
+      <div className="absolute inset-0 z-0 overflow-hidden animated-background">
+        {/* Placeholder for animated SVG/Lottie background */}
+      </div>
+      <motion.div
+        className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4"
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+      >
+        <h1 className="text-5xl md:text-7xl font-bold mb-4">
           Carnivore Couture
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-xl md:text-2xl mb-8"
-        >
-          Experience the finest selection of premium meats.
-          <br />
-          <span className="text-red-500 font-semibold">Bold flavors. Exceptional quality.</span>
-        </motion.p>
-        <div className="flex justify-center space-x-4">
+        </h1>
+        <p className="text-xl md:text-2xl mb-8">
+          Premium Meats for the Discerning Palate
+        </p>
+        <div className="flex space-x-4">
           <motion.button
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full text-lg"
+            className="bg-red-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-red-700 transition-colors duration-300"
+            whileHover={{ scale: 1.1, boxShadow: "0 0 25px rgba(0, 255, 255, 0.7)" }}
+            whileTap={{ scale: 0.9 }}
           >
             Shop Now
           </motion.button>
           <motion.button
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.7 }}
-            className="bg-transparent border-2 border-white hover:bg-white hover:text-black font-bold py-3 px-8 rounded-full text-lg"
+            className="bg-gray-800 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-gray-700 transition-colors duration-300"
+            whileHover={{ scale: 1.1, boxShadow: "0 0 25px rgba(0, 255, 255, 0.7)" }}
+            whileTap={{ scale: 0.9 }}
           >
             View Collection
           </motion.button>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
