@@ -1,14 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+    <title>Carnivore Couture</title>
+
+    <!-- Google Fonts - Exact same as your design -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Tailwind CSS CDN (for instant dark premium look) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ['"Bebas Neue"', 'sans-serif'],
+              body: ['Inter', 'sans-serif'],
+            },
+            colors: {
+              red: { 600: '#dc2626' },
+              pink: { 500: '#ec4899', 600: '#db2777' },
+            }
+          }
+        }
+      }
+    </script>
+
+    <style>
+      body {
+        background-color: #000000;
+        color: white;
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+      }
+      .bg-gradient-hero {
+        background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('https://images.unsplash.com/photo-1607116176197-0f5c9f875ae1?w=1920&q=80') center/cover no-repeat;
+      }
+    </style>
   </head>
-  <body>
+  <body class="bg-black text-white antialiased">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        lucide.createIcons();
+      });
+    </script>
   </body>
 </html>
