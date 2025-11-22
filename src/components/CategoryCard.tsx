@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useNavigate } from 'react-router-dom';
 
 interface CategoryCardProps {
   title: string;
@@ -6,12 +7,19 @@ interface CategoryCardProps {
 }
 
 const CategoryCard: React.FC<CategoryCardProps> = ({ title, image }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/${title.toLowerCase()}`);
+  };
+
   return (
     <motion.div
       whileHover={{ scale: 1.05, rotateY: 10 }}
       whileTap={{ scale: 0.95, rotateY: -10 }}
       transition={{ type: "spring", stiffness: 400, damping: 17 }}
       className="relative w-full h-64 bg-gray-800 rounded-lg overflow-hidden shadow-lg cursor-pointer"
+      onClick={handleClick}
     >
       <motion.img
         src={image}
