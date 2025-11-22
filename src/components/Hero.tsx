@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import heroMeat from '/hero-meat (1).jpg';
+import './HeroAnimations.css';
 
 const Hero = () => {
   const ref = useRef(null);

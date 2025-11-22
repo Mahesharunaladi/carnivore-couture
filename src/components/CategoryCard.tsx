@@ -19,9 +19,17 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ title, image }) => {
         className="w-full h-full object-cover opacity-70 transition-opacity duration-300"
         whileHover={{ scale: 1.1, rotate: 2, opacity: 1 }}
         transition={{ type: "spring", stiffness: 400, damping: 10 }}
+        initial={{ scale: 1, rotate: 0, opacity: 0.7 }}
+        animate={{ scale: 1, rotate: 0, opacity: 0.7 }}
       />
       <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40">
-        <h3 className="text-3xl font-bold text-white uppercase">{title}</h3>
+        <motion.h3
+          className="text-3xl font-bold text-white uppercase"
+          whileHover={{ scale: 1.1, color: "#dc2626" }}
+          transition={{ type: "spring", stiffness: 400, damping: 10 }}
+        >
+          {title}
+        </motion.h3>
       </div>
     </motion.div>
   );
