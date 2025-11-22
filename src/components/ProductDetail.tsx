@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useCart } from '../context/CartContext';
 
 interface ProductDetailProps {
   image: string;
@@ -9,6 +10,18 @@ interface ProductDetailProps {
 
 const ProductDetail: React.FC<ProductDetailProps> = ({ image, title, description }) => {
   const [isZoomed, setIsZoomed] = useState(false);
+  const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+    addToCart({
+      id: title.toLowerCase().replace(/ /g, '-'), // Simple ID generation
+      name: title,
+      image: image,
+      price: 25.99, // Placeholder price
+      quantity: 1,
+    });
+    alert(`${title} added to cart!`);
+  };
 
   return (
     <div className="flex flex-col items-center p-8 bg-gray-900 text-white min-h-screen">
@@ -30,7 +43,15 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ image, title, description
           </div>
         )}
       </div>
-      <p className="text-lg text-center max-w-2xl">{description}</p>
+      <p className="text-lg text-center max-w-2xl mb-8">{description}</p>
+      <motion.button
+        className="bg-red-600 text-white px-8 py-4 rounded-full text-xl font-semibold hover:bg-red-700 transition-colors duration-300 shadow-lg"
+        whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(220, 38, 38, 0.6)" }}
+        whileTap={{ scale: 0.95 }}
+        onClick={handleAddToCart}
+      >
+        Add to Cart
+      </motion.button>
     </div>
   );
 };

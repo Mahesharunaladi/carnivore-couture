@@ -1,113 +1,75 @@
-import { useEffect } from "react";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-// @ts-ignore
-import { useCart, CartItem } from "@/hooks/useCart";
-import { useAuth } from '../context/AuthContext.jsx';
+import React from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useCart } from '../context/CartContext';
 
-import { Minus, Plus, Trash2 } from "lucide-react";
-import { motion } from "framer-motion";
+interface CartDrawerProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
 
-export const CartDrawer = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
-    const { items, total, cartError, fetchCart, updateQuantity, removeItem, clearCart } = useCart();
-    const { token } = useAuth();
+const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
+  const { cart, removeFromCart } = useCart();
 
-    useEffect(() => {
-      if (open && token) {
-        fetchCart(token);
-      }
-    }, [open, token, fetchCart]);
+  const calculateTotal = () => {
+    return cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+  };
 
-    return (
-      <Sheet open={open} onOpenChange={onClose}>
-          <SheetContent className="w-full sm:max-w-lg">
-          <SheetHeader>
-            <SheetTitle className="font-display text-3xl">YOUR CART</SheetTitle>
-          </SheetHeader>
-          <div className="mt-8 flex flex-col h-[calc(100vh-200px)]">
-            {cartError && <p className="text-destructive text-center mb-4">{cartError}</p>}
-            {items.length === 0 ? (
-              <div className="flex-1 flex items-center justify-center">
-                <p className="text-muted-foreground text-lg">Your cart is empty</p>
-              </div>
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ x: '100%' }}
+          animate={{ x: 0 }}
+          exit={{ x: '100%' }}
+          transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+          className="fixed top-0 right-0 w-full md:w-96 h-full bg-gray-800 shadow-lg z-50 flex flex-col"
+        >
+          <div className="p-4 border-b border-gray-700 flex justify-between items-center">
+            <h2 className="text-2xl font-bold text-white">Your Cart</h2>
+            <button onClick={onClose} className="text-white text-2xl">
+              &times;
+            </button>
+          </div>
+          <div className="flex-grow p-4 overflow-y-auto">
+            {cart.length === 0 ? (
+              <p className="text-white text-center">Your cart is empty.</p>
             ) : (
-              <>
-                <div className="flex-1 overflow-y-auto space-y-4">
-                  {items.map((item: CartItem, index: number) => (
-                    <motion.div
-                      key={item.id ?? index}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className="flex gap-4 bg-card border border-border rounded-lg p-4"
-                    >
-                      <img
-                        src={item.image ?? ""}
-                        alt={item.name ?? "Product"}
-                        className="w-20 h-20 object-cover rounded-lg"
-                      />
-                      <div className="flex-1">
-                        <h3 className="font-display text-lg mb-1">{item.name ?? "Unnamed"}</h3>
-                        <p className="text-primary font-bold">₹{(item.price ?? 0).toLocaleString('en-IN')}</p>
-                        <div className="flex items-center gap-2 mt-2">
-                          <Button
-                            size="icon"
-                            variant="outline"
-                            className="h-8 w-8"
-                            onClick={() => (item.quantity ?? 1) > 1 && updateQuantity(item.id, (item.quantity ?? 1) - 1, token)}
-                          >
-                            <Minus className="w-4 h-4" />
-                          </Button>
-                          <span className="font-bold w-8 text-center">{item.quantity ?? 1}</span>
-                          <Button
-                            size="icon"
-                            variant="outline"
-                            className="h-8 w-8"
-                            onClick={() => updateQuantity(item.id, (item.quantity ?? 1) + 1, token)}
-                          >
-                            <Plus className="w-4 h-4" />
-                          </Button>
-                          <Button
-                            size="icon"
-                            variant="ghost"
-                            className="h-8 w-8 ml-auto text-destructive"
-                            onClick={() => removeItem(item.id, token)}
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-
-                <div className="border-t border-border pt-4 mt-4 space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="font-display text-2xl">TOTAL</span>
-                    <span className="font-display text-3xl text-primary">
-₹{total.toLocaleString()}
-                    </span>
+              cart.map((item) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  className="flex items-center mb-4 p-2 bg-gray-700 rounded-lg"
+                >
+                  <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded-md mr-4" />
+                  <div className="flex-grow">
+                    <h3 className="text-lg font-semibold text-white">{item.name}</h3>
+                    <p className="text-gray-300">${item.price.toFixed(2)} x {item.quantity}</p>
                   </div>
-                  <Button className="w-full" size="lg">
-                    CHECKOUT
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full"
-                    onClick={() => clearCart(token)}
+                  <button
+                    onClick={() => removeFromCart(item.id)}
+                    className="bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-700 transition-colors"
                   >
-                    Clear Cart
-                  </Button>
-                </div>
-              </>
+                    Remove
+                  </button>
+                </motion.div>
+              ))
             )}
           </div>
-        </SheetContent>
-      </Sheet>
-    );
-}
+          <div className="p-4 border-t border-gray-700">
+            <div className="flex justify-between items-center mb-4">
+              <span className="text-xl font-bold text-white">Total:</span>
+              <span className="text-xl font-bold text-white">${calculateTotal()}</span>
+            </div>
+            <button className="w-full bg-green-600 text-white py-3 rounded-full text-lg font-semibold hover:bg-green-700 transition-colors">
+              Proceed to Checkout
+            </button>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
+export default CartDrawer;
