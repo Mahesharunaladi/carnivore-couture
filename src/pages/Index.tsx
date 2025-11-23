@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import Hero from "../components/Hero";
 import CategoryCard from "../components/CategoryCard";
 import productMutton from "/product-mutton.jpg";
 import productChicken from "/product-chicken.jpg";
@@ -24,7 +23,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <Hero />
+
 
       <section className="py-12 px-4 md:px-8 bg-gray-900">
         <h2 className="text-5xl font-extrabold text-center mb-12 text-red-600 uppercase tracking-wide font-display">

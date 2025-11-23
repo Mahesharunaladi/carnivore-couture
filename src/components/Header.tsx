@@ -1,26 +1,32 @@
 import { Link } from "react-router-dom";
 import { LogIn, ShoppingCart } from "lucide-react";
 
-export default function Header() {
+export default function Header({ onCartClick }) {
   return (
     <div
-      className="relative h-64 bg-cover bg-center flex flex-col items-center justify-center"
-      style={{ backgroundImage: `url('/header-meat.jpg')` }}
+      className="relative h-full bg-cover bg-center flex flex-col items-center justify-center"
+      style={{ backgroundImage: `url('/hero-meat (1).jpg')` }}
     >
-      <div className="absolute inset-0 bg-black opacity-40"></div> {/* Overlay for better text readability */}
-      <div className="relative z-10 w-full flex justify-between items-center px-6 py-5">
-        {/* Logo - now part of the main title */}
-        <Link to="/" className="flex items-center">
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-red-600">
-            CARNIVORE COUTURE
-          </h1>
-        </Link>
+      <div className="absolute inset-0 bg-black opacity-20"></div> {/* Overlay for better text readability */}
+      <div className="relative z-10 w-full flex flex-col items-center justify-center h-full">
+        <h1 className="text-6xl md:text-7xl font-extrabold tracking-tight text-white">
+          CARNIVORE COUTURE
+        </h1>
+        <p className="text-white text-lg md:text-xl mt-2">Premium Meats for the Discerning Palate</p>
+        <div className="flex mt-6 space-x-4">
+          <button className="bg-red-600 text-white px-6 py-3 rounded-md text-lg font-semibold hover:bg-red-700 transition">
+            Shop Now
+          </button>
+          <button className="bg-gray-800 text-white px-6 py-3 rounded-md text-lg font-semibold hover:bg-gray-700 transition">
+            View Collection
+          </button>
+        </div>
 
         {/* Right Side */}
-        <div className="flex items-center gap-8">
-          <Link to="/cart" className="relative">
+        <div className="absolute top-5 right-6">
+          <button onClick={onCartClick} className="relative">
             <ShoppingCart className="w-7 h-7 text-white hover:text-red-400 transition" />
-          </Link>
+          </button>
         </div>
       </div>
     </div>

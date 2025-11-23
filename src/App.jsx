@@ -8,6 +8,7 @@ import Index from './pages/Index';
 import MuttonPage from './pages/MuttonPage';
 import ChickenPage from './pages/ChickenPage';
 import FishPage from './pages/FishPage';
+import AboutUsPage from './pages/AboutUsPage';
 import CartDrawer from './components/CartDrawer';
 import Header from './components/Header';
 
@@ -16,7 +17,7 @@ function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   return (
-    <>
+    <div className="app-container">
       <Header onCartClick={() => setIsCartOpen(true)} />
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
@@ -112,10 +113,36 @@ function App() {
               </motion.div>
             }
           />
+          <Route
+            path="/about-us"
+            element={
+              <motion.div
+                initial={{ opacity: 0, x: -100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 100 }}
+                transition={{ duration: 0.5 }}
+              >
+                <AboutUsPage />
+              </motion.div>
+            }
+          />
+          <Route
+            path="/about-us"
+            element={
+              <motion.div
+                initial={{ opacity: 0, x: -100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 100 }}
+                transition={{ duration: 0.5 }}
+              >
+                <AboutUsPage />
+              </motion.div>
+            }
+          />
         </Routes>
       </AnimatePresence>
       <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
-    </>
+    </div>
   );
 }
 

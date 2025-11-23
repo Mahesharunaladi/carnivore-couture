@@ -1,5 +1,24 @@
+/**
+ * @typedef {object} CartItem
+ * @property {string} id
+ * @property {string} name
+ * @property {string} image
+ * @property {number} price
+ * @property {number} quantity
+ */
+
+/**
+ * @typedef {object} CartItem
+ * @property {string} id
+ * @property {string} name
+ * @property {string} image
+ * @property {number} price
+ * @property {number} quantity
+ */
+
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+// @ts-ignore
 import { useCart } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
 import productChicken from '/product-chicken.jpg';

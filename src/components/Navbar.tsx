@@ -1,14 +1,13 @@
-import { Hero } from "@/components/Hero";
-import { ProductCard } from "@/components/ProductCard";
-import { CategoryCard } from "@/components/CategoryCard";
-import { CartDrawer } from "@/components/CartDrawer";
+import CategoryCard from "@/components/CategoryCard";
+import CartDrawer from "@/components/CartDrawer";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
 import { Button } from "./ui/button";
 import { useCart } from "../hooks/useCart";
 import NewLogo from "./NewLogo";
 
-export const Navbar = ({ onCartClick }) => {
+export const Navbar = ({ onCartClick }: { onCartClick: () => void }) => {
   const { itemCount } = useCart();
 
   return (
@@ -21,6 +20,7 @@ export const Navbar = ({ onCartClick }) => {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <NewLogo />
         <div className="flex items-center space-x-4">
+          <Link to="/about-us" className="text-white hover:text-red-400 transition">About Us</Link>
           <Button
             variant="ghost"
             className="relative"
@@ -28,9 +28,9 @@ export const Navbar = ({ onCartClick }) => {
             onClick={onCartClick}
           >
             <ShoppingCart className="h-6 w-6" />
-            {itemCount > 0 && (
+            {itemCount() > 0 && (
               <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
-                {itemCount}
+                {itemCount()}
               </span>
             )}
           </Button>

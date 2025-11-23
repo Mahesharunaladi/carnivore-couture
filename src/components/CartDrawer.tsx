@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+// @ts-ignore
 import { useCart } from '../context/CartContext';
 
 interface CartDrawerProps {
@@ -11,7 +12,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
   const { cart, removeFromCart } = useCart();
 
   const calculateTotal = () => {
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+    return cart.reduce((total: number, item: any) => total + item.price * item.quantity, 0).toFixed(2);
   };
 
   return (
@@ -34,7 +35,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
             {cart.length === 0 ? (
               <p className="text-white text-center">Your cart is empty.</p>
             ) : (
-              cart.map((item) => (
+              cart.map((item: any) => (
                 <motion.div
                   key={item.id}
                   initial={{ opacity: 0, y: 20 }}
