@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiMail, FiLock, FiArrowLeft } from 'react-icons/fi';
+import { FiMail, FiLock, FiArrowLeft, FiCheckCircle } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import './Auth.css';
 
@@ -10,6 +10,9 @@ const LoginPage = () => {
     email: '',
     password: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -28,6 +31,17 @@ const LoginPage = () => {
 
   return (
     <div className="auth-page">
+      {success && (
+        <motion.div
+          className="success-message"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <FiCheckCircle size={24} />
+          <span>Login successful! Redirecting...</span>
+        </motion.div>
+      )}
+
       <div className="auth-page-left">
         <motion.button
           className="back-to-home"
@@ -46,6 +60,16 @@ const LoginPage = () => {
           </div>
 
           <form onSubmit={handleSubmit} className="auth-page-form">
+            {error && (
+              <motion.div
+                className="error-message"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                {error}
+              </motion.div>
+            )}
+
             <div className="form-group">
               <label htmlFor="email">
                 <FiMail />
@@ -93,8 +117,9 @@ const LoginPage = () => {
               className="auth-submit-btn"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+              disabled={isLoading}
             >
-              Login
+              {isLoading ? 'Logging in...' : 'Login'}
             </motion.button>
 
             <div className="auth-switch">

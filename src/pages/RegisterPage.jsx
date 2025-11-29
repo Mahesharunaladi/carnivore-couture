@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiMail, FiLock, FiUser, FiPhone, FiArrowLeft } from 'react-icons/fi';
+import { FiMail, FiLock, FiUser, FiPhone, FiArrowLeft, FiCheckCircle } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import './Auth.css';
 
@@ -13,6 +13,9 @@ const RegisterPage = () => {
     password: '',
     confirmPassword: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -21,20 +24,76 @@ const RegisterPage = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    
+    // Validation
     if (formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match!');
+      setError('Passwords do not match!');
       return;
     }
-    console.log('Register:', formData);
-    // Handle registration logic here
-    // After successful registration, navigate to home
-    // navigate('/');
+
+    if (formData.password.length < 6) {
+      setError('Password must be at least 6 characters long');
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('http://localhost:3001/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          password: formData.password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Registration failed');
+      }
+
+      // Success! Store the token
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+      }
+
+      setSuccess(true);
+
+      // Redirect to home after 2 seconds
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
+
+    } catch (err) {
+      setError(err.message || 'Failed to register. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="auth-page">
+      {success && (
+        <motion.div
+          className="success-message"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <FiCheckCircle size={24} />
+          <span>Registration successful! Redirecting...</span>
+        </motion.div>
+      )}
+
       <div className="auth-page-left">
         <motion.button
           className="back-to-home"
@@ -53,6 +112,16 @@ const RegisterPage = () => {
           </div>
 
           <form onSubmit={handleSubmit} className="auth-page-form">
+            {error && (
+              <motion.div
+                className="error-message"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                {error}
+              </motion.div>
+            )}
+
             <div className="form-group">
               <label htmlFor="name">
                 <FiUser />
@@ -145,8 +214,9 @@ const RegisterPage = () => {
               className="auth-submit-btn"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+              disabled={isLoading}
             >
-              Create Account
+              {isLoading ? 'Creating Account...' : 'Create Account'}
             </motion.button>
 
             <div className="auth-switch">
