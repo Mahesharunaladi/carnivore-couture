@@ -9,6 +9,7 @@ import { CartProvider } from './context/CartContext';
 import { useAuth } from './context/AuthContext';
 import { useCart } from './context/CartContext';
 import Loading from './components/Loading';
+import ProductCard from './components/ProductCard';
 
 function App() {
   const [cartItems, setCartItems] = useState(0);
@@ -468,31 +469,7 @@ function App() {
               </div>
               <div className="product-grid">
                 {featuredProducts.map((product) => (
-                  <div className="product-card" key={product.id}>
-                    <img
-                      src={`/product${product.id}.svg`}
-                      alt={product.name}
-                      className="product-image"
-                    />
-                    <div
-                      className="add-btn"
-                      onClick={() => setCartItems(cartItems + 1)}
-                    >
-                      +
-                    </div>
-                    <h3>{product.name}</h3>
-                    <div className="product-details">
-                      <span className="weight">{product.weight}</span>
-                      <span className="pieces">| 4-6 Pieces</span>
-                      <span className="serves">| Serves 2-3</span>
-                    </div>
-                    <div className="price-container">
-                      <span className="original-price">₹{product.originalPrice}</span>
-                      <span className="discounted-price">₹{product.discountedPrice}</span>
-                      <span className="discount">{product.discount}</span>
-                    </div>
-                    <div className="delivery-time">{product.deliveryTime}</div>
-                  </div>
+                  <ProductCard key={product.id} product={product} />
                 ))}
               </div>
             </section>
