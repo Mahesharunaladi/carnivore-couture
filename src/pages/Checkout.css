@@ -484,3 +484,164 @@
     padding: 1.5rem;
   }
 }
+
+/* Payment Method Selector */
+.payment-method-selector {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.payment-method-btn {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.payment-method-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.payment-method-btn.active {
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.2), rgba(239, 68, 68, 0.2));
+  border-color: #dc2626;
+  color: #fff;
+}
+
+.payment-method-btn svg {
+  font-size: 1.5rem;
+}
+
+.payment-method-btn .upi-icon,
+.payment-method-btn .wallet-icon {
+  font-size: 1.5rem;
+}
+
+/* UPI Payment Styles */
+.form-hint {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.upi-apps {
+  grid-column: 1 / -1;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.upi-app-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.upi-app-icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.upi-app {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Wallet Payment Styles */
+.wallet-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.wallet-option {
+  cursor: pointer;
+}
+
+.wallet-option input[type="radio"] {
+  display: none;
+}
+
+.wallet-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.wallet-option:hover .wallet-card {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.wallet-option input[type="radio"]:checked + .wallet-card {
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.2), rgba(239, 68, 68, 0.2));
+  border-color: #dc2626;
+}
+
+.wallet-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #dc2626, #ef4444);
+  color: #fff;
+}
+
+.wallet-logo.phonepe {
+  background: linear-gradient(135deg, #5f259f, #8a3cff);
+}
+
+.wallet-logo.paytm {
+  background: linear-gradient(135deg, #00baf2, #0099d8);
+}
+
+.wallet-card span:last-child {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Responsive for payment methods */
+@media (max-width: 768px) {
+  .payment-method-selector {
+    flex-direction: column;
+  }
+
+  .wallet-options {
+    grid-template-columns: 1fr;
+  }
+}

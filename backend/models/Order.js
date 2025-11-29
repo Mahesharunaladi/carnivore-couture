@@ -33,8 +33,23 @@ const orderSchema = new mongoose.Schema({
         zipCode: { type: String, required: true }
     },
     paymentInfo: {
-        cardLastFour: { type: String, required: true },
-        cardName: { type: String, required: true }
+        method: { 
+            type: String, 
+            enum: ['card', 'upi', 'wallet'],
+            required: true,
+            default: 'card'
+        },
+        // Card payment fields
+        cardLastFour: { type: String },
+        cardName: { type: String },
+        // UPI payment fields
+        upiId: { type: String },
+        // Wallet payment fields
+        walletType: { 
+            type: String,
+            enum: ['gpay', 'phonepe', 'paytm']
+        },
+        walletPhone: { type: String }
     },
     subtotal: {
         type: Number,

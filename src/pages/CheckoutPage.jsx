@@ -22,11 +22,22 @@ const CheckoutPage = () => {
     zipCode: '',
   });
 
+  const [paymentMethod, setPaymentMethod] = useState('card'); // 'card', 'upi', 'wallet'
+  
   const [paymentInfo, setPaymentInfo] = useState({
     cardNumber: '',
     cardName: '',
     expiryDate: '',
     cvv: '',
+  });
+
+  const [upiInfo, setUpiInfo] = useState({
+    upiId: '',
+  });
+
+  const [walletInfo, setWalletInfo] = useState({
+    walletType: '', // 'paytm', 'phonepe', 'gpay'
+    walletPhone: '',
   });
 
   useEffect(() => {
@@ -95,17 +106,38 @@ const CheckoutPage = () => {
     });
   };
 
+  const handleUpiChange = (e) => {
+    setUpiInfo({
+      ...upiInfo,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleWalletChange = (e) => {
+    setWalletInfo({
+      ...walletInfo,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   const validateShipping = () => {
     const { fullName, email, phone, address, city, state, zipCode } = shippingInfo;
     return fullName && email && phone && address && city && state && zipCode;
   };
 
   const validatePayment = () => {
-    const { cardNumber, cardName, expiryDate, cvv } = paymentInfo;
-    return cardNumber.replace(/\s/g, '').length === 16 && 
-           cardName && 
-           expiryDate.length === 5 && 
-           cvv.length === 3;
+    if (paymentMethod === 'card') {
+      const { cardNumber, cardName, expiryDate, cvv } = paymentInfo;
+      return cardNumber.replace(/\s/g, '').length === 16 && 
+             cardName && 
+             expiryDate.length === 5 && 
+             cvv.length === 3;
+    } else if (paymentMethod === 'upi') {
+      return upiInfo.upiId && upiInfo.upiId.includes('@');
+    } else if (paymentMethod === 'wallet') {
+      return walletInfo.walletType && walletInfo.walletPhone && walletInfo.walletPhone.length === 10;
+    }
+    return false;
   };
 
   const handleContinueToPayment = () => {
@@ -126,13 +158,32 @@ const CheckoutPage = () => {
 
     try {
       const token = localStorage.getItem('token');
+      
+      let paymentDetails = {};
+      
+      if (paymentMethod === 'card') {
+        paymentDetails = {
+          method: 'card',
+          cardLastFour: paymentInfo.cardNumber.slice(-4),
+          cardName: paymentInfo.cardName,
+        };
+      } else if (paymentMethod === 'upi') {
+        paymentDetails = {
+          method: 'upi',
+          upiId: upiInfo.upiId,
+        };
+      } else if (paymentMethod === 'wallet') {
+        paymentDetails = {
+          method: 'wallet',
+          walletType: walletInfo.walletType,
+          walletPhone: walletInfo.walletPhone,
+        };
+      }
+      
       const orderData = {
         items: cartItems,
         shippingInfo,
-        paymentInfo: {
-          cardLastFour: paymentInfo.cardNumber.slice(-4),
-          cardName: paymentInfo.cardName,
-        },
+        paymentInfo: paymentDetails,
         subtotal: calculateSubtotal(),
         tax: calculateTax(),
         shipping: calculateShipping(),
@@ -355,58 +406,183 @@ const CheckoutPage = () => {
                   <h2>Payment Information</h2>
                 </div>
 
-                <div className="form-grid">
-                  <div className="form-group full-width">
-                    <label>Card Number *</label>
-                    <input
-                      type="text"
-                      name="cardNumber"
-                      value={paymentInfo.cardNumber}
-                      onChange={handlePaymentChange}
-                      placeholder="1234 5678 9012 3456"
-                      maxLength="19"
-                      required
-                    />
-                  </div>
-
-                  <div className="form-group full-width">
-                    <label>Cardholder Name *</label>
-                    <input
-                      type="text"
-                      name="cardName"
-                      value={paymentInfo.cardName}
-                      onChange={handlePaymentChange}
-                      placeholder="John Doe"
-                      required
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label>Expiry Date *</label>
-                    <input
-                      type="text"
-                      name="expiryDate"
-                      value={paymentInfo.expiryDate}
-                      onChange={handlePaymentChange}
-                      placeholder="MM/YY"
-                      maxLength="5"
-                      required
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label>CVV *</label>
-                    <input
-                      type="text"
-                      name="cvv"
-                      value={paymentInfo.cvv}
-                      onChange={handlePaymentChange}
-                      placeholder="123"
-                      maxLength="3"
-                      required
-                    />
-                  </div>
+                {/* Payment Method Selection */}
+                <div className="payment-method-selector">
+                  <button
+                    type="button"
+                    className={`payment-method-btn ${paymentMethod === 'card' ? 'active' : ''}`}
+                    onClick={() => setPaymentMethod('card')}
+                  >
+                    <FiCreditCard />
+                    <span>Card</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={`payment-method-btn ${paymentMethod === 'upi' ? 'active' : ''}`}
+                    onClick={() => setPaymentMethod('upi')}
+                  >
+                    <span className="upi-icon">⚡</span>
+                    <span>UPI</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={`payment-method-btn ${paymentMethod === 'wallet' ? 'active' : ''}`}
+                    onClick={() => setPaymentMethod('wallet')}
+                  >
+                    <span className="wallet-icon">💳</span>
+                    <span>Wallet</span>
+                  </button>
                 </div>
+
+                {/* Card Payment */}
+                {paymentMethod === 'card' && (
+                  <div className="form-grid">
+                    <div className="form-group full-width">
+                      <label>Card Number *</label>
+                      <input
+                        type="text"
+                        name="cardNumber"
+                        value={paymentInfo.cardNumber}
+                        onChange={handlePaymentChange}
+                        placeholder="1234 5678 9012 3456"
+                        maxLength="19"
+                        required
+                      />
+                    </div>
+
+                    <div className="form-group full-width">
+                      <label>Cardholder Name *</label>
+                      <input
+                        type="text"
+                        name="cardName"
+                        value={paymentInfo.cardName}
+                        onChange={handlePaymentChange}
+                        placeholder="John Doe"
+                        required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Expiry Date *</label>
+                      <input
+                        type="text"
+                        name="expiryDate"
+                        value={paymentInfo.expiryDate}
+                        onChange={handlePaymentChange}
+                        placeholder="MM/YY"
+                        maxLength="5"
+                        required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>CVV *</label>
+                      <input
+                        type="text"
+                        name="cvv"
+                        value={paymentInfo.cvv}
+                        onChange={handlePaymentChange}
+                        placeholder="123"
+                        maxLength="3"
+                        required
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {/* UPI Payment */}
+                {paymentMethod === 'upi' && (
+                  <div className="form-grid">
+                    <div className="form-group full-width">
+                      <label>UPI ID *</label>
+                      <input
+                        type="text"
+                        name="upiId"
+                        value={upiInfo.upiId}
+                        onChange={handleUpiChange}
+                        placeholder="yourname@upi"
+                        required
+                      />
+                      <small className="form-hint">Enter your UPI ID (e.g., yourname@paytm, yourname@oksbi)</small>
+                    </div>
+                    <div className="upi-apps">
+                      <span className="upi-app-label">Supported UPI Apps:</span>
+                      <div className="upi-app-icons">
+                        <span className="upi-app">Google Pay</span>
+                        <span className="upi-app">PhonePe</span>
+                        <span className="upi-app">Paytm</span>
+                        <span className="upi-app">BHIM</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Wallet Payment */}
+                {paymentMethod === 'wallet' && (
+                  <div className="form-grid">
+                    <div className="form-group full-width">
+                      <label>Select Wallet *</label>
+                      <div className="wallet-options">
+                        <label className="wallet-option">
+                          <input
+                            type="radio"
+                            name="walletType"
+                            value="gpay"
+                            checked={walletInfo.walletType === 'gpay'}
+                            onChange={handleWalletChange}
+                            required
+                          />
+                          <div className="wallet-card">
+                            <span className="wallet-logo">G</span>
+                            <span>Google Pay</span>
+                          </div>
+                        </label>
+                        <label className="wallet-option">
+                          <input
+                            type="radio"
+                            name="walletType"
+                            value="phonepe"
+                            checked={walletInfo.walletType === 'phonepe'}
+                            onChange={handleWalletChange}
+                            required
+                          />
+                          <div className="wallet-card">
+                            <span className="wallet-logo phonepe">⚡</span>
+                            <span>PhonePe</span>
+                          </div>
+                        </label>
+                        <label className="wallet-option">
+                          <input
+                            type="radio"
+                            name="walletType"
+                            value="paytm"
+                            checked={walletInfo.walletType === 'paytm'}
+                            onChange={handleWalletChange}
+                            required
+                          />
+                          <div className="wallet-card">
+                            <span className="wallet-logo paytm">P</span>
+                            <span>Paytm</span>
+                          </div>
+                        </label>
+                      </div>
+                    </div>
+
+                    <div className="form-group full-width">
+                      <label>Registered Mobile Number *</label>
+                      <input
+                        type="tel"
+                        name="walletPhone"
+                        value={walletInfo.walletPhone}
+                        onChange={handleWalletChange}
+                        placeholder="9876543210"
+                        maxLength="10"
+                        required
+                      />
+                      <small className="form-hint">Enter the mobile number linked to your wallet</small>
+                    </div>
+                  </div>
+                )}
 
                 <div className="checkout-actions">
                   <motion.button
