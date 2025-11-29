@@ -167,17 +167,54 @@ function App() {
           {/* Top Navigation Bar */}
           <div className="top-nav">
             <div className="nav-left">
-              <button className="menu-btn"><FiMenu /></button>
+              <motion.button
+                className="menu-btn"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <FiMenu />
+              </motion.button>
             </div>
             <div className="nav-center">
-              <h1>Carnivore Couture</h1>
+              <motion.h1
+                animate={{ color: ["#333", "#d11243", "#333"] }}
+                transition={{ duration: 3, repeat: Infinity }}
+              >
+                Carnivore Couture
+              </motion.h1>
               <p>Premium Meat Delivery Service</p>
             </div>
             <div className="nav-right">
-              <button className="share-btn"><FiShare2 /></button>
-              <button className="bookmark-btn"><FiBookmark /></button>
-              <button className="more-btn"><FiMoreVertical /></button>
-              <button onClick={() => setShowLogin(true)}>Login</button>
+              <motion.button
+                className="share-btn"
+                whileHover={{ scale: 1.1, rotate: 360 }}
+                whileTap={{ scale: 0.9 }}
+                transition={{ duration: 0.3 }}
+              >
+                <FiShare2 />
+              </motion.button>
+              <motion.button
+                className="bookmark-btn"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <FiBookmark />
+              </motion.button>
+              <motion.button
+                className="more-btn"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <FiMoreVertical />
+              </motion.button>
+              <motion.button
+                onClick={() => setShowLogin(true)}
+                whileHover={{ scale: 1.05, backgroundColor: "#d11243", color: "white" }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+              >
+                Login
+              </motion.button>
             </div>
           </div>
 
@@ -217,11 +254,31 @@ function App() {
               />
             </div>
             <div className="header-actions">
-              <button className="categories-btn">Categories</button>
-              <button className="store-btn">Store</button>
-              <button className="cart-btn">
+              <motion.button
+                className="categories-btn"
+                whileHover={{ scale: 1.05, backgroundColor: "#d11243", color: "white" }}
+                whileTap={{ scale: 0.95 }}
+                animate={{ boxShadow: ["0 0 0 rgba(209, 18, 67, 0)", "0 0 15px rgba(209, 18, 67, 0.5)", "0 0 0 rgba(209, 18, 67, 0)"] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                Categories
+              </motion.button>
+              <motion.button
+                className="store-btn"
+                whileHover={{ scale: 1.05, backgroundColor: "#4ecdc4", color: "white" }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Store
+              </motion.button>
+              <motion.button
+                className="cart-btn"
+                whileHover={{ scale: 1.05, backgroundColor: "#45b7d1", color: "white" }}
+                whileTap={{ scale: 0.95 }}
+                animate={cartItems > 0 ? { scale: [1, 1.1, 1] } : {}}
+                transition={{ duration: 0.5 }}
+              >
                 <FiShoppingCart /> Cart ({cartItems})
-              </button>
+              </motion.button>
             </div>
           </header>
 
@@ -352,14 +409,34 @@ function App() {
                   else if (category.name === 'Prawns & More') imagePath = '/prawns.svg';
 
                   return (
-                    <div className="category-card" key={category.id}>
-                      <img
+                    <motion.div
+                      className="category-card"
+                      key={category.id}
+                      whileHover={{
+                        scale: 1.1,
+                        rotate: [0, -5, 5, 0],
+                        boxShadow: "0 10px 30px rgba(0,0,0,0.2)"
+                      }}
+                      whileTap={{ scale: 0.95 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 50 }}
+                    >
+                      <motion.img
                         src={imagePath}
                         alt={category.name}
                         className="category-image"
+                        animate={{ rotate: [0, 360] }}
+                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                        whileHover={{ scale: 1.2, filter: "hue-rotate(45deg)" }}
                       />
-                      <h3>{category.name}</h3>
-                    </div>
+                      <motion.h3
+                        whileHover={{ color: "#d11243", scale: 1.05 }}
+                      >
+                        {category.name}
+                      </motion.h3>
+                    </motion.div>
                   );
                 })}
               </div>
