@@ -104,14 +104,15 @@ body {
 /* Hero Section */
 .hero-section {
   position: relative;
-  height: 600px;
+  height: 700px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   overflow: hidden;
-  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)),
-              url('/hero-meat.jpg') center/cover;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)),
+              url('/hero-meat (1).jpg') center/cover no-repeat;
+  background-attachment: fixed;
 }
 
 .hero-content {
