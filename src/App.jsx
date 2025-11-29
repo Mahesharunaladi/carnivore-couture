@@ -3,15 +3,13 @@ import './App.css';
 import { FiShoppingCart, FiLogIn } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProductCard from './components/ProductCard';
-import Login from './components/Login';
-import Register from './components/Register';
+import AuthPage from './components/AuthPage';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [cartItems, setCartItems] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [showLogin, setShowLogin] = useState(false);
-  const [showRegister, setShowRegister] = useState(false);
+  const [showAuth, setShowAuth] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -162,7 +160,7 @@ function App() {
             className="login-btn"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => setShowLogin(true)}
+            onClick={() => setShowAuth(true)}
           >
             <FiLogIn size={18} />
             Login
@@ -385,25 +383,10 @@ function App() {
         </>
       )}
 
-      {/* Login and Register Modals */}
+      {/* Auth Page */}
       <AnimatePresence>
-        {showLogin && (
-          <Login
-            onClose={() => setShowLogin(false)}
-            onSwitchToRegister={() => {
-              setShowLogin(false);
-              setShowRegister(true);
-            }}
-          />
-        )}
-        {showRegister && (
-          <Register
-            onClose={() => setShowRegister(false)}
-            onSwitchToLogin={() => {
-              setShowRegister(false);
-              setShowLogin(true);
-            }}
-          />
+        {showAuth && (
+          <AuthPage onClose={() => setShowAuth(false)} />
         )}
       </AnimatePresence>
     </div>
