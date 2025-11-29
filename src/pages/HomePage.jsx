@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
-import './App.css';
+import { useNavigate } from 'react-router-dom';
+import '../App.css';
 import { FiShoppingCart, FiLogIn } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
-import ProductCard from './components/ProductCard';
-import AuthPage from './components/AuthPage';
+import ProductCard from '../components/ProductCard';
 
-function App() {
+function HomePage() {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [cartItems, setCartItems] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [showAuth, setShowAuth] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -160,7 +160,7 @@ function App() {
             className="login-btn"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => setShowAuth(true)}
+            onClick={() => navigate('/login')}
           >
             <FiLogIn size={18} />
             Login
@@ -382,15 +382,8 @@ function App() {
           </motion.div>
         </>
       )}
-
-      {/* Auth Page */}
-      <AnimatePresence>
-        {showAuth && (
-          <AuthPage onClose={() => setShowAuth(false)} />
-        )}
-      </AnimatePresence>
     </div>
   );
 }
 
-export default App;
+export default HomePage;
