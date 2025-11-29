@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import { FiShoppingCart, FiLogIn } from 'react-icons/fi';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import ProductCard from './components/ProductCard';
+import Login from './components/Login';
+import Register from './components/Register';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [cartItems, setCartItems] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -158,6 +162,7 @@ function App() {
             className="login-btn"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => setShowLogin(true)}
           >
             <FiLogIn size={18} />
             Login
@@ -379,6 +384,28 @@ function App() {
           </motion.div>
         </>
       )}
+
+      {/* Login and Register Modals */}
+      <AnimatePresence>
+        {showLogin && (
+          <Login
+            onClose={() => setShowLogin(false)}
+            onSwitchToRegister={() => {
+              setShowLogin(false);
+              setShowRegister(true);
+            }}
+          />
+        )}
+        {showRegister && (
+          <Register
+            onClose={() => setShowRegister(false)}
+            onSwitchToLogin={() => {
+              setShowRegister(false);
+              setShowLogin(true);
+            }}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
