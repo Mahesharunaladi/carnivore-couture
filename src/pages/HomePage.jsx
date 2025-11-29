@@ -170,15 +170,30 @@ function HomePage() {
             <FiShoppingCart size={20} />
             {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
           </motion.button>
-          <motion.button
-            className="login-btn"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => navigate('/login')}
-          >
-            <FiLogIn size={18} />
-            Login
-          </motion.button>
+          
+          {user ? (
+            <div className="user-menu">
+              <span className="user-name">Hello, {user.name}</span>
+              <motion.button
+                className="logout-btn"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleLogout}
+              >
+                Logout
+              </motion.button>
+            </div>
+          ) : (
+            <motion.button
+              className="login-btn"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => navigate('/login')}
+            >
+              <FiLogIn size={18} />
+              Login
+            </motion.button>
+          )}
         </div>
       </header>
 

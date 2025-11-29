@@ -1,19 +1,8 @@
 const express = require('express');
 const router = express.Router();
-
-// Test route
-router.get('/test', (req, res) => {
-    console.log('Test route hit');
-    res.json({ message: 'Auth router is working' });
-});
-
-// Simple register route
-router.post('/register', (req, res) => {
-    console.log('Register route hit:', req.body);
-    res.json({ message: 'Registration endpoint working', data: req.body });
-});
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-const { userValidationRules, validate } = require('../middleware/validation');
 const auth = require('../middleware/auth');
 
 // Register a new user
