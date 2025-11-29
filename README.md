@@ -4,50 +4,54 @@
 
 Carnivore Couture is a sophisticated e-commerce platform specializing in premium meat products. Built with modern technologies and best practices, it offers a seamless shopping experience for quality meat products.
 
+**🌐 Live Demo**: [Deploy your own in 15 minutes!](#-quick-deployment)
+
 ![Carnivore Couture Logo](/public/logo3.png)
 
 ## 🚀 Features
 
 ### 🎨 Frontend
-- **Modern UI/UX** - Built with React + Vite for optimal performance
-- **Responsive Design** - Fully responsive across all devices
-- **Dynamic Product Catalog** - Real-time filtering and search
-- **Interactive Shopping Cart** - Seamless cart management
-- **User Authentication** - Secure login and registration
-- **Order Management** - Track orders and view history
-- **Admin Dashboard** - Complete product and order management
-- **Wishlist** - Save favorite items for later
+- **Modern UI/UX** - Built with React 19 + Vite for optimal performance
+- **Responsive Design** - Fully responsive across all devices with dark theme
+- **Dynamic Product Catalog** - 8 premium meat products with images
+- **Interactive Shopping Cart** - Cart persistence with localStorage
+- **User Authentication** - Secure login and registration with JWT
+- **2-Step Checkout** - Shipping info + Multiple payment methods
+- **Payment Options** - Card, UPI, and Digital Wallets (GPay/PhonePe/Paytm)
+- **Smooth Animations** - Framer Motion for delightful UX
+- **Email Notifications** - Welcome emails on registration
 
 ### ⚙️ Backend
 - **Robust API** - RESTful architecture with Express.js
-- **Secure Authentication** - JWT-based user authentication
-- **Data Protection** - Input validation and sanitization
-- **Access Control** - Role-based permissions system
-- **Performance** - Rate limiting and optimization
+- **Secure Authentication** - JWT-based with bcrypt password hashing
+- **Data Protection** - Input validation with express-validator
+- **Rate Limiting** - API protection against abuse
 - **Security** - CORS, Helmet, and security best practices
 - **Database** - MongoDB with Mongoose ODM
-- **Error Handling** - Comprehensive error management
+- **Email Service** - Nodemailer with Gmail integration
+- **Error Handling** - Comprehensive error management and logging
 
 ## 🛠 Tech Stack
 
 ### Frontend
-- **React** - UI library
-- **Vite** - Build tool
+- **React 19** - Latest UI library with concurrent features
+- **Vite 7** - Lightning-fast build tool
+- **React Router DOM v6** - Client-side routing
+- **Framer Motion** - Animation library
 - **React Icons** - Icon library
-- **CSS3** - Styling with modern CSS features
-- **Context API** - State management
-- **React Router** - Navigation
-- **Axios** - HTTP client
+- **CSS3** - Modern styling with gradients and animations
 
 ### Backend
 - **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **MongoDB** - Database
-- **Mongoose** - ODM
-- **JWT** - Authentication
-- **bcrypt** - Password hashing
+- **Express.js 5** - Web framework
+- **MongoDB** - NoSQL database
+- **Mongoose 8** - Elegant MongoDB ODM
+- **JWT** - Token-based authentication
+- **bcryptjs** - Password hashing (8 rounds)
+- **Nodemailer** - Email service
 - **Express Validator** - Input validation
 - **Helmet** - Security headers
+- **Morgan** - HTTP request logging
 
 ## 🚀 Getting Started
 
@@ -262,15 +266,62 @@ PATCH /api/orders/:id/status # Admin only
 PATCH /api/orders/:id/cancel
 ```
 
+## 🚀 Quick Deployment
+
+### Deploy in 15 Minutes (Free!)
+
+Your app is **production-ready** and can be deployed for **$0/month** using:
+- **Frontend**: Vercel (Free)
+- **Backend**: Render (Free - 750 hours/month)
+- **Database**: MongoDB Atlas (Free - 512MB)
+
+#### Quick Start:
+```bash
+# Automated deployment
+./deploy.sh
+
+# OR Manual deployment
+npm run build
+vercel --prod
+```
+
+#### Detailed Guides:
+- 📖 **[DEPLOY_NOW.md](DEPLOY_NOW.md)** - Quick visual guide
+- ⚡ **[QUICK_DEPLOY.md](QUICK_DEPLOY.md)** - 15-minute deployment
+- 📚 **[DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)** - Complete detailed guide
+- ✅ **[DEPLOYMENT_CHECKLIST.md](DEPLOYMENT_CHECKLIST.md)** - Step-by-step checklist
+
+**Platform Options:**
+- ✅ Vercel + Render (Recommended - Free & Easy)
+- ✅ Netlify + Railway (Alternative - Free)
+- ✅ DigitalOcean Droplet (Full control - $6/month)
+- ✅ Heroku (Easy but $7/month)
+
+**Live in 3 Steps:**
+1. Deploy backend to Render (5 min)
+2. Setup MongoDB Atlas (5 min)
+3. Deploy frontend to Vercel (5 min)
+
+See **[DEPLOY_NOW.md](DEPLOY_NOW.md)** to get started!
+
 ## Security Features
 
-- JWT-based authentication
-- Request rate limiting
+- JWT-based authentication (24h token expiration)
+- Request rate limiting (100 requests/15min)
 - Input validation and sanitization
-- Secure HTTP headers
+- Secure HTTP headers (Helmet)
 - CORS configuration
-- Error handling
-- Request logging
+- Password hashing with bcrypt (8 rounds)
+- Error handling with proper status codes
+- Request logging with Morgan
+
+## 📚 Documentation
+
+- **[DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)** - Complete deployment instructions
+- **[QUICK_DEPLOY.md](QUICK_DEPLOY.md)** - Fast deployment guide
+- **[DEPLOYMENT_CHECKLIST.md](DEPLOYMENT_CHECKLIST.md)** - Deployment checklist
+- **[PAYMENT_METHODS_README.md](PAYMENT_METHODS_README.md)** - Payment integration guide
+- **[EMAIL_FIX_GUIDE.md](EMAIL_FIX_GUIDE.md)** - Email setup instructions
 
 ## Contributing
 
@@ -280,9 +331,26 @@ PATCH /api/orders/:id/cancel
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
+## 🎯 Project Status
+
+- ✅ **Frontend**: Complete with responsive design
+- ✅ **Backend**: Complete with security features
+- ✅ **Authentication**: JWT-based login/registration
+- ✅ **Cart**: Persistent cart with localStorage
+- ✅ **Checkout**: 2-step with multiple payment methods
+- ✅ **Emails**: Welcome emails with HTML templates
+- ✅ **Database**: MongoDB with Mongoose schemas
+- ✅ **Deployment**: Ready to deploy (see guides)
+- 🚧 **Payment Gateway**: Mock payment (integrate Razorpay/Stripe for production)
+
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 👨‍💻 Author
+
+**Mahesh Arunaladi**
+- GitHub: [@Mahesharunaladi](https://github.com/Mahesharunaladi)
 
 ## Acknowledgments
 
