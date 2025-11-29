@@ -1,6 +1,7 @@
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
+import { FiShoppingCart } from 'react-icons/fi';
 
-const ProductCard = ({ product, index }) => {
+const ProductCard = ({ product, index, onAddToCart }) => {
   return (
     <motion.div
       className="product-card"
@@ -15,13 +16,22 @@ const ProductCard = ({ product, index }) => {
           alt={product.name}
           className="product-image"
           onError={(e) => {
-            e.target.src = "/hero-meat.jpg";
+            e.target.src = "/hero-meat (1).jpg";
           }}
         />
       </div>
       <div className="product-info">
         <h3 className="product-name">{product.name}</h3>
         <div className="product-price">₹{product.price.toLocaleString()}</div>
+        <motion.button
+          className="add-to-cart-btn"
+          onClick={() => onAddToCart(product)}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <FiShoppingCart size={18} />
+          Add to Cart
+        </motion.button>
       </div>
     </motion.div>
   );

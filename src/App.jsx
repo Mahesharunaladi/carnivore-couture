@@ -6,7 +6,8 @@ import ProductCard from './components/ProductCard';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const [cartCount, setCartCount] = useState(5);
+  const [cartItems, setCartItems] = useState([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -14,6 +15,42 @@ function App() {
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
+
+  const addToCart = (product) => {
+    setCartItems(prevItems => {
+      const existingItem = prevItems.find(item => item.id === product.id);
+      if (existingItem) {
+        return prevItems.map(item =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+      return [...prevItems, { ...product, quantity: 1 }];
+    });
+  };
+
+  const removeFromCart = (productId) => {
+    setCartItems(prevItems => prevItems.filter(item => item.id !== productId));
+  };
+
+  const updateQuantity = (productId, newQuantity) => {
+    if (newQuantity <= 0) {
+      removeFromCart(productId);
+      return;
+    }
+    setCartItems(prevItems =>
+      prevItems.map(item =>
+        item.id === productId ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
+  const getTotalPrice = () => {
+    return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+  };
+
+  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   const categories = [
     { id: 1, name: 'FISH', icon: '🐟', count: '9 Products' },
@@ -25,7 +62,7 @@ function App() {
     {
       id: 1,
       name: 'Mutton Shoulder',
-      price: 7200,
+      price: 720,
       image: 'mutton',
     },
     {
@@ -112,6 +149,7 @@ function App() {
             className="cart-icon"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => setIsCartOpen(true)}
           >
             <FiShoppingCart size={20} />
             {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
@@ -227,10 +265,120 @@ function App() {
         </div>
         <div className="products-grid">
           {products.map((product, index) => (
-            <ProductCard key={product.id} product={product} index={index} />
+            <ProductCard 
+              key={product.id} 
+              product={product} 
+              index={index}
+              onAddToCart={addToCart}
+            />
           ))}
         </div>
       </section>
+
+      {/* Cart Sidebar */}
+      {isCartOpen && (
+        <>
+          <motion.div 
+            className="cart-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsCartOpen(false)}
+          />
+          <motion.div
+            className="cart-sidebar"
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+          >
+            <div className="cart-header">
+              <h2>Your Cart ({cartCount} items)</h2>
+              <button 
+                className="cart-close"
+                onClick={() => setIsCartOpen(false)}
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="cart-items">
+              {cartItems.length === 0 ? (
+                <div className="empty-cart">
+                  <FiShoppingCart size={60} />
+                  <p>Your cart is empty</p>
+                  <button 
+                    className="continue-shopping"
+                    onClick={() => setIsCartOpen(false)}
+                  >
+                    Continue Shopping
+                  </button>
+                </div>
+              ) : (
+                <>
+                  {cartItems.map(item => (
+                    <motion.div 
+                      key={item.id} 
+                      className="cart-item"
+                      layout
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                    >
+                      <img 
+                        src={`/product-${item.image}.jpg`} 
+                        alt={item.name}
+                        className="cart-item-image"
+                      />
+                      <div className="cart-item-details">
+                        <h4>{item.name}</h4>
+                        <p className="cart-item-price">₹{item.price.toLocaleString()}</p>
+                        <div className="quantity-controls">
+                          <button 
+                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            className="qty-btn"
+                          >
+                            -
+                          </button>
+                          <span className="quantity">{item.quantity}</span>
+                          <button 
+                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            className="qty-btn"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                      <button 
+                        className="remove-item"
+                        onClick={() => removeFromCart(item.id)}
+                      >
+                        🗑️
+                      </button>
+                    </motion.div>
+                  ))}
+                </>
+              )}
+            </div>
+
+            {cartItems.length > 0 && (
+              <div className="cart-footer">
+                <div className="cart-total">
+                  <span>Total:</span>
+                  <span className="total-price">₹{getTotalPrice().toLocaleString()}</span>
+                </div>
+                <motion.button
+                  className="checkout-btn"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Proceed to Checkout →
+                </motion.button>
+              </div>
+            )}
+          </motion.div>
+        </>
+      )}
     </div>
   );
 }
