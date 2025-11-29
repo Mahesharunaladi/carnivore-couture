@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import { FiSearch, FiShoppingCart, FiUser, FiMenu, FiShare2, FiBookmark, FiMoreVertical, FiMapPin, FiNavigation } from 'react-icons/fi';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Login from './Login.jsx';
 import Logo from './components/NewLogo';
 import { AuthProvider } from './context/AuthContext';
@@ -15,6 +16,11 @@ function App() {
   const [locationLoading, setLocationLoading] = useState(false);
   const [locationError, setLocationError] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
+
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, [0, 300], [0, -50]);
+  const y2 = useTransform(scrollY, [0, 300], [0, -100]);
+  const y3 = useTransform(scrollY, [0, 300], [0, -150]);
 
   // Function to get user's current location
   const getCurrentLocation = () => {
@@ -221,25 +227,76 @@ function App() {
 
           {/* Main Content */}
           <div className="main-content">
-            {/* Welcome Banner */}
+            {/* Welcome Banner with Parallax */}
             <section className="welcome-banner">
-              <div className="welcome-text">
-                <h2>Welcome to Carnivore Couture</h2>
-                <p>Premium meat delivery service with exciting offers just for you!</p>
-              </div>
-              <div className="banner-image">
-                <div className="product-image-container">
-                  <img src="/product1.svg" alt="Chicken Curry Cut" className="banner-product-image" />
-                </div>
-                <div className="banner-details">
+              <motion.div className="parallax-bg" style={{ y: y1 }}>
+                <svg width="100%" height="400" viewBox="0 0 1200 400" className="meat-pattern">
+                  <defs>
+                    <pattern id="meatPattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+                      <circle cx="50" cy="50" r="20" fill="#ff6b6b" opacity="0.1">
+                        <animate attributeName="r" values="20;25;20" dur="3s" repeatCount="indefinite" />
+                      </circle>
+                      <circle cx="20" cy="80" r="15" fill="#4ecdc4" opacity="0.1">
+                        <animate attributeName="r" values="15;20;15" dur="4s" repeatCount="indefinite" />
+                      </circle>
+                      <circle cx="80" cy="20" r="12" fill="#45b7d1" opacity="0.1">
+                        <animate attributeName="r" values="12;18;12" dur="5s" repeatCount="indefinite" />
+                      </circle>
+                    </pattern>
+                  </defs>
+                  <rect width="100%" height="100%" fill="url(#meatPattern)" />
+                </svg>
+              </motion.div>
+              <motion.div className="welcome-text" style={{ y: y2 }}>
+                <motion.h2
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                >
+                  Welcome to Carnivore Couture
+                </motion.h2>
+                <motion.p
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                >
+                  Premium meat delivery service with exciting offers just for you!
+                </motion.p>
+              </motion.div>
+              <motion.div className="banner-image" style={{ y: y3 }}>
+                <motion.div
+                  className="product-image-container"
+                  whileHover={{ scale: 1.05, rotate: 5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <motion.img
+                    src="/product1.svg"
+                    alt="Chicken Curry Cut"
+                    className="banner-product-image"
+                    animate={{ y: [0, -10, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  />
+                </motion.div>
+                <motion.div
+                  className="banner-details"
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.6 }}
+                >
                   <h3>Chicken Curry Cut & more</h3>
                   <p>Starting at</p>
                   <div className="price-container">
                     <span className="original-price">₹189</span>
-                    <span className="discounted-price">₹160</span>
+                    <motion.span
+                      className="discounted-price"
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    >
+                      ₹160
+                    </motion.span>
                   </div>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             </section>
 
             {/* Bestsellers Section */}
