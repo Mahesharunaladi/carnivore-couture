@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const auth = require('../middleware/auth');
+const { sendWelcomeEmail } = require('../utils/emailService');
 
 // Register a new user
 router.post('/register', async (req, res) => {
@@ -34,8 +35,18 @@ router.post('/register', async (req, res) => {
         const userResponse = user.toObject();
         delete userResponse.password;
         
-        // Send welcome email (you can implement this later)
-        // await sendWelcomeEmail(user.email, user.name);
+        // Send welcome email
+        sendWelcomeEmail(user.email, user.name)
+            .then(result => {
+                if (result.success) {
+                    console.log('Welcome email sent successfully to:', user.email);
+                } else {
+                    console.log('Failed to send welcome email:', result.error);
+                }
+            })
+            .catch(err => {
+                console.error('Error in email sending process:', err);
+            });
         
         res.status(201).json({ 
             message: 'Registration successful',
