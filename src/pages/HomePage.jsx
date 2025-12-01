@@ -93,51 +93,61 @@ function HomePage() {
   const products = [
     {
       id: 1,
-      name: 'Mutton Shoulder',
-      price: 720,
-      image: 'mutton',
+      name: 'Premium Chicken Breast',
+      originalPrice: 5200,
+      discountedPrice: 3750,
+      image: 'chicken',
+      badge: 'PREMIUM'
     },
     {
       id: 2,
-      name: 'Chicken Breast',
-      price: 450,
-      image: 'chicken',
+      name: 'Chicken Wings',
+      originalPrice: 3500,
+      discountedPrice: 2800,
+      image: 'wings',
+      badge: 'BESTSELLER'
     },
     {
       id: 3,
-      name: 'Fresh Cod Fish',
-      price: 1200,
-      image: 'cod',
+      name: 'Chicken Thighs',
+      discountedPrice: 3200,
+      image: 'thighs',
+      badge: null
     },
     {
       id: 4,
-      name: 'Mutton Curry Cut',
-      price: 890,
-      image: 'mutton-curry',
+      name: 'Whole Chicken',
+      discountedPrice: 4500,
+      image: 'chicken',
+      badge: null
     },
     {
       id: 5,
-      name: 'Fresh Prawns',
-      price: 1500,
-      image: 'prawns',
+      name: 'Mutton Curry Cut',
+      discountedPrice: 890,
+      image: 'mutton-curry',
+      badge: 'POPULAR'
     },
     {
       id: 6,
-      name: 'Chicken Thighs',
-      price: 380,
-      image: 'thighs',
+      name: 'Fresh Prawns',
+      discountedPrice: 1500,
+      image: 'prawns',
+      badge: 'PREMIUM'
     },
     {
       id: 7,
-      name: 'Fresh Tuna',
-      price: 950,
-      image: 'tuna',
+      name: 'Fresh Cod Fish',
+      discountedPrice: 1200,
+      image: 'cod',
+      badge: 'FRESH'
     },
     {
       id: 8,
-      name: 'Chicken Wings',
-      price: 320,
-      image: 'wings',
+      name: 'Fresh Tuna',
+      discountedPrice: 950,
+      image: 'tuna',
+      badge: null
     },
   ];
 
