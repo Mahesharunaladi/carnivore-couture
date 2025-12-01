@@ -39,6 +39,9 @@ const cartReducer = (state, action) => {
     case 'CLEAR_CART':
       return { ...state, items: [] };
 
+    case 'LOAD_CART':
+      return { ...state, items: action.payload.items || [] };
+
     default:
       return state;
   }
@@ -87,6 +90,10 @@ export const CartProvider = ({ children }) => {
     }, 0);
   };
 
+  const getCartCount = () => {
+    return state.items.reduce((count, item) => count + item.quantity, 0);
+  };
+
   return (
     <CartContext.Provider value={{
       items: state.items,
@@ -94,7 +101,8 @@ export const CartProvider = ({ children }) => {
       removeItem,
       updateQuantity,
       clearCart,
-      getCartTotal
+      getCartTotal,
+      getCartCount
     }}>
       {children}
     </CartContext.Provider>
