@@ -124,7 +124,9 @@ const ProductCard = ({ product }) => {
                 whileTap={{ scale: 0.95 }}
                 transition={{ duration: 0.3 }}
                 style={{
-                  background: 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)',
+                  background: isAdded 
+                    ? 'linear-gradient(135deg, #16a34a 0%, #15803d 100%)'
+                    : 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)',
                   border: 'none',
                   color: 'white',
                   padding: '1rem 2rem',
@@ -138,11 +140,43 @@ const ProductCard = ({ product }) => {
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '0.5rem',
-                  boxShadow: '0 4px 15px rgba(220, 38, 38, 0.4)'
+                  boxShadow: isAdded
+                    ? '0 4px 15px rgba(22, 163, 74, 0.4)'
+                    : '0 4px 15px rgba(220, 38, 38, 0.4)',
+                  transition: 'all 0.3s ease'
                 }}
               >
-                <FiShoppingCart size={20} /> Add to Cart
+                <FiShoppingCart size={20} /> 
+                {isAdded ? '✓ Added!' : 'Add to Cart'}
               </motion.button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        
+        {/* Added to Cart Notification */}
+        <AnimatePresence>
+          {isAdded && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                background: 'linear-gradient(135deg, #16a34a 0%, #15803d 100%)',
+                color: 'white',
+                padding: '1rem 2rem',
+                borderRadius: '15px',
+                fontWeight: '700',
+                fontSize: '1.1rem',
+                boxShadow: '0 10px 30px rgba(22, 163, 74, 0.5)',
+                zIndex: 20,
+                pointerEvents: 'none'
+              }}
+            >
+              ✓ Added to Cart!
             </motion.div>
           )}
         </AnimatePresence>
