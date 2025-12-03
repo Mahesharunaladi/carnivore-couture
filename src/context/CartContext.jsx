@@ -56,7 +56,15 @@ export const CartProvider = ({ children }) => {
     // Load cart from localStorage
     const savedCart = localStorage.getItem('cart');
     if (savedCart) {
-      dispatch({ type: 'LOAD_CART', payload: JSON.parse(savedCart) });
+      try {
+        const parsed = JSON.parse(savedCart);
+        // Handle both formats: {items: []} or just []
+        const items = Array.isArray(parsed) ? parsed : (parsed.items || []);
+        dispatch({ type: 'LOAD_CART', payload: { items } });
+      } catch (e) {
+        console.error('Error loading cart:', e);
+        localStorage.removeItem('cart');
+      }
     }
   }, []);
 
@@ -66,14 +74,17 @@ export const CartProvider = ({ children }) => {
   }, [state]);
 
   const addItem = (item) => {
+    console.log('Adding item to cart:', item);
     dispatch({ type: 'ADD_ITEM', payload: item });
   };
 
   const removeItem = (itemId) => {
+    console.log('Removing item from cart:', itemId);
     dispatch({ type: 'REMOVE_ITEM', payload: itemId });
   };
 
   const updateQuantity = (itemId, quantity) => {
+    console.log('Updating quantity:', itemId, quantity);
     dispatch({
       type: 'UPDATE_QUANTITY',
       payload: { id: itemId, quantity }
@@ -93,6 +104,13 @@ export const CartProvider = ({ children }) => {
   const getCartCount = () => {
     return state.items.reduce((count, item) => count + item.quantity, 0);
   };
+
+  // Debug logging
+  useEffect(() => {
+    console.log('Cart state updated:', state);
+    console.log('Cart items:', state.items);
+    console.log('Cart count:', getCartCount());
+  }, [state]);
 
   return (
     <CartContext.Provider value={{

@@ -4,13 +4,14 @@ import '../App.css';
 import { FiShoppingCart, FiLogIn } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProductCard from '../components/ProductCard';
+import { useCart } from '../context/CartContext';
 
 function HomePage() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-  const [cartItems, setCartItems] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const { items: cartItems, removeItem, updateQuantity, getCartTotal, getCartCount } = useCart();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -23,57 +24,19 @@ function HomePage() {
       setUser(JSON.parse(storedUser));
     }
     
-    // Load cart items from localStorage
-    const savedCart = localStorage.getItem('cartItems');
-    if (savedCart) {
-      setCartItems(JSON.parse(savedCart));
-    }
-    
     return () => clearTimeout(timer);
   }, []);
 
-  const addToCart = (product) => {
-    setCartItems(prevItems => {
-      const existingItem = prevItems.find(item => item.id === product.id);
-      let updatedItems;
-      if (existingItem) {
-        updatedItems = prevItems.map(item =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      } else {
-        updatedItems = [...prevItems, { ...product, quantity: 1 }];
-      }
-      localStorage.setItem('cartItems', JSON.stringify(updatedItems));
-      return updatedItems;
-    });
+  const handleRemoveFromCart = (productId) => {
+    removeItem(productId);
   };
 
-  const removeFromCart = (productId) => {
-    setCartItems(prevItems => {
-      const updatedItems = prevItems.filter(item => item.id !== productId);
-      localStorage.setItem('cartItems', JSON.stringify(updatedItems));
-      return updatedItems;
-    });
-  };
-
-  const updateQuantity = (productId, newQuantity) => {
+  const handleUpdateQuantity = (productId, newQuantity) => {
     if (newQuantity <= 0) {
-      removeFromCart(productId);
+      removeItem(productId);
       return;
     }
-    setCartItems(prevItems => {
-      const updatedItems = prevItems.map(item =>
-        item.id === productId ? { ...item, quantity: newQuantity } : item
-      );
-      localStorage.setItem('cartItems', JSON.stringify(updatedItems));
-      return updatedItems;
-    });
-  };
-
-  const getTotalPrice = () => {
-    return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+    updateQuantity(productId, newQuantity);
   };
 
   const handleLogout = () => {
@@ -82,7 +45,7 @@ function HomePage() {
     setUser(null);
   };
 
-  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+  const cartCount = getCartCount();
 
   const categories = [
     { id: 1, name: 'FISH', icon: '🐟', count: '9 Products' },
@@ -327,7 +290,6 @@ function HomePage() {
               key={product.id} 
               product={product} 
               index={index}
-              onAddToCart={addToCart}
             />
           ))}
         </div>
@@ -390,17 +352,17 @@ function HomePage() {
                       />
                       <div className="cart-item-details">
                         <h4>{item.name}</h4>
-                        <p className="cart-item-price">₹{item.price.toLocaleString()}</p>
+                        <p className="cart-item-price">₹{(item.discountedPrice || item.price).toLocaleString()}</p>
                         <div className="quantity-controls">
                           <button 
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
                             className="qty-btn"
                           >
                             -
                           </button>
                           <span className="quantity">{item.quantity}</span>
                           <button 
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
                             className="qty-btn"
                           >
                             +
@@ -409,7 +371,7 @@ function HomePage() {
                       </div>
                       <button 
                         className="remove-item"
-                        onClick={() => removeFromCart(item.id)}
+                        onClick={() => handleRemoveFromCart(item.id)}
                       >
                         🗑️
                       </button>
@@ -423,7 +385,7 @@ function HomePage() {
               <div className="cart-footer">
                 <div className="cart-total">
                   <span>Total:</span>
-                  <span className="total-price">₹{getTotalPrice().toLocaleString()}</span>
+                  <span className="total-price">₹{getCartTotal().toLocaleString()}</span>
                 </div>
                 <motion.button
                   className="checkout-btn"
