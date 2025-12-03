@@ -2,11 +2,12 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { FiShoppingCart, FiUser, FiMapPin, FiCreditCard, FiCheck, FiArrowLeft } from 'react-icons/fi';
+import { useCart } from '../context/CartContext';
 import './Checkout.css';
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
-  const [cartItems, setCartItems] = useState([]);
+  const { items: cartItems, getCartTotal } = useCart();
   const [user, setUser] = useState(null);
   const [currentStep, setCurrentStep] = useState(1);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -41,12 +42,9 @@ const CheckoutPage = () => {
   });
 
   useEffect(() => {
-    // Load cart items from localStorage
-    const savedCart = localStorage.getItem('cartItems');
-    if (savedCart) {
-      setCartItems(JSON.parse(savedCart));
-    } else {
-      // If no items, redirect to home
+    // Check if cart is empty
+    if (!cartItems || cartItems.length === 0) {
+      // Redirect to home if cart is empty
       navigate('/');
     }
 
@@ -62,10 +60,13 @@ const CheckoutPage = () => {
         phone: userData.phone || '',
       }));
     }
-  }, [navigate]);
+  }, [navigate, cartItems]);
 
   const calculateSubtotal = () => {
-    return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+    return cartItems.reduce((total, item) => {
+      const price = item.discountedPrice || item.price || 0;
+      return total + (price * item.quantity);
+    }, 0);
   };
 
   const calculateTax = () => {
@@ -628,7 +629,7 @@ const CheckoutPage = () => {
                       <p>Qty: {item.quantity}</p>
                     </div>
                     <div className="item-price">
-                      ₹{(item.price * item.quantity).toLocaleString()}
+                      ₹{((item.discountedPrice || item.price) * item.quantity).toLocaleString()}
                     </div>
                   </div>
                 ))}
