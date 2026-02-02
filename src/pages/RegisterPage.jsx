@@ -61,7 +61,7 @@ const RegisterPage = () => {
         throw new Error(data.message || 'Registration failed');
       }
 
-      // Success! Store the token
+      // Success! Store the token (but user needs to verify email)
       if (data.token) {
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
@@ -69,10 +69,17 @@ const RegisterPage = () => {
 
       setSuccess(true);
 
-      // Redirect to home after 2 seconds
-      setTimeout(() => {
-        navigate('/');
-      }, 2000);
+      // If requires verification, show message and redirect to login after longer delay
+      if (data.requiresVerification) {
+        setTimeout(() => {
+          navigate('/login');
+        }, 4000);
+      } else {
+        // Redirect to home after 2 seconds
+        setTimeout(() => {
+          navigate('/');
+        }, 2000);
+      }
 
     } catch (err) {
       setError(err.message || 'Failed to register. Please try again.');
@@ -88,9 +95,15 @@ const RegisterPage = () => {
           className="success-message"
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
+          style={{ padding: '1rem 1.5rem', textAlign: 'center' }}
         >
           <FiCheckCircle size={24} />
-          <span>Registration successful! Redirecting...</span>
+          <div style={{ marginTop: '0.5rem' }}>
+            <strong>Registration successful!</strong>
+            <p style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>
+              Please check your email to verify your account before logging in.
+            </p>
+          </div>
         </motion.div>
       )}
 

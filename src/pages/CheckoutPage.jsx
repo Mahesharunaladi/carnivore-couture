@@ -182,7 +182,13 @@ const CheckoutPage = () => {
       }
       
       const orderData = {
-        items: cartItems,
+        items: cartItems.map(item => ({
+          product: item.id?.toString() || '',
+          name: item.name,
+          quantity: item.quantity,
+          price: item.discountedPrice || item.price || 0,
+          image: item.image
+        })),
         shippingInfo,
         paymentInfo: paymentDetails,
         subtotal: calculateSubtotal(),
@@ -190,6 +196,8 @@ const CheckoutPage = () => {
         shipping: calculateShipping(),
         total: calculateTotal(),
       };
+
+      console.log('Sending order data:', orderData);
 
       const response = await fetch('http://localhost:3001/api/orders', {
         method: 'POST',
@@ -210,11 +218,13 @@ const CheckoutPage = () => {
           navigate('/');
         }, 3000);
       } else {
-        throw new Error('Order failed');
+        const errorData = await response.json();
+        console.error('Order failed:', errorData);
+        throw new Error(errorData.message || 'Order failed');
       }
     } catch (error) {
       console.error('Order error:', error);
-      alert('Failed to place order. Please try again.');
+      alert(`Failed to place order: ${error.message}. Please try again.`);
     } finally {
       setIsProcessing(false);
     }

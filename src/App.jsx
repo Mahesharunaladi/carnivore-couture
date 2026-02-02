@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import CheckoutPage from './pages/CheckoutPage';
+import EmailVerificationPage from './pages/EmailVerificationPage';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/verify-email" element={<EmailVerificationPage />} />
         </Routes>
       </Router>
     </CartProvider>

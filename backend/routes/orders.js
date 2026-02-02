@@ -6,13 +6,21 @@ const auth = require('../middleware/auth');
 // Create a new order
 router.post('/', auth, async (req, res) => {
     try {
+        console.log('Creating order for user:', req.user._id);
+        console.log('Order data:', JSON.stringify(req.body, null, 2));
+        
         const order = new Order({
             ...req.body,
             user: req.user._id
         });
         await order.save();
+        
+        console.log('Order created successfully:', order._id);
         res.status(201).json(order);
     } catch (error) {
+        console.error('Order creation error:', error);
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
         res.status(400).json({ message: error.message });
     }
 });

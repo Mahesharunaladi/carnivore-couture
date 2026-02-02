@@ -150,6 +150,17 @@
   color: #6b7280;
 }
 
+/* Fix autocomplete/autofill white background */
+.auth-page-form .form-group input:-webkit-autofill,
+.auth-page-form .form-group input:-webkit-autofill:hover,
+.auth-page-form .form-group input:-webkit-autofill:focus,
+.auth-page-form .form-group input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px rgba(255, 255, 255, 0.05) inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 .auth-page-form .form-options {
   display: flex;
   justify-content: space-between;

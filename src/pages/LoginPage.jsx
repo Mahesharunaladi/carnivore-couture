@@ -13,6 +13,8 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+  const [showResendVerification, setShowResendVerification] = useState(false);
+  const [isResending, setIsResending] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -25,6 +27,7 @@ const LoginPage = () => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
+    setShowResendVerification(false);
 
     try {
       const response = await fetch('http://localhost:3001/api/auth/login', {
@@ -50,12 +53,43 @@ const LoginPage = () => {
         }, 1500);
       } else {
         setError(data.message || 'Login failed. Please check your credentials.');
+        
+        // Show resend verification option if email is not verified
+        if (data.requiresVerification) {
+          setShowResendVerification(true);
+        }
       }
     } catch (error) {
       console.error('Login error:', error);
       setError('Unable to connect to server. Please try again later.');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleResendVerification = async () => {
+    setIsResending(true);
+    try {
+      const response = await fetch('http://localhost:3001/api/auth/resend-verification', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: formData.email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('Verification email sent! Please check your inbox.');
+      } else {
+        alert(data.message || 'Failed to resend verification email.');
+      }
+    } catch (error) {
+      console.error('Resend error:', error);
+      alert('Unable to resend verification email. Please try again later.');
+    } finally {
+      setIsResending(false);
     }
   };
 
@@ -97,6 +131,26 @@ const LoginPage = () => {
                 animate={{ opacity: 1 }}
               >
                 {error}
+                {showResendVerification && (
+                  <button
+                    type="button"
+                    onClick={handleResendVerification}
+                    disabled={isResending}
+                    style={{
+                      marginTop: '0.5rem',
+                      padding: '0.5rem 1rem',
+                      background: '#dc2626',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '6px',
+                      cursor: 'pointer',
+                      fontSize: '0.9rem',
+                      width: '100%'
+                    }}
+                  >
+                    {isResending ? 'Sending...' : 'Resend Verification Email'}
+                  </button>
+                )}
               </motion.div>
             )}
 

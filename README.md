@@ -2,9 +2,7 @@
 
 ## Premium Meat E-commerce Platform
 
-Carnivore Couture is a sophisticated, full-stack e-commerce platform specializing in premium meat products. Built with modern technologies and best practices, it offers a seamless shopping experience with stunning animations, secure payments, and real-time cart management.
-
-**🌐 Live Demo**: [Deploy your own in 15 minutes!](#-quick-deployment)
+Carnivore Couture is a full-stack e-commerce platform specializing in premium meat products. Built with modern technologies and best practices, it offers secure authentication, email verification, order management, and seamless shopping experience.
 
 ![Carnivore Couture](https://img.shields.io/badge/Status-Active-success)
 ![React](https://img.shields.io/badge/React-19-blue)
@@ -13,61 +11,44 @@ Carnivore Couture is a sophisticated, full-stack e-commerce platform specializin
 
 ---
 
-## ✨ Key Highlights
+## ✨ Key Features
 
-- 🎨 **Modern Dark Theme UI** with smooth animations
-- 🛒 **Real-time Cart Management** with Context API
-- 🔐 **Secure JWT Authentication** 
+- 🔐 **Secure JWT Authentication** with email verification
+- � **Email Verification System** with 24-hour token expiry
 - 💳 **Multiple Payment Methods** (Card, UPI, Wallets)
 - 📱 **Fully Responsive** design for all devices
-- 🎭 **Framer Motion Animations** throughout
-- 💾 **Smart Cart Persistence** with localStorage
-- ✉️ **Email Notifications** on registration
+- ✉️ **Email Notifications** (Welcome, Verification, Order Confirmation)
 - 🔒 **Industry-Standard Security** practices
+- � **Real-time Cart Management**
+- 💾 **Smart Data Persistence**
 
 ---
 
-## 🚀 Features
+## 🚀 Core Features
 
-### 🎨 Frontend Features
-- **Stunning Product Cards** 
-  - Hover-activated "Add to Cart" button with overlay
-  - Animated badges (PREMIUM, BESTSELLER, POPULAR, FRESH)
-  - Dynamic color gradients for each badge type
-  - Success notification on cart addition
-  - Image zoom on hover
-  
-- **Smart Shopping Cart**
-  - Real-time cart updates using React Context
-  - Cart badge with item count
-  - Quantity controls (+/-) in cart
-  - Remove items functionality
-  - Cart persistence across sessions
-  - Automatic price calculations
+### 🔐 Authentication & Security
+- User registration with email verification
+- Secure login with JWT tokens
+- Password hashing with bcryptjs (8 rounds)
+- Email verification required before login
+- Resend verification email option
+- 24-hour verification token expiry
+- Protected API routes
 
-- **User Authentication**
-  - Secure login and registration
-  - JWT token-based authentication
-  - Remember me functionality
-  - Protected routes
-  - User profile integration
+### 📧 Email System
+- **Verification Emails**: Professional branded templates with verification links
+- **Welcome Emails**: Sent after email verification
+- **Order Confirmations**: Automated order receipt emails
+- Gmail SMTP integration
+- HTML email templates with responsive design
 
-- **Advanced Checkout Process**
-  - 2-Step checkout flow
-  - Shipping information form
-  - Multiple payment options:
-    - 💳 Credit/Debit Cards
-    - 📱 UPI (Google Pay, PhonePe, Paytm)
-    - 💰 Digital Wallets
-  - Order summary with tax & shipping
-  - Order confirmation with success animation
-
-- **Smooth Animations**
-  - Page transitions with Framer Motion
-  - Product card animations
-  - Cart slide-in/out animations
-  - Button hover effects
-  - Loading states
+### � E-commerce Features
+- Product catalog management
+- Shopping cart functionality
+- Order processing and tracking
+- Multiple payment method support
+- Tax and shipping calculations
+- Order history for users
 
 ### ⚙️ Backend Features
 - **RESTful API Architecture**
@@ -78,7 +59,7 @@ Carnivore Couture is a sophisticated, full-stack e-commerce platform specializin
   
 - **Security Features**
   - JWT authentication
-  - Bcrypt password hashing (8 rounds)
+  - Bcrypt password hashing
   - Rate limiting on API endpoints
   - CORS protection
   - Helmet.js for HTTP headers
@@ -91,25 +72,9 @@ Carnivore Couture is a sophisticated, full-stack e-commerce platform specializin
   - Relationship modeling
   - Efficient queries
 
-- **Email Service**
-  - Nodemailer integration
-  - Welcome emails on registration
-  - Order confirmation emails
-  - Gmail SMTP support
-
 ---
 
 ## 🛠 Tech Stack
-
-### Frontend
-| Technology | Version | Purpose |
-|-----------|---------|---------|
-| **React** | 19 | UI Library with concurrent features |
-| **Vite** | 7 | Build tool & dev server |
-| **React Router DOM** | 6 | Client-side routing |
-| **Framer Motion** | Latest | Advanced animations |
-| **React Icons** | Latest | Icon library |
-| **CSS3** | - | Modern styling |
 
 ### Backend
 | Technology | Version | Purpose |
@@ -124,6 +89,16 @@ Carnivore Couture is a sophisticated, full-stack e-commerce platform specializin
 | **Express Validator** | 7 | Input validation |
 | **Helmet** | 8 | Security headers |
 | **Morgan** | 1 | HTTP request logger |
+| **CORS** | 2 | Cross-origin resource sharing |
+| **dotenv** | 17 | Environment variables |
+
+### Frontend
+| Technology | Version | Purpose |
+|-----------|---------|---------|
+| **React** | 19 | UI Library |
+| **Vite** | 7 | Build tool & dev server |
+| **React Router DOM** | 6 | Client-side routing |
+| **Framer Motion** | Latest | Animations |
 
 ---
 
@@ -131,36 +106,14 @@ Carnivore Couture is a sophisticated, full-stack e-commerce platform specializin
 
 ```
 carnivore-couture/
-├── public/                      # Static assets
-│   ├── product-*.jpg           # Product images
-│   └── hero-meat (1).jpg       # Hero image
-├── src/
-│   ├── components/             # React components
-│   │   ├── ProductCard.jsx    # Product card with animations
-│   │   ├── AuthPage.jsx       # Authentication component
-│   │   ├── Logo.jsx           # Logo component
-│   │   └── Loading.jsx        # Loading states
-│   ├── context/               # React Context
-│   │   ├── CartContext.jsx    # Cart state management
-│   │   └── AuthContext.jsx    # Auth state management
-│   ├── pages/                 # Page components
-│   │   ├── HomePage.jsx       # Main landing page
-│   │   ├── CheckoutPage.jsx   # Checkout flow
-│   │   ├── LoginPage.jsx      # Login page
-│   │   └── RegisterPage.jsx   # Registration page
-│   ├── utils/                 # Utilities
-│   │   └── api.js            # API client
-│   ├── App.jsx               # Main app component
-│   ├── App.css               # Global styles
-│   └── main.jsx              # Entry point
 ├── backend/
 │   ├── models/               # Mongoose models
-│   │   ├── User.js          # User schema
+│   │   ├── User.js          # User schema with email verification
 │   │   ├── Product.js       # Product schema
 │   │   ├── Order.js         # Order schema
 │   │   └── Cart.js          # Cart schema
 │   ├── routes/              # API routes
-│   │   ├── auth.js          # Authentication routes
+│   │   ├── auth.js          # Authentication & verification routes
 │   │   ├── products.js      # Product routes
 │   │   ├── orders.js        # Order routes
 │   │   └── cart.js          # Cart routes
@@ -173,6 +126,8 @@ carnivore-couture/
 │   │   └── emailService.js  # Email functionality
 │   ├── server.js            # Express server
 │   └── .env                 # Environment variables
+├── src/                     # Frontend source
+├── public/                  # Static assets
 └── README.md
 
 ```
@@ -200,25 +155,18 @@ git clone https://github.com/Mahesharunaladi/carnivore-couture.git
 cd carnivore-couture
 ```
 
-#### 2️⃣ Frontend Setup
+#### 2️⃣ Install Dependencies
 ```bash
-# Install dependencies
+# Install frontend dependencies
 npm install
 
-# Start development server (runs on http://localhost:5173)
-npm run dev
-```
-
-#### 3️⃣ Backend Setup
-```bash
-# Navigate to backend directory
+# Install backend dependencies
 cd backend
-
-# Install dependencies
 npm install
+cd ..
 ```
 
-#### 4️⃣ Configure Environment Variables
+#### 3️⃣ Configure Environment Variables
 
 Create a `.env` file in the `backend` directory:
 
@@ -232,6 +180,9 @@ MONGODB_URI=mongodb://localhost:27017/carnivore-couture
 # Authentication
 JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
 
+# Frontend URL (for email verification links)
+FRONTEND_URL=http://localhost:5173
+
 # Email Configuration (Gmail)
 EMAIL_USER=your-email@gmail.com
 EMAIL_PASSWORD=your-app-specific-password
@@ -243,7 +194,7 @@ EMAIL_PASSWORD=your-app-specific-password
 3. Generate an [App Password](https://myaccount.google.com/apppasswords)
 4. Use the generated password in `EMAIL_PASSWORD`
 
-#### 5️⃣ Start MongoDB
+#### 4️⃣ Start MongoDB
 
 ```bash
 # macOS (using Homebrew)
@@ -256,91 +207,28 @@ mongod
 sudo systemctl start mongod
 ```
 
-#### 6️⃣ Start the Backend Server
+#### 5️⃣ Start the Servers
 
 ```bash
-# From the backend directory
-node server.js
+# Terminal 1 - Start Backend (from backend directory)
+cd backend
+npm start
+
+# Terminal 2 - Start Frontend (from root directory)
+npm run dev
 ```
 
 You should see:
 ```
-Server is running on port 3001
-Connected to MongoDB
+Backend: Server is running on port 3001
+Backend: Connected to MongoDB
+Frontend: Local: http://localhost:5173
 ```
 
-#### 7️⃣ Access the Application
+#### 6️⃣ Access the Application
 
 - **Frontend**: http://localhost:5173
 - **Backend API**: http://localhost:3001
-
----
-
-## 🎯 Usage Guide
-
-### Creating an Account
-
-1. Click **"Login"** in the header
-2. Select **"Create Account"**
-3. Fill in your details:
-   - Full Name
-   - Email Address
-   - Password (min 6 characters)
-4. Click **"Create Account"**
-5. Check your email for welcome message ✉️
-
-### Shopping Experience
-
-1. **Browse Products**: View 8 premium meat products on homepage
-2. **Hover Over Product**: See "Add to Cart" button appear
-3. **Add to Cart**: Click button → See success notification "✓ Added!"
-4. **View Cart**: Click cart icon in header → Cart sidebar opens
-5. **Manage Cart**: 
-   - Adjust quantities with +/- buttons
-   - Remove items with 🗑️ button
-   - See real-time total updates
-
-### Checkout Process
-
-1. **Click "Proceed to Checkout"** from cart
-2. **Step 1 - Shipping Information**:
-   - Enter delivery address
-   - Contact information
-   - Click "Continue to Payment"
-3. **Step 2 - Payment**:
-   - Choose payment method:
-     - 💳 Credit/Debit Card
-     - 📱 UPI (Google Pay, PhonePe, Paytm)
-     - 💰 Digital Wallet
-   - Enter payment details
-   - Review order summary
-4. **Place Order**
-5. **Success!** - Order confirmation displayed
-
----
-
-## 🎨 Features Walkthrough
-
-### Product Cards
-- **Dynamic Badges**: Color-coded (PREMIUM: Purple, BESTSELLER: Pink, POPULAR: Blue, FRESH: Green)
-- **Hover Animation**: Card lifts, image zooms, overlay appears
-- **Add to Cart Button**: Appears on hover, changes to green "✓ Added!" on click
-- **Success Notification**: 2-second popup confirms cart addition
-
-### Shopping Cart
-- **Real-time Updates**: Powered by React Context API
-- **Cart Badge**: Shows item count in header
-- **Quantity Controls**: Increment/decrement with validation
-- **Price Display**: Shows discounted prices
-- **Persistence**: Cart saved in localStorage
-- **Slide Animation**: Smooth sidebar animation
-
-### Checkout
-- **2-Step Process**: Clear, guided flow
-- **Multiple Payments**: 3 payment method options
-- **Order Summary**: Real-time totals with tax & shipping
-- **Form Validation**: Client-side validation for all inputs
-- **Success Animation**: Celebratory confirmation screen
 
 ---
 
@@ -352,27 +240,41 @@ Connected to MongoDB
 |--------|----------|-------------|---------------|
 | `POST` | `/api/auth/register` | Register new user | ❌ |
 | `POST` | `/api/auth/login` | Login user | ❌ |
-| `GET` | `/api/auth/profile` | Get user profile | ✅ |
+| `GET` | `/api/auth/verify-email/:token` | Verify email address | ❌ |
+| `POST` | `/api/auth/resend-verification` | Resend verification email | ❌ |
+| `GET` | `/api/auth/me` | Get user profile | ✅ |
+| `PATCH` | `/api/auth/me` | Update user profile | ✅ |
 
 **Example Register Request:**
 ```json
 {
   "name": "John Doe",
   "email": "john@example.com",
-  "password": "secure123",
-  "phone": "1234567890"
+  "password": "secure123"
 }
 ```
 
-**Example Login Response:**
+**Example Register Response:**
 ```json
 {
-  "token": "eyJhbGciOiJIUzI1NiIs...",
+  "message": "Registration successful. Please check your email to verify your account.",
   "user": {
     "id": "507f1f77bcf86cd799439011",
     "name": "John Doe",
-    "email": "john@example.com"
-  }
+    "email": "john@example.com",
+    "isEmailVerified": false
+  },
+  "token": "eyJhbGciOiJIUzI1NiIs...",
+  "requiresVerification": true
+}
+```
+
+**Example Login Response (Unverified):**
+```json
+{
+  "message": "Please verify your email before logging in. Check your inbox for the verification link.",
+  "requiresVerification": true,
+  "email": "john@example.com"
 }
 ```
 
@@ -384,20 +286,245 @@ Connected to MongoDB
 | `GET` | `/api/orders/:id` | Get order by ID | ✅ |
 | `GET` | `/api/orders/user/:userId` | Get user's orders | ✅ |
 
-**Example Order Request:**
-```json
-{
-  "items": [
-    {
-      "id": "1",
-      "name": "Premium Chicken Breast",
-      "quantity": 2,
-      "discountedPrice": 3750
-    }
-  ],
-  "shippingInfo": {
-    "fullName": "John Doe",
-    "email": "john@example.com",
+---
+
+## 🔒 Security Features
+
+| Feature | Implementation | Description |
+|---------|---------------|-------------|
+| **Authentication** | JWT | 24-hour token expiration |
+| **Email Verification** | Crypto tokens | 24-hour verification token expiry |
+| **Password Security** | bcryptjs | 8 rounds of hashing |
+| **Rate Limiting** | express-rate-limit | 100 requests/15 minutes |
+| **Input Validation** | express-validator | Sanitization & validation |
+| **CORS** | cors middleware | Controlled origins |
+| **Security Headers** | Helmet.js | XSS, clickjacking protection |
+| **Error Handling** | Custom middleware | No sensitive data leakage |
+| **Request Logging** | Morgan | HTTP request logging |
+
+---
+
+## 📧 Email Verification Flow
+
+1. **User Registers** → Account created with `isEmailVerified: false`
+2. **Verification Email Sent** → Contains unique token and verification link
+3. **User Clicks Link** → Opens verification page
+4. **Token Validated** → Backend verifies token and expiry
+5. **Email Verified** → Account activated, welcome email sent
+6. **User Can Login** → Access granted to platform
+
+**Security Features:**
+- Cryptographically secure tokens (32 bytes)
+- 24-hour token expiry
+- One-time use tokens (deleted after verification)
+- Login blocked until email verified
+- Resend verification option available
+
+---
+
+## 📚 Additional Documentation
+
+| Document | Description |
+|----------|-------------|
+| **[EMAIL_VERIFICATION_GUIDE.md](EMAIL_VERIFICATION_GUIDE.md)** | Complete email verification implementation |
+| **[EMAIL_VERIFICATION_QUICK_REFERENCE.md](EMAIL_VERIFICATION_QUICK_REFERENCE.md)** | Quick commands and troubleshooting |
+| **[EMAIL_VERIFICATION_SUMMARY.md](EMAIL_VERIFICATION_SUMMARY.md)** | Implementation summary and checklist |
+| **[EMAIL_VERIFICATION_FLOW_DIAGRAM.md](EMAIL_VERIFICATION_FLOW_DIAGRAM.md)** | Visual flow diagram |
+| **[AUTHENTICATION_README.md](AUTHENTICATION_README.md)** | JWT authentication details |
+| **[PAYMENT_METHODS_README.md](PAYMENT_METHODS_README.md)** | Payment integration guide |
+| **[EMAIL_SETUP_GUIDE.md](EMAIL_SETUP_GUIDE.md)** | Email configuration |
+| **[DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)** | Deployment instructions |
+
+---
+
+## 🐛 Troubleshooting
+
+### Common Issues:
+
+**❌ MongoDB Connection Failed**
+```bash
+# Check if MongoDB is running
+brew services list  # macOS
+sudo systemctl status mongod  # Linux
+
+# Start MongoDB
+brew services start mongodb-community  # macOS
+sudo systemctl start mongod  # Linux
+```
+
+**❌ Port Already in Use**
+```bash
+# Find process using port 3001
+lsof -ti:3001
+
+# Kill the process
+kill -9 <PID>
+```
+
+**❌ Backend Not Responding**
+```bash
+# Check server logs
+cd backend
+npm start
+
+# Should see:
+# Server is running on port 3001
+# Connected to MongoDB
+```
+
+**❌ Email Not Sending**
+- Verify Gmail app password is correct
+- Check 2-Step Verification is enabled
+- Ensure `EMAIL_USER` and `EMAIL_PASSWORD` are set in `.env`
+- Check backend console for email sending logs
+
+**❌ Email Verification Not Working**
+- Check verification link format: `http://localhost:5173/verify-email?token=xxx`
+- Verify token hasn't expired (24 hours)
+- Check backend logs for verification errors
+- Use resend verification option if token expired
+
+**❌ Can't Login After Registration**
+- Users must verify email before login
+- Check inbox for verification email
+- Click "Resend Verification Email" if needed
+- For testing, manually verify in MongoDB:
+  ```bash
+  mongosh
+  use carnivore-couture
+  db.users.updateOne(
+    { email: "test@example.com" },
+    { $set: { isEmailVerified: true } }
+  )
+  ```
+
+---
+
+## 🎯 Roadmap & Future Enhancements
+
+- [ ] **Payment Gateway Integration**
+  - Razorpay integration
+  - Stripe integration
+  - Payment verification
+
+- [ ] **Admin Dashboard**
+  - Product management
+  - Order management
+  - User analytics
+  - Sales reports
+
+- [ ] **Advanced Features**
+  - Product reviews & ratings
+  - Wishlist functionality
+  - Order tracking
+  - Push notifications
+  - Password reset via email
+  - Two-factor authentication
+
+- [ ] **Testing**
+  - Unit tests with Jest
+  - Integration tests
+  - E2E tests with Cypress
+
+---
+
+## � Deployment
+
+### Recommended: Vercel + Render (Free Tier)
+
+**Backend (Render)** - 750 hours/month free
+- Automatic deployments from Git
+- Free SSL
+- Environment variables
+- Health checks
+
+**Database (MongoDB Atlas)** - 512MB free
+- Managed MongoDB
+- Automatic backups
+- Global clusters
+
+**Frontend (Vercel)** - Free Forever
+- Automatic deployments
+- Global CDN
+- SSL certificates included
+
+### Deployment Notes:
+- Update `FRONTEND_URL` in backend `.env` to production domain
+- Use professional email service (SendGrid/AWS SES) for production
+- Set all environment variables in hosting platform
+- Test email verification thoroughly before launch
+
+### Detailed Deployment Guides:
+- 📖 **[DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)** - Complete step-by-step guide
+- ⚡ **[QUICK_DEPLOY.md](QUICK_DEPLOY.md)** - 15-minute quick deploy
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Here's how you can help:
+
+1. **Fork the Repository**
+2. **Create a Feature Branch**
+   ```bash
+   git checkout -b feature/amazing-feature
+   ```
+3. **Commit Your Changes**
+   ```bash
+   git commit -m 'Add some amazing feature'
+   ```
+4. **Push to the Branch**
+   ```bash
+   git push origin feature/amazing-feature
+   ```
+5. **Open a Pull Request**
+
+### Contribution Guidelines:
+- Follow existing code style
+- Write meaningful commit messages
+- Add comments for complex logic
+- Update documentation as needed
+- Test your changes thoroughly
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 👨‍💻 Author
+
+**Mahesh Arunaladi**
+
+- 🐱 GitHub: [@Mahesharunaladi](https://github.com/Mahesharunaladi)
+- 📧 Email: mahesharunaladi@gmail.com
+
+---
+
+## 🙏 Acknowledgments
+
+- **React Team** - For the amazing React library
+- **MongoDB** - For the excellent database
+- **Express.js** - For the powerful web framework
+- **Open Source Community** - For inspiration and tools
+
+---
+
+## ⭐ Show Your Support
+
+If you like this project, please give it a ⭐ on [GitHub](https://github.com/Mahesharunaladi/carnivore-couture)!
+
+---
+
+<div align="center">
+
+**Made with ❤️ and ☕ by Mahesh Arunaladi**
+
+⭐ **Star this repo if you found it helpful!** ⭐
+
+</div>
     "phone": "1234567890",
     "address": "123 Main St",
     "city": "New York",

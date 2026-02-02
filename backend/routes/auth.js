@@ -153,4 +153,89 @@ router.patch('/me', auth, async (req, res) => {
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
-});module.exports = router;
+});
+
+// Verify email
+router.get('/verify-email/:token', async (req, res) => {
+    try {
+        const { token } = req.params;
+        
+        const user = await User.findOne({
+            emailVerificationToken: token,
+            emailVerificationExpires: { $gt: Date.now() }
+        });
+        
+        if (!user) {
+            return res.status(400).json({ 
+                message: 'Invalid or expired verification token. Please request a new verification email.' 
+            });
+        }
+        
+        user.isEmailVerified = true;
+        user.emailVerificationToken = undefined;
+        user.emailVerificationExpires = undefined;
+        await user.save();
+        
+        // Send welcome email after verification
+        sendWelcomeEmail(user.email, user.name)
+            .then(result => {
+                if (result.success) {
+                    console.log('Welcome email sent successfully to:', user.email);
+                }
+            })
+            .catch(err => {
+                console.error('Error sending welcome email:', err);
+            });
+        
+        res.json({ 
+            message: 'Email verified successfully! You can now log in.',
+            verified: true
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// Resend verification email
+router.post('/resend-verification', async (req, res) => {
+    try {
+        const { email } = req.body;
+        
+        if (!email) {
+            return res.status(400).json({ message: 'Email is required' });
+        }
+        
+        const user = await User.findOne({ email });
+        
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        
+        if (user.isEmailVerified) {
+            return res.status(400).json({ message: 'Email is already verified' });
+        }
+        
+        // Generate new verification token
+        const verificationToken = crypto.randomBytes(32).toString('hex');
+        user.emailVerificationToken = verificationToken;
+        user.emailVerificationExpires = Date.now() + 24 * 60 * 60 * 1000; // 24 hours
+        await user.save();
+        
+        // Send verification email
+        const result = await sendVerificationEmail(user.email, user.name, verificationToken);
+        
+        if (result.success) {
+            res.json({ 
+                message: 'Verification email sent successfully. Please check your inbox.' 
+            });
+        } else {
+            res.status(500).json({ 
+                message: 'Failed to send verification email. Please try again later.' 
+            });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+module.exports = router;
