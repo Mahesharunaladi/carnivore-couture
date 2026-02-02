@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const User = require('../models/User');
 const auth = require('../middleware/auth');
-const { sendWelcomeEmail } = require('../utils/emailService');
+const { sendWelcomeEmail, sendVerificationEmail } = require('../utils/emailService');
 
 // Register a new user
 router.post('/register', async (req, res) => {
@@ -18,10 +19,15 @@ router.post('/register', async (req, res) => {
 
         const user = new User(userData);
         
+        // Generate email verification token
+        const verificationToken = crypto.randomBytes(32).toString('hex');
+        user.emailVerificationToken = verificationToken;
+        user.emailVerificationExpires = Date.now() + 24 * 60 * 60 * 1000; // 24 hours
+        
         // Password will be automatically hashed by the pre-save middleware
         await user.save();
         
-        // Generate JWT token
+        // Generate JWT token (but user won't have full access until verified)
         const token = jwt.sign(
             { 
                 userId: user._id,
@@ -34,14 +40,15 @@ router.post('/register', async (req, res) => {
         // Remove sensitive data from response
         const userResponse = user.toObject();
         delete userResponse.password;
+        delete userResponse.emailVerificationToken;
         
-        // Send welcome email
-        sendWelcomeEmail(user.email, user.name)
+        // Send verification email
+        sendVerificationEmail(user.email, user.name, verificationToken)
             .then(result => {
                 if (result.success) {
-                    console.log('Welcome email sent successfully to:', user.email);
+                    console.log('Verification email sent successfully to:', user.email);
                 } else {
-                    console.log('Failed to send welcome email:', result.error);
+                    console.log('Failed to send verification email:', result.error);
                 }
             })
             .catch(err => {
@@ -49,9 +56,10 @@ router.post('/register', async (req, res) => {
             });
         
         res.status(201).json({ 
-            message: 'Registration successful',
+            message: 'Registration successful. Please check your email to verify your account.',
             user: userResponse, 
-            token 
+            token,
+            requiresVerification: true
         });
     } catch (error) {
         console.error('Registration error:', error);
@@ -87,6 +95,15 @@ router.post('/login', async (req, res) => {
             return res.status(401).json({ message: 'Invalid email or password' });
         }
         
+        // Check if email is verified
+        if (!user.isEmailVerified) {
+            return res.status(403).json({ 
+                message: 'Please verify your email before logging in. Check your inbox for the verification link.',
+                requiresVerification: true,
+                email: user.email
+            });
+        }
+        
         const token = jwt.sign(
             { userId: user._id },
             process.env.JWT_SECRET || 'your-secret-key',
@@ -96,6 +113,7 @@ router.post('/login', async (req, res) => {
         // Remove password from response
         const userResponse = user.toObject();
         delete userResponse.password;
+        delete userResponse.emailVerificationToken;
         
         res.json({ user: userResponse, token });
     } catch (error) {

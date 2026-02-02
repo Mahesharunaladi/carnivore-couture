@@ -226,7 +226,167 @@ const sendOrderConfirmation = async (userEmail, userName, orderDetails) => {
   }
 };
 
+// Send email verification
+const sendVerificationEmail = async (userEmail, userName, verificationToken) => {
+  try {
+    const transporter = createTransporter();
+    const verificationUrl = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/verify-email?token=${verificationToken}`;
+
+    const mailOptions = {
+      from: {
+        name: 'Carnivore Couture',
+        address: process.env.EMAIL_USER,
+      },
+      to: userEmail,
+      subject: 'Verify Your Email - Carnivore Couture',
+      html: `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <style>
+            body {
+              font-family: 'Arial', sans-serif;
+              background-color: #f4f4f4;
+              margin: 0;
+              padding: 0;
+            }
+            .container {
+              max-width: 600px;
+              margin: 20px auto;
+              background: #ffffff;
+              border-radius: 10px;
+              overflow: hidden;
+              box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            }
+            .header {
+              background: linear-gradient(135deg, #dc2626, #b91c1c);
+              color: white;
+              padding: 40px 20px;
+              text-align: center;
+            }
+            .header h1 {
+              margin: 0;
+              font-size: 32px;
+              font-weight: 900;
+              letter-spacing: 2px;
+            }
+            .content {
+              padding: 40px 30px;
+              color: #333;
+            }
+            .content h2 {
+              color: #dc2626;
+              font-size: 24px;
+              margin-bottom: 20px;
+            }
+            .content p {
+              font-size: 16px;
+              line-height: 1.6;
+              margin-bottom: 15px;
+            }
+            .cta-button {
+              display: inline-block;
+              background: linear-gradient(135deg, #dc2626, #b91c1c);
+              color: white;
+              padding: 15px 40px;
+              text-decoration: none;
+              border-radius: 8px;
+              font-weight: bold;
+              font-size: 16px;
+              margin: 20px 0;
+            }
+            .footer {
+              background: #1a1a1a;
+              color: #999;
+              padding: 30px;
+              text-align: center;
+              font-size: 14px;
+            }
+            .token-box {
+              background: #f9f9f9;
+              border: 2px dashed #dc2626;
+              padding: 15px;
+              margin: 20px 0;
+              text-align: center;
+              font-family: monospace;
+              font-size: 14px;
+              color: #666;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <div class="header">
+              <h1>CARNIVORE COUTURE</h1>
+              <p style="margin: 10px 0 0; font-size: 16px;">Email Verification</p>
+            </div>
+            
+            <div class="content">
+              <h2>Verify Your Email Address 📧</h2>
+              
+              <p>Hello ${userName},</p>
+              
+              <p>Thank you for registering with Carnivore Couture! To complete your registration and start shopping for premium quality meats, please verify your email address.</p>
+              
+              <center>
+                <a href="${verificationUrl}" class="cta-button">Verify Email Address</a>
+              </center>
+              
+              <p style="margin-top: 30px; font-size: 14px; color: #666;">
+                Or copy and paste this link into your browser:
+              </p>
+              <div class="token-box">
+                ${verificationUrl}
+              </div>
+              
+              <p style="font-size: 14px; color: #999;">
+                <strong>Note:</strong> This verification link will expire in 24 hours for security reasons.
+              </p>
+              
+              <p style="margin-top: 30px; font-size: 14px; color: #666;">
+                If you didn't create an account with Carnivore Couture, please ignore this email.
+              </p>
+            </div>
+            
+            <div class="footer">
+              <p><strong>CARNIVORE COUTURE</strong></p>
+              <p>Premium Quality Meats | Fresh Daily Delivery</p>
+              <p style="margin-top: 20px; font-size: 12px;">
+                © 2026 Carnivore Couture. All rights reserved.
+              </p>
+            </div>
+          </div>
+        </body>
+        </html>
+      `,
+      text: `
+Verify Your Email Address
+
+Hello ${userName},
+
+Thank you for registering with Carnivore Couture! To complete your registration, please verify your email address by clicking the link below:
+
+${verificationUrl}
+
+This link will expire in 24 hours.
+
+If you didn't create an account with Carnivore Couture, please ignore this email.
+
+© 2026 Carnivore Couture. All rights reserved.
+      `,
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Verification email sent:', info.messageId);
+    return { success: true, messageId: info.messageId };
+  } catch (error) {
+    console.error('Error sending verification email:', error);
+    return { success: false, error: error.message };
+  }
+};
+
 module.exports = {
   sendWelcomeEmail,
   sendOrderConfirmation,
+  sendVerificationEmail,
 };
