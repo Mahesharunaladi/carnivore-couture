@@ -57,58 +57,58 @@ function HomePage() {
     {
       id: 1,
       name: 'Premium Chicken Breast',
-      originalPrice: 5200,
-      discountedPrice: 3750,
+      originalPrice: 600,
+      discountedPrice: 500,
       image: 'chicken',
       badge: 'PREMIUM'
     },
     {
       id: 2,
       name: 'Chicken Wings',
-      originalPrice: 3500,
-      discountedPrice: 2800,
+      originalPrice: 550,
+      discountedPrice: 450,
       image: 'wings',
       badge: 'BESTSELLER'
     },
     {
       id: 3,
       name: 'Chicken Thighs',
-      discountedPrice: 3200,
+      discountedPrice: 420,
       image: 'thighs',
       badge: null
     },
     {
       id: 4,
       name: 'Whole Chicken',
-      discountedPrice: 4500,
+      discountedPrice: 480,
       image: 'chicken',
       badge: null
     },
     {
       id: 5,
       name: 'Mutton Curry Cut',
-      discountedPrice: 890,
+      discountedPrice: 490,
       image: 'mutton-curry',
       badge: 'POPULAR'
     },
     {
       id: 6,
       name: 'Fresh Prawns',
-      discountedPrice: 1500,
+      discountedPrice: 500,
       image: 'prawns',
       badge: 'PREMIUM'
     },
     {
       id: 7,
       name: 'Fresh Cod Fish',
-      discountedPrice: 1200,
+      discountedPrice: 460,
       image: 'cod',
       badge: 'FRESH'
     },
     {
       id: 8,
       name: 'Fresh Tuna',
-      discountedPrice: 950,
+      discountedPrice: 440,
       image: 'tuna',
       badge: null
     },
