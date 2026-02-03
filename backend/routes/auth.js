@@ -19,15 +19,27 @@ router.post('/register', async (req, res) => {
 
         const user = new User(userData);
         
-        // Generate email verification token
-        const verificationToken = crypto.randomBytes(32).toString('hex');
-        user.emailVerificationToken = verificationToken;
-        user.emailVerificationExpires = Date.now() + 24 * 60 * 60 * 1000; // 24 hours
+        // Check if email service is configured
+        const emailConfigured = process.env.EMAIL_USER && 
+                               process.env.EMAIL_PASSWORD && 
+                               process.env.EMAIL_USER !== 'your-email@gmail.com' &&
+                               process.env.EMAIL_PASSWORD !== 'your-app-password';
+        
+        if (emailConfigured) {
+            // Generate email verification token only if email is configured
+            const verificationToken = crypto.randomBytes(32).toString('hex');
+            user.emailVerificationToken = verificationToken;
+            user.emailVerificationExpires = Date.now() + 24 * 60 * 60 * 1000; // 24 hours
+        } else {
+            // Skip verification if email is not configured (development mode)
+            user.isEmailVerified = true;
+            console.log('⚠️  Email service not configured - user registered without verification requirement');
+        }
         
         // Password will be automatically hashed by the pre-save middleware
         await user.save();
         
-        // Generate JWT token (but user won't have full access until verified)
+        // Generate JWT token (but user won't have full access until verified if email is configured)
         const token = jwt.sign(
             { 
                 userId: user._id,
@@ -42,24 +54,30 @@ router.post('/register', async (req, res) => {
         delete userResponse.password;
         delete userResponse.emailVerificationToken;
         
-        // Send verification email
-        sendVerificationEmail(user.email, user.name, verificationToken)
-            .then(result => {
-                if (result.success) {
-                    console.log('Verification email sent successfully to:', user.email);
-                } else {
-                    console.log('Failed to send verification email:', result.error);
-                }
-            })
-            .catch(err => {
-                console.error('Error in email sending process:', err);
-            });
+        // Send verification email only if configured
+        if (emailConfigured && user.emailVerificationToken) {
+            sendVerificationEmail(user.email, user.name, user.emailVerificationToken)
+                .then(result => {
+                    if (result.success) {
+                        console.log('Verification email sent successfully to:', user.email);
+                    } else {
+                        console.log('Failed to send verification email:', result.error);
+                    }
+                })
+                .catch(err => {
+                    console.error('Error in email sending process:', err);
+                });
+        }
+        
+        const responseMessage = emailConfigured 
+            ? 'Registration successful. Please check your email to verify your account.'
+            : 'Registration successful. You can now log in (email verification disabled in development mode).';
         
         res.status(201).json({ 
-            message: 'Registration successful. Please check your email to verify your account.',
+            message: responseMessage,
             user: userResponse, 
             token,
-            requiresVerification: true
+            requiresVerification: emailConfigured && !user.isEmailVerified
         });
     } catch (error) {
         console.error('Registration error:', error);
@@ -95,13 +113,23 @@ router.post('/login', async (req, res) => {
             return res.status(401).json({ message: 'Invalid email or password' });
         }
         
-        // Check if email is verified
-        if (!user.isEmailVerified) {
+        // Check if email verification is enforced (only if email service is properly configured)
+        const emailConfigured = process.env.EMAIL_USER && 
+                               process.env.EMAIL_PASSWORD && 
+                               process.env.EMAIL_USER !== 'your-email@gmail.com' &&
+                               process.env.EMAIL_PASSWORD !== 'your-app-password';
+        
+        if (!user.isEmailVerified && emailConfigured) {
             return res.status(403).json({ 
                 message: 'Please verify your email before logging in. Check your inbox for the verification link.',
                 requiresVerification: true,
                 email: user.email
             });
+        }
+        
+        // Allow login even without verification if email is not configured (development mode)
+        if (!user.isEmailVerified && !emailConfigured) {
+            console.log('⚠️  Email verification skipped - email service not configured');
         }
         
         const token = jwt.sign(
@@ -115,7 +143,13 @@ router.post('/login', async (req, res) => {
         delete userResponse.password;
         delete userResponse.emailVerificationToken;
         
-        res.json({ user: userResponse, token });
+        res.json({ 
+            user: userResponse, 
+            token,
+            emailVerified: user.isEmailVerified,
+            message: !user.isEmailVerified && !emailConfigured ? 
+                'Logged in without email verification (development mode)' : undefined
+        });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -205,6 +239,19 @@ router.post('/resend-verification', async (req, res) => {
             return res.status(400).json({ message: 'Email is required' });
         }
         
+        // Check if email service is configured
+        const emailConfigured = process.env.EMAIL_USER && 
+                               process.env.EMAIL_PASSWORD && 
+                               process.env.EMAIL_USER !== 'your-email@gmail.com' &&
+                               process.env.EMAIL_PASSWORD !== 'your-app-password';
+        
+        if (!emailConfigured) {
+            return res.status(503).json({ 
+                message: 'Email service is not configured. Please contact administrator or login without verification.',
+                emailNotConfigured: true
+            });
+        }
+        
         const user = await User.findOne({ email });
         
         if (!user) {
@@ -230,11 +277,16 @@ router.post('/resend-verification', async (req, res) => {
             });
         } else {
             res.status(500).json({ 
-                message: 'Failed to send verification email. Please try again later.' 
+                message: 'Failed to send verification email. Please try again later.',
+                error: result.error
             });
         }
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error('Resend verification error:', error);
+        res.status(500).json({ 
+            message: 'Server error while sending verification email.',
+            error: error.message 
+        });
     }
 });
 

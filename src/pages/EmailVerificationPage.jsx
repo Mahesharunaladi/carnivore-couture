@@ -66,12 +66,14 @@ const EmailVerificationPage = () => {
       if (response.ok) {
         alert('Verification email sent! Please check your inbox.');
         setResendEmail('');
+      } else if (data.emailNotConfigured) {
+        alert('Email service is not configured. You can login without verification for now.');
       } else {
         alert(data.message || 'Failed to resend verification email.');
       }
     } catch (error) {
       console.error('Resend error:', error);
-      alert('Unable to resend verification email. Please try again later.');
+      alert('Unable to resend verification email. You may be able to login without verification.');
     } finally {
       setIsResending(false);
     }

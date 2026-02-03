@@ -47,6 +47,11 @@ const LoginPage = () => {
         
         setSuccess(true);
         
+        // Show a message if logged in without verification
+        if (data.message) {
+          console.log(data.message);
+        }
+        
         // Redirect after a short delay
         setTimeout(() => {
           navigate('/');
@@ -82,12 +87,16 @@ const LoginPage = () => {
 
       if (response.ok) {
         alert('Verification email sent! Please check your inbox.');
+      } else if (data.emailNotConfigured) {
+        alert('Email service is not configured. You can login without verification.');
+        setShowResendVerification(false);
+        setError('Email verification not required. Please try logging in again.');
       } else {
         alert(data.message || 'Failed to resend verification email.');
       }
     } catch (error) {
       console.error('Resend error:', error);
-      alert('Unable to resend verification email. Please try again later.');
+      alert('Unable to resend verification email. Email service may not be configured.');
     } finally {
       setIsResending(false);
     }
